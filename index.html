@@ -140,22 +140,35 @@ footer a{color:var(--ink2);text-decoration:underline}
 /* neighbourhood map layout */
 .neigh-layout{display:grid;grid-template-columns:minmax(0,1fr) 310px;gap:20px;align-items:start;margin-top:16px}
 .map-wrap{background:linear-gradient(180deg,#fff 0%,#fbfaf6 100%);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;box-shadow:0 10px 30px rgba(26,25,21,.05)}
-.map-head{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 14px 8px}.map-title{font-size:11px;font-weight:500;text-transform:uppercase;letter-spacing:.06em;color:var(--ink3)}.map-chip{font-family:var(--mono);font-size:10px;color:var(--ink2);background:var(--surface2);border-radius:999px;padding:3px 8px;white-space:nowrap}
+.map-head{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 14px 8px}
+.map-title{font-size:11px;font-weight:500;text-transform:uppercase;letter-spacing:.06em;color:var(--ink3)}
+.map-chip{font-family:var(--mono);font-size:10px;color:var(--ink2);background:var(--surface2);border-radius:999px;padding:3px 8px;white-space:nowrap}
 #regionMap{width:100%;padding:2px 8px 10px}
 #regionMap svg{width:100%;height:auto;display:block;filter:drop-shadow(0 4px 12px rgba(26,25,21,.04))}
 #regionMap .rgn{fill:#e8e6df;stroke:#fff;stroke-width:1.8;cursor:pointer;transition:fill .18s,opacity .18s,filter .18s}
 #regionMap .rgn:hover{opacity:.88;filter:brightness(.98)}
 #regionMap .sub{fill:rgba(255,255,255,.18);stroke:#fff;stroke-width:1.15;cursor:pointer;transition:fill .18s,opacity .18s,filter .18s;opacity:.95}
 #regionMap .sub:hover{opacity:.78;filter:brightness(.98)}
+#regionMap .rgn.parent-condo{fill:#b9ded3}
+#regionMap .rgn.parent-house{fill:#efc3b6}
 #regionMap .sub.sel-condo,#regionMap .rgn.sel-condo{fill:#1a7a5e;filter:drop-shadow(0 4px 8px rgba(26,25,21,.18))}
 #regionMap .sub.sel-house,#regionMap .rgn.sel-house{fill:#c94a2b;filter:drop-shadow(0 4px 8px rgba(26,25,21,.18))}
+#regionMap .sub.sel-condo{stroke:#0f4f3d;stroke-width:2.25}
+#regionMap .sub.sel-house{stroke:#8f321d;stroke-width:2.25}
 #regionMap .sub.sel-condo+text,#regionMap .sub.sel-house+text{fill:#fff;font-weight:500}
-#regionMap text{font-family:'DM Sans',sans-serif;font-size:9px;fill:#6b6a62;pointer-events:none;text-anchor:middle}.map-legend{display:flex;gap:8px;flex-wrap:wrap;padding:0 14px 14px}.legend-item{display:flex;align-items:center;gap:6px;font-size:11px;color:var(--ink2)}.legend-dot{width:9px;height:9px;border-radius:50%;background:#e8e6df}.legend-dot.condo{background:var(--teal)}.legend-dot.house{background:var(--coral)}
+#regionMap text{font-family:'DM Sans',sans-serif;font-size:9px;fill:#6b6a62;pointer-events:none;text-anchor:middle}
+.map-legend{display:flex;gap:8px;flex-wrap:wrap;padding:0 14px 14px}
+.legend-item{display:flex;align-items:center;gap:6px;font-size:11px;color:var(--ink2)}
+.legend-dot{width:9px;height:9px;border-radius:50%;background:#e8e6df}
+.legend-dot.condo{background:var(--teal)}
+.legend-dot.house{background:var(--coral)}
 .neigh-panel{display:flex;flex-direction:column;gap:12px;position:sticky;top:16px}
 .neigh-label{font-size:11px;font-weight:500;text-transform:uppercase;letter-spacing:.06em;color:var(--ink3);margin-bottom:4px}
 #neighSelect{width:100%}
 .neigh-cards{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.neigh-card .stat-val{font-size:18px}.neigh-note{font-size:11px;color:var(--ink3);line-height:1.45}.region-rank{display:flex;align-items:center;justify-content:space-between;gap:10px;border-top:1px solid var(--border2);padding-top:9px;margin-top:9px;font-size:12px;color:var(--ink2)}
+.neigh-card .stat-val{font-size:18px}
+.neigh-note{font-size:11px;color:var(--ink3);line-height:1.45}
+.region-rank{display:flex;align-items:center;justify-content:space-between;gap:10px;border-top:1px solid var(--border2);padding-top:9px;margin-top:9px;font-size:12px;color:var(--ink2)}
 @media(max-width:780px){.neigh-layout{grid-template-columns:1fr}.neigh-panel{position:static}#regionMap{padding:0 4px 8px}}
 @media(max-width:680px){h1{font-size:22px}.savings-grid{grid-template-columns:1fr 1fr}.neigh-cards{grid-template-columns:1fr}}
 
@@ -681,12 +694,15 @@ function initMap(){updateMapHighlight();}
 
 function updateMapHighlight(){
   const selCol=neighType==='condo'?'sel-condo':'sel-house';
+  const parentCol=neighType==='condo'?'parent-condo':'parent-house';
   const parent=REGION_PARENT[neighRegion];
+
   SVG_REGIONS.concat(SVG_SUBS).forEach(key=>{
     const el=document.getElementById('svg-'+key);
     if(!el)return;
-    el.classList.remove('sel-condo','sel-house');
-    if(key===neighRegion || key===parent)el.classList.add(selCol);
+    el.classList.remove('sel-condo','sel-house','parent-condo','parent-house');
+    if(key===neighRegion)el.classList.add(selCol);
+    else if(parent && key===parent)el.classList.add(parentCol);
   });
 }
 
