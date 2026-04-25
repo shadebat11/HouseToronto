@@ -3,9 +3,9 @@
 <head>
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1"/>
-<meta name="description" content="Interactive dashboard showing Toronto income distribution by age cohort vs. housing affordability thresholds. Data from StatCan T1FF and CMHC."/>
+<meta name="description" content="Interactive dashboard showing Toronto income distribution by age cohort vs. housing affordability thresholds. Data from StatCan FY2024 and CMHC FY2025."/>
 <meta name="google-adsense-account" content="ca-pub-5619117265675077">
-<title>Toronto Income & Housing Affordability Analysis 2024</title>
+<title>Toronto Income & Housing Affordability</title>
 
 <!-- Google AdSense -->
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5619117265675077" crossorigin="anonymous"></script>
@@ -74,7 +74,6 @@ section{margin-bottom:20px}
 .savings-years{font-family:'DM Mono',monospace;font-size:20px;font-weight:500}
 .savings-mo{font-size:11px;color:var(--ink2);margin-top:2px}
 
-/* Ad unit container — labelled per AdSense policy */
 .ad-unit{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:8px;margin:20px 0;text-align:center;overflow:hidden}
 .ad-label{font-size:10px;font-weight:500;text-transform:uppercase;letter-spacing:.08em;color:var(--ink3);margin-bottom:6px}
 
@@ -91,31 +90,23 @@ footer a{color:var(--ink2);text-decoration:underline}
 <div class="shell">
 
 <header>
-  <div class="eyebrow">Toronto &middot; 2024</div>
-  <h1>Toronto Income &amp; Housing Affordability Analysis</h1>
+  <div class="eyebrow">Toronto</div>
+  <h1>Toronto Income &amp; Housing Affordability</h1>
   <p class="sub">Income distribution by age cohort vs. Toronto housing market thresholds. Data sourced from StatCan T1FF and CMHC affordability tables. By Eric Liu.</p>
 </header>
 
-<!-- Ad unit 1: Below header (leaderboard / responsive) -->
 <div class="ad-unit">
   <div class="ad-label">Advertisement</div>
-  <ins class="adsbygoogle"
-       style="display:block"
-       data-ad-client="ca-pub-5619117265675077"
-       data-ad-slot="SLOT_ID_1"
-       data-ad-format="auto"
-       data-full-width-responsive="true"></ins>
+  <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-5619117265675077" data-ad-slot="SLOT_ID_1" data-ad-format="auto" data-full-width-responsive="true"></ins>
   <script>(adsbygoogle=window.adsbygoogle||[]).push({})</script>
 </div>
 
-<!-- Age selector -->
 <div style="display:flex;align-items:center;gap:12px;margin-bottom:20px">
   <span style="font-size:13px;color:var(--ink2)">Age cohort:</span>
   <select id="ageSelect"></select>
   <span id="affordBadge" class="pill coral"></span>
 </div>
 
-<!-- Affordability banner -->
 <div id="affordBanner" class="banner warn">
   <div class="banner-icon">&#9888;</div>
   <div class="banner-text">
@@ -124,12 +115,10 @@ footer a{color:var(--ink2);text-decoration:underline}
   </div>
 </div>
 
-<!-- Summary stats -->
 <div class="grid4" id="summaryCards"></div>
 
 <div class="divider"></div>
 
-<!-- Income distribution -->
 <section>
   <div class="section-title">Income distribution by age</div>
   <div class="section-sub">Upper-tail percentiles across Toronto earners</div>
@@ -143,19 +132,12 @@ footer a{color:var(--ink2);text-decoration:underline}
 
 <div class="divider"></div>
 
-<!-- Ad unit 2: Mid-page (in-content, between sections) -->
 <div class="ad-unit">
   <div class="ad-label">Advertisement</div>
-  <ins class="adsbygoogle"
-       style="display:block;text-align:center"
-       data-ad-layout="in-article"
-       data-ad-format="fluid"
-       data-ad-client="ca-pub-5619117265675077"
-       data-ad-slot="SLOT_ID_2"></ins>
+  <ins class="adsbygoogle" style="display:block;text-align:center" data-ad-layout="in-article" data-ad-format="fluid" data-ad-client="ca-pub-5619117265675077" data-ad-slot="SLOT_ID_2"></ins>
   <script>(adsbygoogle=window.adsbygoogle||[]).push({})</script>
 </div>
 
-<!-- Housing affordability -->
 <section>
   <div class="section-title">Housing affordability</div>
   <div class="section-sub">Qualifying income thresholds vs. income percentiles for selected cohort</div>
@@ -177,7 +159,6 @@ footer a{color:var(--ink2);text-decoration:underline}
 
 <div class="divider"></div>
 
-<!-- What can I afford -->
 <section>
   <div class="section-title">What can I afford?</div>
   <div class="section-sub">Enter your income to see where you land in the distribution and what you can qualify for</div>
@@ -191,7 +172,6 @@ footer a{color:var(--ink2);text-decoration:underline}
 
 <div class="divider"></div>
 
-<!-- Savings runway -->
 <section>
   <div class="section-title">Downpayment savings runway</div>
   <div class="section-sub">Years to save a downpayment at different savings rates — based on your income above</div>
@@ -200,21 +180,14 @@ footer a{color:var(--ink2);text-decoration:underline}
 
 <div class="divider"></div>
 
-<!-- Income table -->
 <section>
   <div class="section-title">Full income percentile table</div>
   <div id="incomeTable"></div>
 </section>
 
-<!-- Ad unit 3: Bottom of page (anchor / responsive) -->
 <div class="ad-unit" style="margin-top:32px">
   <div class="ad-label">Advertisement</div>
-  <ins class="adsbygoogle"
-       style="display:block"
-       data-ad-client="ca-pub-5619117265675077"
-       data-ad-slot="SLOT_ID_3"
-       data-ad-format="auto"
-       data-full-width-responsive="true"></ins>
+  <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-5619117265675077" data-ad-slot="SLOT_ID_3" data-ad-format="auto" data-full-width-responsive="true"></ins>
   <script>(adsbygoogle=window.adsbygoogle||[]).push({})</script>
 </div>
 
@@ -227,14 +200,15 @@ footer a{color:var(--ink2);text-decoration:underline}
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.6/dist/chart.umd.js"></script>
 <script>
+// top1 removed — P99 is the ceiling (top 1% threshold)
 const DATA=[
- {age:"18–24",p10:0,p25:4200,p50:14200,p75:28600,p90:46500,p95:62000,p97:76000,p99:112000,top1:145000},
- {age:"25–34",p10:9800,p25:26500,p50:45200,p75:72500,p90:108000,p95:142000,p97:178000,p99:255000,top1:330000},
- {age:"35–44",p10:12800,p25:34200,p50:61200,p75:98500,p90:148000,p95:205000,p97:265000,p99:390000,top1:520000},
- {age:"45–54",p10:13200,p25:36500,p50:68400,p75:112000,p90:172000,p95:245000,p97:315000,p99:465000,top1:625000},
- {age:"55–64",p10:8200,p25:28800,p50:54800,p75:92000,p90:146000,p95:218000,p97:292000,p99:440000,top1:610000},
- {age:"65–69",p10:6200,p25:21800,p50:39200,p75:68500,p90:106000,p95:158000,p97:215000,p99:340000,top1:480000},
- {age:"70+",p10:4200,p25:18200,p50:32800,p75:57600,p90:91000,p95:135000,p97:182000,p99:295000,top1:430000}
+ {age:"18–24",p10:0,p25:4200,p50:14200,p75:28600,p90:46500,p95:62000,p97:76000,p99:112000},
+ {age:"25–34",p10:9800,p25:26500,p50:45200,p75:72500,p90:108000,p95:142000,p97:178000,p99:255000},
+ {age:"35–44",p10:12800,p25:34200,p50:61200,p75:98500,p90:148000,p95:205000,p97:265000,p99:390000},
+ {age:"45–54",p10:13200,p25:36500,p50:68400,p75:112000,p90:172000,p95:245000,p97:315000,p99:465000},
+ {age:"55–64",p10:8200,p25:28800,p50:54800,p75:92000,p90:146000,p95:218000,p97:292000,p99:440000},
+ {age:"65–69",p10:6200,p25:21800,p50:39200,p75:68500,p90:106000,p95:158000,p97:215000,p99:340000},
+ {age:"70+",p10:4200,p25:18200,p50:32800,p75:57600,p90:91000,p95:135000,p97:182000,p99:295000}
 ];
 const HOUSING={
  all:{label:"All dwellings",price:1096710,down:84671,months:101.1,mortgage:5843,mortgagePct:69.8,qualifying:246584,medianIncome:100505,ownership:65},
@@ -249,9 +223,9 @@ let incomeChart,housingChart;
 
 function pctRankFor(age,income){
   const d=DATA.find(x=>x.age===age);
-  const pts=[{p:10,v:d.p10},{p:25,v:d.p25},{p:50,v:d.p50},{p:75,v:d.p75},{p:90,v:d.p90},{p:95,v:d.p95},{p:97,v:d.p97},{p:99,v:d.p99},{p:99.9,v:d.top1}];
+  const pts=[{p:10,v:d.p10},{p:25,v:d.p25},{p:50,v:d.p50},{p:75,v:d.p75},{p:90,v:d.p90},{p:95,v:d.p95},{p:97,v:d.p97},{p:99,v:d.p99}];
   if(income<=pts[0].v)return '<10th';
-  if(income>=pts[pts.length-1].v)return 'top 0.1%';
+  if(income>=pts[pts.length-1].v)return 'Top 1%';
   for(let i=1;i<pts.length;i++){
     if(income<=pts[i].v){
       const frac=(income-pts[i-1].v)/(pts[i].v-pts[i-1].v);
@@ -260,11 +234,12 @@ function pctRankFor(age,income){
   }
   return 'P99+';
 }
+
 function affordFrac(age,qualifying){
   const d=DATA.find(x=>x.age===age);
-  const pts=[{p:0,v:d.p10},{p:25,v:d.p25},{p:50,v:d.p50},{p:75,v:d.p75},{p:90,v:d.p90},{p:95,v:d.p95},{p:97,v:d.p97},{p:99,v:d.p99},{p:100,v:d.top1}];
+  const pts=[{p:0,v:d.p10},{p:25,v:d.p25},{p:50,v:d.p50},{p:75,v:d.p75},{p:90,v:d.p90},{p:95,v:d.p95},{p:97,v:d.p97},{p:99,v:d.p99}];
   if(qualifying<=pts[0].v)return 100;
-  if(qualifying>=pts[pts.length-1].v)return 0.1;
+  if(qualifying>=pts[pts.length-1].v)return 1;
   for(let i=1;i<pts.length;i++){
     if(qualifying<=pts[i].v){
       const frac=(qualifying-pts[i-1].v)/(pts[i].v-pts[i-1].v);
@@ -341,9 +316,10 @@ Chart.defaults.font.family="'DM Sans',sans-serif";Chart.defaults.color=INK3;
 function drawIncome(){
   if(incomeChart)incomeChart.destroy();
   const labels=DATA.map(d=>d.age);let datasets;
-  const palette=['#bfa88a','#9b8a6e','#c94a2b','#1a7a5e','#1a1915'];
+  const palette=['#bfa88a','#9b8a6e','#c94a2b','#1a7a5e'];
   if(incomeView==='upper'){
-    datasets=['p90','p95','p97','p99','top1'].map((k,i)=>({label:k.toUpperCase(),data:DATA.map(d=>d[k]),tension:.3,borderWidth:k==='p99'?2.5:1.5,pointRadius:k==='p99'?4:2.5,borderColor:palette[i],fill:false}));
+    // top1 removed — P99 is now the ceiling
+    datasets=['p90','p95','p97','p99'].map((k,i)=>({label:k.toUpperCase(),data:DATA.map(d=>d[k]),tension:.3,borderWidth:k==='p99'?2.5:1.5,pointRadius:k==='p99'?4:2.5,borderColor:palette[i],fill:false}));
   }else if(incomeView==='gap'){
     datasets=[{label:'P99 minus P90 gap',data:DATA.map(d=>d.p99-d.p90),backgroundColor:DATA.map(d=>d.age===selected?CORAL:TEAL+'66'),borderRadius:4,type:'bar'}];
   }else{
@@ -419,11 +395,12 @@ function renderSavings(){
 }
 
 function renderIncomeTable(){
+  // Top 1% column removed — P99 is the top 1% threshold
   document.getElementById('incomeTable').innerHTML=`<table><thead><tr>
-    <th>Age</th><th>P50</th><th>P75</th><th>P90</th><th>P95</th><th>P97</th><th>P99</th><th>Top 1%</th>
+    <th>Age</th><th>P50</th><th>P75</th><th>P90</th><th>P95</th><th>P97</th><th>P99</th>
   </tr></thead><tbody>${DATA.map(d=>`<tr><td>${d.age}</td><td>${money(d.p50)}</td><td>${money(d.p75)}</td>
     <td class="hl">${money(d.p90)}</td><td>${money(d.p95)}</td><td>${money(d.p97)}</td>
-    <td class="hlt">${money(d.p99)}</td><td>${money(d.top1)}</td></tr>`).join('')}</tbody></table>`;
+    <td class="hlt">${money(d.p99)}</td></tr>`).join('')}</tbody></table>`;
 }
 
 init();
