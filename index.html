@@ -433,9 +433,9 @@ const DATA=[
  {age:"70+",p10:4200,p25:18200,p50:32800,p75:57600,p90:91000,p95:135000,p97:182000,p99:295000}
 ];
 const HOUSING={
- all:{label:"All dwellings",price:1096710,down:84671,months:101.1,mortgage:5843,mortgagePct:69.8,qualifying:246584,medianIncome:100505,ownership:65},
- condo:{label:"Condo",price:651350,down:40135,months:47.9,mortgage:3470,mortgagePct:41.4,qualifying:148923,medianIncome:100505,ownership:16,rent:2905},
- noncondo:{label:"Other dwellings",price:1127744,down:87774,months:104.8,mortgage:6008,mortgagePct:71.7,qualifying:253390,medianIncome:100505,ownership:49}
+ all:{label:"All dwellings",price:1096710,down:84671,down20:1096710*.20,months:101.1,mortgage:5843,mortgagePct:69.8,qualifying:246584,medianIncome:100505,ownership:65},
+ condo:{label:"Condo",price:651350,down:40135,down20:651350*.20,months:47.9,mortgage:3470,mortgagePct:41.4,qualifying:148923,medianIncome:100505,ownership:16,rent:2905},
+ noncondo:{label:"Other dwellings",price:1127744,down:87774,down20:1127744*.20,months:104.8,mortgage:6008,mortgagePct:71.7,qualifying:253390,medianIncome:100505,ownership:49}
 };
 const CORAL='#c94a2b',TEAL='#1a7a5e',INK3='#9b9a92';
 const money=n=>'$'+Math.round(n).toLocaleString();
@@ -578,6 +578,7 @@ function renderHousingTable(){
     <table><thead><tr><th>Metric</th><th>Value</th></tr></thead><tbody>
     <tr><td>Home price</td><td>${money(h.price)}</td></tr>
     <tr><td>Minimum downpayment</td><td>${money(h.down)}</td></tr>
+    <tr><td>20% downpayment</td><td>${money(h.down20)}</td></tr>
     <tr><td>Months saving for down (median income)</td><td>${h.months} mo</td></tr>
     <tr><td>Annual mortgage cost</td><td>${money(h.mortgage*12)}</td></tr>
     <tr><td>Mortgage as % of median income</td><td class="hl">${pct(h.mortgagePct)}</td></tr>
@@ -668,6 +669,7 @@ function renderNeigh(){
   const qualifying=Math.round(r.avg*0.225);
   const mortgage=Math.round(r.avg*0.8*(0.0549/12)/(1-Math.pow(1+0.0549/12,-300)));
   const down=r.avg<=500000?r.avg*0.05:25000+(r.avg-500000)*0.1;
+  const down20=r.avg*0.20;
   const can=myIncome>=qualifying;
   const gap=can?myIncome-qualifying:qualifying-myIncome;
   const chip=document.getElementById('mapChip');
@@ -676,7 +678,8 @@ function renderNeigh(){
     '<div class="neigh-card card-sm"><div class="stat-label">Avg. price</div><div class="stat-val mono">'+money(r.avg)+'</div></div>'+
     '<div class="neigh-card card-sm"><div class="stat-label">Qualifying income</div><div class="stat-val coral mono">'+money(qualifying)+'</div></div>'+
     '<div class="neigh-card card-sm"><div class="stat-label">Est. mortgage/mo</div><div class="stat-val mono">'+money(mortgage)+'</div></div>'+
-    '<div class="neigh-card card-sm"><div class="stat-label">Min. downpayment</div><div class="stat-val mono">'+money(down)+'</div></div>';
+    '<div class="neigh-card card-sm"><div class="stat-label">Min. downpayment</div><div class="stat-val mono">'+money(down)+'</div></div>'+
+    '<div class="neigh-card card-sm"><div class="stat-label">20% downpayment</div><div class="stat-val mono">'+money(down20)+'</div></div>';
   document.getElementById('neighQualify').innerHTML=
     '<div class="stat-label" style="margin-bottom:6px">Your income vs. '+r.label+'</div>'+
     '<div style="font-size:18px;font-family:var(--mono);font-weight:500;color:'+(can?'var(--teal)':'var(--coral)')+';margin-bottom:4px">'+(can?'&#10003; You qualify':'&#10007; Shortfall')+'</div>'+
