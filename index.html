@@ -157,12 +157,19 @@ footer a{color:var(--ink2);text-decoration:underline}
 #regionMap .sub.sel-house{stroke:#8f321d;stroke-width:2.25}
 #regionMap .sub.sel-condo+text,
 #regionMap .sub.sel-house+text,
+
+#regionMap .sub.sel-condo+text+text,
+#regionMap .sub.sel-house+text+text,
+
 #regionMap .rgn.sel-condo+text,
-#regionMap .rgn.sel-house+text{
+#regionMap .rgn.sel-house+text,
+#regionMap .rgn.sel-condo+text+text,
+#regionMap .rgn.sel-house+text+text{
   fill:#1a1915;
   font-weight:800;
   font-size:13px;
 }
+  
 #regionMap text{font-family:'DM Sans',sans-serif;font-size:9px;fill:#6b6a62;pointer-events:none;text-anchor:middle}
 .map-legend{display:flex;gap:8px;flex-wrap:wrap;padding:0 14px 14px}
 .legend-item{display:flex;align-items:center;gap:6px;font-size:11px;color:var(--ink2)}
