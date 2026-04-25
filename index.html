@@ -3,9 +3,9 @@
 <head>
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1"/>
-<meta name="description" content="See how your income compares to Toronto housing thresholds. Explore income distribution by age using StatCan and CMHC data from FY2024 data. Free affordability tool.""/>
+<meta name="description" content="See how your income compares to Toronto housing thresholds. Explore income distribution by age using StatCan and CMHC data from FY2024. Free affordability tool."/>
 <meta name="google-adsense-account" content="ca-pub-5619117265675077">
-<title>Toronto Housing Affordability Calculator 2024 | Income vs. Market</title>
+<title>Toronto Income & Housing Affordability</title>
 
 <!-- Google FAQ Schema -->
 <script type="application/ld+json">
@@ -56,7 +56,7 @@
   ]
 }
 </script>
-
+  
 <!-- Google AdSense -->
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5619117265675077" crossorigin="anonymous"></script>
 
@@ -69,7 +69,7 @@
   --coral:#c94a2b;--coral-bg:#fdf0ec;--coral-border:#f3c5b5;
   --teal:#1a7a5e;--teal-bg:#e8f6f1;--teal-border:#9fd8c6;
   --amber:#b8640a;--amber-bg:#fdf4e3;
-  --border:rgba(26,25,21,0.1);--border2:rgba(26,25,21,0.06);
+  --border:rgba(26,25,21,0.1);--border2:rgba(26,25,21,0.06);--mono:'DM Mono',monospace;
   --radius:12px;--radius-sm:8px;
 }
 body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--ink);font-size:14px;line-height:1.6}
@@ -130,19 +130,44 @@ section{margin-bottom:20px}
 footer{margin-top:32px;padding-top:20px;border-top:1px solid var(--border);font-size:12px;color:var(--ink3);line-height:1.7}
 footer a{color:var(--ink2);text-decoration:underline}
 
-@media(max-width:680px){
-  h1{font-size:22px}
-  .savings-grid{grid-template-columns:1fr 1fr}
-}
+
+/* prop-type toggle */
+.prop-toggle{display:flex;gap:8px;margin-bottom:20px}
+.prop-btn{display:flex;align-items:center;gap:8px;padding:10px 18px;border:1.5px solid var(--border);border-radius:var(--radius-sm);background:transparent;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:500;color:var(--ink2);cursor:pointer;transition:all .15s}
+.prop-btn svg{width:18px;height:18px;flex-shrink:0;stroke:currentColor;fill:none;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+.prop-btn.active{background:var(--ink);color:#fff;border-color:var(--ink)}
+.prop-btn:hover:not(.active){background:var(--surface2)}
+/* neighbourhood map layout */
+.neigh-layout{display:grid;grid-template-columns:minmax(0,1fr) 310px;gap:20px;align-items:start;margin-top:16px}
+.map-wrap{background:linear-gradient(180deg,#fff 0%,#fbfaf6 100%);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;box-shadow:0 10px 30px rgba(26,25,21,.05)}
+.map-head{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 14px 8px}.map-title{font-size:11px;font-weight:500;text-transform:uppercase;letter-spacing:.06em;color:var(--ink3)}.map-chip{font-family:var(--mono);font-size:10px;color:var(--ink2);background:var(--surface2);border-radius:999px;padding:3px 8px;white-space:nowrap}
+#regionMap{width:100%;padding:2px 8px 10px}
+#regionMap svg{width:100%;height:auto;display:block;filter:drop-shadow(0 4px 12px rgba(26,25,21,.04))}
+#regionMap .rgn{fill:#e8e6df;stroke:#fff;stroke-width:1.8;cursor:pointer;transition:fill .18s,opacity .18s,filter .18s}
+#regionMap .rgn:hover{opacity:.88;filter:brightness(.98)}
+#regionMap .sub{fill:rgba(255,255,255,.18);stroke:#fff;stroke-width:1.15;cursor:pointer;transition:fill .18s,opacity .18s,filter .18s;opacity:.95}
+#regionMap .sub:hover{opacity:.78;filter:brightness(.98)}
+#regionMap .sub.sel-condo,#regionMap .rgn.sel-condo{fill:#1a7a5e;filter:drop-shadow(0 4px 8px rgba(26,25,21,.18))}
+#regionMap .sub.sel-house,#regionMap .rgn.sel-house{fill:#c94a2b;filter:drop-shadow(0 4px 8px rgba(26,25,21,.18))}
+#regionMap .sub.sel-condo+text,#regionMap .sub.sel-house+text{fill:#fff;font-weight:500}
+#regionMap text{font-family:'DM Sans',sans-serif;font-size:9px;fill:#6b6a62;pointer-events:none;text-anchor:middle}.map-legend{display:flex;gap:8px;flex-wrap:wrap;padding:0 14px 14px}.legend-item{display:flex;align-items:center;gap:6px;font-size:11px;color:var(--ink2)}.legend-dot{width:9px;height:9px;border-radius:50%;background:#e8e6df}.legend-dot.condo{background:var(--teal)}.legend-dot.house{background:var(--coral)}
+.neigh-panel{display:flex;flex-direction:column;gap:12px;position:sticky;top:16px}
+.neigh-label{font-size:11px;font-weight:500;text-transform:uppercase;letter-spacing:.06em;color:var(--ink3);margin-bottom:4px}
+#neighSelect{width:100%}
+.neigh-cards{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.neigh-card .stat-val{font-size:18px}.neigh-note{font-size:11px;color:var(--ink3);line-height:1.45}.region-rank{display:flex;align-items:center;justify-content:space-between;gap:10px;border-top:1px solid var(--border2);padding-top:9px;margin-top:9px;font-size:12px;color:var(--ink2)}
+@media(max-width:780px){.neigh-layout{grid-template-columns:1fr}.neigh-panel{position:static}#regionMap{padding:0 4px 8px}}
+@media(max-width:680px){h1{font-size:22px}.savings-grid{grid-template-columns:1fr 1fr}.neigh-cards{grid-template-columns:1fr}}
+
 </style>
 </head>
 <body>
 <div class="shell">
 
 <header>
-  <div class="eyebrow">Toronto</div>
-  <h1>Toronto Income &amp; Housing Affordability</h1>
-  <p class="sub">See how your income compares to Toronto housing thresholds. Explore income distribution by age using StatCan and CMHC data from FY2024 data. Free affordability tool.</p>
+  <div class="eyebrow">Toronto &middot; 2024</div>
+  <h1>Toronto Income &amp; Housing Affordability Analysis</h1>
+  <p class="sub">See how your income compares to Toronto housing thresholds. Explore income distribution by age using StatCan and CMHC data from FY2024. Free affordability tool.</p>
 </header>
 
 <div class="ad-unit">
@@ -189,12 +214,17 @@ footer a{color:var(--ink2);text-decoration:underline}
 </div>
 
 <section>
-  <div class="section-title">Housing affordability</div>
-  <div class="section-sub">Qualifying income thresholds vs. income percentiles for selected cohort</div>
-  <div class="tabs" id="housingTabs">
-    <button class="tab active" data-h="all">All dwellings</button>
-    <button class="tab" data-h="condo">Condo</button>
-    <button class="tab" data-h="noncondo">Other dwellings</button>
+  <div class="section-title">Housing affordability &amp; neighbourhood</div>
+  <div class="section-sub">Select a property type — charts, stats and region data all update together</div>
+  <div class="prop-toggle">
+    <button class="prop-btn active" id="btnCondo" onclick="setPropType('condo')">
+      <svg viewBox="0 0 24 24"><rect x="3" y="8" width="18" height="13"/><path d="M1 8l11-5 11 5"/><line x1="9" y1="21" x2="9" y2="13"/><line x1="15" y1="21" x2="15" y2="13"/><rect x="9" y="13" width="6" height="8"/></svg>
+      Condo
+    </button>
+    <button class="prop-btn" id="btnHouse" onclick="setPropType('house')">
+      <svg viewBox="0 0 24 24"><path d="M3 9.5L12 3l9 6.5V21H3V9.5z"/><rect x="9" y="14" width="6" height="7"/></svg>
+      House / Other
+    </button>
   </div>
   <div class="grid4" id="housingCards"></div>
   <div class="chart-wrap"><canvas id="housingChart"></canvas></div>
@@ -204,6 +234,135 @@ footer a{color:var(--ink2);text-decoration:underline}
       <button class="tab" data-view="monthly">Monthly cashflow view</button>
     </div>
     <div id="housingTable" style="margin-top:14px"></div>
+  </div>
+  <div class="divider"></div>
+  <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;margin-bottom:4px">
+    <div class="section-title">Region breakdown</div>
+    <div class="prop-toggle" style="margin-bottom:0">
+      <button class="prop-btn active" id="btnCondo2" onclick="setPropType('condo')">
+        <svg viewBox="0 0 24 24"><rect x="3" y="8" width="18" height="13"/><path d="M1 8l11-5 11 5"/><line x1="9" y1="21" x2="9" y2="13"/><line x1="15" y1="21" x2="15" y2="13"/><rect x="9" y="13" width="6" height="8"/></svg>
+        Condo
+      </button>
+      <button class="prop-btn" id="btnHouse2" onclick="setPropType('house')">
+        <svg viewBox="0 0 24 24"><path d="M3 9.5L12 3l9 6.5V21H3V9.5z"/><rect x="9" y="14" width="6" height="7"/></svg>
+        House / Other
+      </button>
+    </div>
+  </div>
+  <div class="section-sub">Click a region on the map — TRREB Q2 2025 median/average-style market snapshot</div>
+  <div class="neigh-layout">
+    <div class="map-wrap">
+      <div class="map-head"><div class="map-title">Greater Toronto Area — click a region</div><div class="map-chip" id="mapChip">Condo view</div></div>
+      <div id="regionMap"><svg viewBox="0 0 400 320" xmlns="http://www.w3.org/2000/svg">
+  <!-- Lake Ontario -->
+  <rect x="0" y="255" width="400" height="65" fill="#d6eaf4" opacity=".7"/>
+  <text x="200" y="290" style="font-size:9px;fill:#7aabcc;text-anchor:middle;font-family:'DM Sans',sans-serif">Lake Ontario</text>
+  <!-- Halton region base -->
+  <g onclick="selectRegion('halton')">
+    <polygon id="svg-halton" class="rgn" points="20,160 95,160 95,175 105,200 95,255 20,255"/>
+    <text x="55" y="215">Halton</text>
+  </g>
+  <!-- Oakville (within Halton) -->
+  <g onclick="selectRegion('oakville')">
+    <polygon id="svg-oakville" class="sub" points="22,205 93,205 93,253 22,253"/>
+    <text x="57" y="233" style="font-size:7.5px;fill:#6b6a62;pointer-events:none;text-anchor:middle">Oakville</text>
+  </g>
+  <!-- Peel region base -->
+  <g onclick="selectRegion('peel')">
+    <polygon id="svg-peel" class="rgn" points="95,145 160,140 165,170 170,255 105,200 95,175"/>
+    <text x="128" y="168">Peel</text>
+  </g>
+  <!-- Brampton (upper Peel) -->
+  <g onclick="selectRegion('brampton')">
+    <polygon id="svg-brampton" class="sub" points="97,176 158,172 162,210 107,202"/>
+    <text x="129" y="192" style="font-size:7px;fill:#6b6a62;pointer-events:none;text-anchor:middle">Brampton</text>
+  </g>
+  <!-- Mississauga (lower Peel) -->
+  <g onclick="selectRegion('mississauga')">
+    <polygon id="svg-mississauga" class="sub" points="107,202 162,210 166,253 108,253"/>
+    <text x="135" y="232" style="font-size:7px;fill:#6b6a62;pointer-events:none;text-anchor:middle">Mississauga</text>
+  </g>
+  <!-- City of Toronto -->
+  <g onclick="selectRegion('toronto')">
+    <polygon id="svg-toronto" class="rgn" points="160,140 230,138 235,180 230,255 170,255 165,170"/>
+    <text x="197" y="193">City of</text>
+    <text x="197" y="204">Toronto</text>
+  </g>
+  <!-- Durham region base -->
+  <g onclick="selectRegion('durham')">
+    <polygon id="svg-durham" class="rgn" points="230,138 320,130 330,160 330,255 230,255 235,180"/>
+    <text x="285" y="165">Durham</text>
+  </g>
+  <!-- Pickering (western Durham) -->
+  <g onclick="selectRegion('pickering')">
+    <polygon id="svg-pickering" class="sub" points="232,180 275,175 275,225 232,228"/>
+    <text x="253" y="204" style="font-size:7px;fill:#6b6a62;pointer-events:none;text-anchor:middle">Pickering</text>
+  </g>
+  <!-- Oshawa (eastern Durham) -->
+  <g onclick="selectRegion('oshawa')">
+    <polygon id="svg-oshawa" class="sub" points="275,175 325,168 328,253 275,253"/>
+    <text x="300" y="215" style="font-size:7px;fill:#6b6a62;pointer-events:none;text-anchor:middle">Oshawa</text>
+  </g>
+  <!-- York region base -->
+  <g onclick="selectRegion('york')">
+    <polygon id="svg-york" class="rgn" points="95,60 320,50 330,130 330,160 320,130 235,138 160,140 95,145 95,60"/>
+    <text x="130" y="90">York</text>
+  </g>
+  <!-- Vaughan (left York) -->
+  <g onclick="selectRegion('vaughan')">
+    <polygon id="svg-vaughan" class="sub" points="97,100 165,95 163,138 97,143"/>
+    <text x="130" y="122" style="font-size:7px;fill:#6b6a62;pointer-events:none;text-anchor:middle">Vaughan</text>
+  </g>
+  <!-- Richmond Hill (mid York) -->
+  <g onclick="selectRegion('richmond')">
+    <polygon id="svg-richmond" class="sub" points="165,95 230,90 228,138 163,138"/>
+    <text x="196" y="117" style="font-size:7px;fill:#6b6a62;pointer-events:none;text-anchor:middle">Richmond Hill</text>
+  </g>
+  <!-- Markham (right York) -->
+  <g onclick="selectRegion('markham')">
+    <polygon id="svg-markham" class="sub" points="230,90 318,82 320,130 228,138"/>
+    <text x="272" y="112" style="font-size:7px;fill:#6b6a62;pointer-events:none;text-anchor:middle">Markham</text>
+  </g>
+  <!-- Simcoe label -->
+  <rect x="80" y="10" width="250" height="36" rx="4" fill="#f0efe9" stroke="#dddcd5" stroke-width="1"/>
+  <text x="205" y="32" style="font-size:8.5px;fill:#9b9a92;text-anchor:middle;font-family:'DM Sans',sans-serif">Simcoe County (not selectable)</text>
+  <!-- Compass -->
+  <text x="375" y="22" style="font-size:9px;fill:#9b9a92;font-family:'DM Sans',sans-serif;text-anchor:middle">N</text>
+  <line x1="375" y1="26" x2="375" y2="38" stroke="#9b9a92" stroke-width="1"/>
+</svg></div>
+      <div class="map-legend"><span class="legend-item"><span class="legend-dot"></span>Available region</span><span class="legend-item"><span class="legend-dot condo"></span>Condo selected</span><span class="legend-item"><span class="legend-dot house"></span>House selected</span></div>
+    </div>
+    <div class="neigh-panel">
+      <div>
+        <div class="neigh-label">Region</div>
+        <select id="neighSelect" onchange="selectRegion(this.value)">
+          <option value="gta">All GTA</option>
+          <option value="toronto">City of Toronto</option>
+          <option value="york">York Region</option>
+          <option value="peel">Peel Region</option>
+          <option value="durham">Durham Region</option>
+          <option value="halton">Halton Region</option>
+          <optgroup label="York Region cities">
+            <option value="markham">Markham</option>
+            <option value="vaughan">Vaughan</option>
+            <option value="richmond">Richmond Hill</option>
+          </optgroup>
+          <optgroup label="Peel Region cities">
+            <option value="mississauga">Mississauga</option>
+            <option value="brampton">Brampton</option>
+          </optgroup>
+          <optgroup label="Halton Region cities">
+            <option value="oakville">Oakville</option>
+          </optgroup>
+          <optgroup label="Durham Region cities">
+            <option value="oshawa">Oshawa</option>
+            <option value="pickering">Pickering</option>
+          </optgroup>
+        </select>
+      </div>
+      <div class="neigh-cards" id="neighCards"></div>
+      <div class="card-sm" id="neighQualify"></div>
+    </div>
   </div>
 </section>
 
@@ -268,7 +427,8 @@ const HOUSING={
 const CORAL='#c94a2b',TEAL='#1a7a5e',INK3='#9b9a92';
 const money=n=>'$'+Math.round(n).toLocaleString();
 const pct=n=>n.toFixed(1)+'%';
-let incomeView='upper',housingView='all',tableView='annual',selected='35–44',myIncome=100000;
+let incomeView='upper',housingView='condo',tableView='annual',selected='35–44',myIncome=100000;
+let neighType='condo',neighRegion='gta';
 let incomeChart,housingChart;
 
 function pctRankFor(age,income){
@@ -308,22 +468,17 @@ function init(){
     document.querySelectorAll('#incomeTabs .tab').forEach(x=>x.classList.toggle('active',x===b));
     drawIncome();
   });
-  document.querySelectorAll('#housingTabs .tab').forEach(b=>b.onclick=()=>{
-    housingView=b.dataset.h;
-    document.querySelectorAll('#housingTabs .tab').forEach(x=>x.classList.toggle('active',x===b));
-    drawHousing();renderHousingTable();renderBanner();renderSummary();
-  });
   document.querySelectorAll('#viewTabs .tab').forEach(b=>b.onclick=()=>{
     tableView=b.dataset.view;
     document.querySelectorAll('#viewTabs .tab').forEach(x=>x.classList.toggle('active',x===b));
     renderHousingTable();
   });
   const inc=document.getElementById('myIncome');
-  inc.oninput=()=>{myIncome=+inc.value;document.getElementById('myIncomeVal').textContent=money(myIncome);renderAfford();renderSavings()};
+  inc.oninput=()=>{myIncome=+inc.value;document.getElementById('myIncomeVal').textContent=money(myIncome);renderAfford();renderSavings();renderNeigh()};
   renderAll();
 }
 
-function renderAll(){renderBanner();renderSummary();drawIncome();drawHousing();renderHousingTable();renderIncomeTable();renderAfford();renderSavings()}
+function renderAll(){renderBanner();renderSummary();drawIncome();drawHousing();renderHousingTable();renderIncomeTable();renderAfford();renderSavings();renderNeigh()}
 
 function renderBanner(){
   const h=HOUSING[housingView];
@@ -453,7 +608,90 @@ function renderIncomeTable(){
     <td class="hlt">${money(d.p99)}</td></tr>`).join('')}</tbody></table>`;
 }
 
+
+// ── Neighbourhood data (TRREB Q2 2025 median/average-style market snapshot) ──
+const NEIGH={
+  condo:{
+    gta:{label:'All GTA',avg:685961},toronto:{label:'City of Toronto',avg:717210},
+    york:{label:'York Region',avg:658082},peel:{label:'Peel Region',avg:555757},
+    durham:{label:'Durham Region',avg:544011},halton:{label:'Halton Region',avg:736017},
+    markham:{label:'Markham',avg:687604},vaughan:{label:'Vaughan',avg:655492},
+    mississauga:{label:'Mississauga',avg:570126},brampton:{label:'Brampton',avg:483140},
+    oakville:{label:'Oakville',avg:796991},richmond:{label:'Richmond Hill',avg:612819},
+    oshawa:{label:'Oshawa',avg:449209},pickering:{label:'Pickering',avg:597637}
+  },
+  house:{
+    gta:{label:'All GTA',avg:1120879},toronto:{label:'City of Toronto',avg:1155616},
+    york:{label:'York Region',avg:1282040},peel:{label:'Peel Region',avg:1022631},
+    durham:{label:'Durham Region',avg:905702},halton:{label:'Halton Region',avg:1237499},
+    markham:{label:'Markham',avg:1279253},vaughan:{label:'Vaughan',avg:1323877},
+    mississauga:{label:'Mississauga',avg:1040979},brampton:{label:'Brampton',avg:951337},
+    oakville:{label:'Oakville',avg:1447106},richmond:{label:'Richmond Hill',avg:1478294},
+    oshawa:{label:'Oshawa',avg:781748},pickering:{label:'Pickering',avg:991759}
+  }
+};
+
+// Map propType -> HOUSING key
+const PROP_TO_HOUSING={condo:'condo',house:'noncondo'};
+
+function setPropType(t){
+  neighType=t;
+  housingView=PROP_TO_HOUSING[t];
+  ['btnCondo','btnCondo2'].forEach(id=>{const el=document.getElementById(id);if(el)el.classList.toggle('active',t==='condo');});
+  ['btnHouse','btnHouse2'].forEach(id=>{const el=document.getElementById(id);if(el)el.classList.toggle('active',t==='house');});
+  drawHousing();renderHousingTable();renderBanner();renderSummary();renderNeigh();updateMapHighlight();
+}
+
+function selectRegion(r){
+  neighRegion=r;
+  document.getElementById('neighSelect').value=r;
+  renderNeigh();updateMapHighlight();
+}
+
+function renderNeigh(){
+  const r=NEIGH[neighType][neighRegion];
+  const list=Object.entries(NEIGH[neighType]).map(([key,val])=>({key,...val})).sort((a,b)=>a.avg-b.avg);
+  const rank=list.findIndex(x=>x.key===neighRegion)+1;
+  const qualifying=Math.round(r.avg*0.225);
+  const mortgage=Math.round(r.avg*0.8*(0.0549/12)/(1-Math.pow(1+0.0549/12,-300)));
+  const down=r.avg<=500000?r.avg*0.05:25000+(r.avg-500000)*0.1;
+  const can=myIncome>=qualifying;
+  const gap=can?myIncome-qualifying:qualifying-myIncome;
+  const chip=document.getElementById('mapChip');
+  if(chip)chip.textContent=(neighType==='condo'?'Condo':'House')+' view';
+  document.getElementById('neighCards').innerHTML=
+    '<div class="neigh-card card-sm"><div class="stat-label">Avg. price</div><div class="stat-val mono">'+money(r.avg)+'</div></div>'+
+    '<div class="neigh-card card-sm"><div class="stat-label">Qualifying income</div><div class="stat-val coral mono">'+money(qualifying)+'</div></div>'+
+    '<div class="neigh-card card-sm"><div class="stat-label">Est. mortgage/mo</div><div class="stat-val mono">'+money(mortgage)+'</div></div>'+
+    '<div class="neigh-card card-sm"><div class="stat-label">Min. downpayment</div><div class="stat-val mono">'+money(down)+'</div></div>';
+  document.getElementById('neighQualify').innerHTML=
+    '<div class="stat-label" style="margin-bottom:6px">Your income vs. '+r.label+'</div>'+
+    '<div style="font-size:18px;font-family:var(--mono);font-weight:500;color:'+(can?'var(--teal)':'var(--coral)')+';margin-bottom:4px">'+(can?'&#10003; You qualify':'&#10007; Shortfall')+'</div>'+
+    '<div style="font-size:12px;color:var(--ink2)">'+(can?'+'+money(gap)+' above':money(gap)+' below')+' threshold &middot; need '+money(qualifying)+'/yr</div>'+
+    '<div class="region-rank"><span>Price rank</span><strong>'+rank+' / '+list.length+' cheapest</strong></div>'+
+    '<div class="neigh-note" style="margin-top:8px">Assumes 20% down for mortgage estimate and a simple 22.5% price-to-income qualifying rule for regional comparison.</div>';
+}
+
+// ── SVG map highlight ──
+const SVG_REGIONS=['halton','peel','toronto','durham','york'];
+const SVG_SUBS=['oakville','brampton','mississauga','pickering','oshawa','vaughan','richmond','markham'];
+const REGION_PARENT={oakville:'halton',brampton:'peel',mississauga:'peel',pickering:'durham',oshawa:'durham',vaughan:'york',richmond:'york',markham:'york'};
+
+function initMap(){updateMapHighlight();}
+
+function updateMapHighlight(){
+  const selCol=neighType==='condo'?'sel-condo':'sel-house';
+  const parent=REGION_PARENT[neighRegion];
+  SVG_REGIONS.concat(SVG_SUBS).forEach(key=>{
+    const el=document.getElementById('svg-'+key);
+    if(!el)return;
+    el.classList.remove('sel-condo','sel-house');
+    if(key===neighRegion || key===parent)el.classList.add(selCol);
+  });
+}
+
 init();
+initMap();
 </script>
 </body>
 </html>
