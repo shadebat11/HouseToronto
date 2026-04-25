@@ -3,10 +3,14 @@
 <head>
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1"/>
-<title>Toronto Housing Affordability Analysis</title>
-
+<meta name="description" content="Interactive dashboard showing Toronto income distribution by age cohort vs. housing affordability thresholds. Data from StatCan T1FF and CMHC."/>
 <meta name="google-adsense-account" content="ca-pub-5619117265675077">
-     
+<title>Toronto Income & Housing Affordability Analysis 2024</title>
+
+<!-- Google AdSense -->
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5619117265675077" crossorigin="anonymous"></script>
+
+<style>
 @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@400;500&display=swap');
 *{box-sizing:border-box;margin:0;padding:0}
 :root{
@@ -20,43 +24,30 @@
 }
 body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--ink);font-size:14px;line-height:1.6}
 .mono{font-family:'DM Mono',monospace}
-
-/* Layout */
 .shell{max-width:1100px;margin:0 auto;padding:32px 24px 56px}
-header{margin-bottom:32px;padding-bottom:24px;border-bottom:1px solid var(--border)}
+header{margin-bottom:24px;padding-bottom:24px;border-bottom:1px solid var(--border)}
 .eyebrow{font-size:11px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:var(--ink3);margin-bottom:10px}
 h1{font-size:28px;font-weight:300;letter-spacing:-.03em;line-height:1.2;color:var(--ink)}
 .sub{color:var(--ink2);font-size:13px;margin-top:8px;max-width:680px}
-
-/* Cards */
 .card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:20px 22px}
 .card-sm{background:var(--surface2);border-radius:var(--radius-sm);padding:14px 16px}
 .grid4{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;margin:20px 0}
-.grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:20px 0}
 .stat-label{font-size:11px;font-weight:500;text-transform:uppercase;letter-spacing:.06em;color:var(--ink3);margin-bottom:6px}
 .stat-val{font-family:'DM Mono',monospace;font-size:22px;font-weight:500;color:var(--ink)}
 .stat-val.coral{color:var(--coral)}
 .stat-val.teal{color:var(--teal)}
-
-/* Affordability banner */
 .banner{border-radius:var(--radius);padding:18px 22px;margin:20px 0;display:flex;align-items:center;gap:16px}
 .banner.warn{background:var(--coral-bg);border:1px solid var(--coral-border)}
 .banner.ok{background:var(--teal-bg);border:1px solid var(--teal-border)}
 .banner-icon{font-size:22px;flex-shrink:0}
 .banner-text strong{font-weight:500;color:var(--ink)}
 .banner-text p{font-size:13px;color:var(--ink2);margin-top:2px}
-
-/* Controls */
 .tabs{display:flex;gap:4px;flex-wrap:wrap;margin-bottom:16px}
 .tab{border:1px solid var(--border);background:transparent;border-radius:var(--radius-sm);padding:7px 14px;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:500;color:var(--ink2);cursor:pointer;transition:all .15s}
 .tab.active{background:var(--ink);color:#fff;border-color:var(--ink)}
 .tab:hover:not(.active){background:var(--surface2)}
 select{border:1px solid var(--border);background:var(--surface);border-radius:var(--radius-sm);padding:7px 12px;font-family:'DM Sans',sans-serif;font-size:13px;color:var(--ink);cursor:pointer}
-
-/* Chart wrapper */
 .chart-wrap{position:relative;height:360px;margin-top:16px}
-
-/* Table */
 table{width:100%;border-collapse:collapse;font-size:13px}
 th{font-size:11px;font-weight:500;text-transform:uppercase;letter-spacing:.05em;color:var(--ink3);padding:8px 10px;border-bottom:1px solid var(--border);text-align:right}
 th:first-child{text-align:left}
@@ -65,38 +56,33 @@ td:first-child{text-align:left;font-family:'DM Sans',sans-serif;font-size:13px}
 tr:last-child td{border-bottom:none}
 .hl{color:var(--coral);font-weight:500}
 .hlt{color:var(--teal);font-weight:500}
-
-/* Slider */
 .slider-row{display:flex;align-items:center;gap:12px;margin:16px 0}
 .slider-row label{font-size:13px;color:var(--ink2);white-space:nowrap;min-width:130px}
 input[type=range]{flex:1;accent-color:var(--ink)}
 .slider-val{font-family:'DM Mono',monospace;font-size:13px;font-weight:500;min-width:90px;text-align:right}
-
-/* Section spacing */
 section{margin-bottom:20px}
 .section-title{font-size:15px;font-weight:500;margin-bottom:4px}
 .section-sub{font-size:12px;color:var(--ink2);margin-bottom:16px}
 .divider{height:1px;background:var(--border);margin:24px 0}
-
-/* Gap pill */
 .pill{display:inline-block;padding:3px 10px;border-radius:999px;font-size:11px;font-weight:500}
 .pill.coral{background:var(--coral-bg);color:var(--coral)}
 .pill.teal{background:var(--teal-bg);color:var(--teal)}
 .pill.amber{background:var(--amber-bg);color:var(--amber)}
-
-/* Toggle row */
-.toggle-row{display:flex;gap:8px;align-items:center;margin-bottom:16px;flex-wrap:wrap}
-
-/* Savings table */
 .savings-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:14px}
 .savings-cell{background:var(--surface2);border-radius:var(--radius-sm);padding:12px 14px}
 .savings-rate{font-size:11px;font-weight:500;text-transform:uppercase;letter-spacing:.05em;color:var(--ink3);margin-bottom:4px}
 .savings-years{font-family:'DM Mono',monospace;font-size:20px;font-weight:500}
 .savings-mo{font-size:11px;color:var(--ink2);margin-top:2px}
 
+/* Ad unit container — labelled per AdSense policy */
+.ad-unit{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:8px;margin:20px 0;text-align:center;overflow:hidden}
+.ad-label{font-size:10px;font-weight:500;text-transform:uppercase;letter-spacing:.08em;color:var(--ink3);margin-bottom:6px}
+
+footer{margin-top:32px;padding-top:20px;border-top:1px solid var(--border);font-size:12px;color:var(--ink3);line-height:1.7}
+footer a{color:var(--ink2);text-decoration:underline}
+
 @media(max-width:680px){
   h1{font-size:22px}
-  .grid2{grid-template-columns:1fr}
   .savings-grid{grid-template-columns:1fr 1fr}
 }
 </style>
@@ -106,9 +92,21 @@ section{margin-bottom:20px}
 
 <header>
   <div class="eyebrow">Toronto &middot; 2024</div>
-  <h1>Toronto Income & Housing Affordability Analysis</h1>
-  <p class="sub">Income distribution by age cohort vs. Toronto housing market thresholds. Data sourced from StatCan T1FF and CMHC affordability tables. By Eric Liu</p>
+  <h1>Toronto Income &amp; Housing Affordability Analysis</h1>
+  <p class="sub">Income distribution by age cohort vs. Toronto housing market thresholds. Data sourced from StatCan T1FF and CMHC affordability tables. By Eric Liu.</p>
 </header>
+
+<!-- Ad unit 1: Below header (leaderboard / responsive) -->
+<div class="ad-unit">
+  <div class="ad-label">Advertisement</div>
+  <ins class="adsbygoogle"
+       style="display:block"
+       data-ad-client="ca-pub-5619117265675077"
+       data-ad-slot="SLOT_ID_1"
+       data-ad-format="auto"
+       data-full-width-responsive="true"></ins>
+  <script>(adsbygoogle=window.adsbygoogle||[]).push({})</script>
+</div>
 
 <!-- Age selector -->
 <div style="display:flex;align-items:center;gap:12px;margin-bottom:20px">
@@ -119,7 +117,7 @@ section{margin-bottom:20px}
 
 <!-- Affordability banner -->
 <div id="affordBanner" class="banner warn">
-  <div class="banner-icon">⚠</div>
+  <div class="banner-icon">&#9888;</div>
   <div class="banner-text">
     <strong id="bannerTitle"></strong>
     <p id="bannerBody"></p>
@@ -145,20 +143,29 @@ section{margin-bottom:20px}
 
 <div class="divider"></div>
 
+<!-- Ad unit 2: Mid-page (in-content, between sections) -->
+<div class="ad-unit">
+  <div class="ad-label">Advertisement</div>
+  <ins class="adsbygoogle"
+       style="display:block;text-align:center"
+       data-ad-layout="in-article"
+       data-ad-format="fluid"
+       data-ad-client="ca-pub-5619117265675077"
+       data-ad-slot="SLOT_ID_2"></ins>
+  <script>(adsbygoogle=window.adsbygoogle||[]).push({})</script>
+</div>
+
 <!-- Housing affordability -->
 <section>
   <div class="section-title">Housing affordability</div>
   <div class="section-sub">Qualifying income thresholds vs. income percentiles for selected cohort</div>
-
   <div class="tabs" id="housingTabs">
     <button class="tab active" data-h="all">All dwellings</button>
     <button class="tab" data-h="condo">Condo</button>
     <button class="tab" data-h="noncondo">Other dwellings</button>
   </div>
-
   <div class="grid4" id="housingCards"></div>
   <div class="chart-wrap"><canvas id="housingChart"></canvas></div>
-
   <div style="margin-top:20px">
     <div class="tabs" id="viewTabs">
       <button class="tab active" data-view="annual">Annual income view</button>
@@ -174,13 +181,11 @@ section{margin-bottom:20px}
 <section>
   <div class="section-title">What can I afford?</div>
   <div class="section-sub">Enter your income to see where you land in the distribution and what you can qualify for</div>
-
   <div class="slider-row">
     <label>My annual income</label>
     <input type="range" id="myIncome" min="30000" max="600000" step="5000" value="100000"/>
     <span class="slider-val" id="myIncomeVal">$100,000</span>
   </div>
-
   <div id="affordResult" class="grid4"></div>
 </section>
 
@@ -201,6 +206,23 @@ section{margin-bottom:20px}
   <div id="incomeTable"></div>
 </section>
 
+<!-- Ad unit 3: Bottom of page (anchor / responsive) -->
+<div class="ad-unit" style="margin-top:32px">
+  <div class="ad-label">Advertisement</div>
+  <ins class="adsbygoogle"
+       style="display:block"
+       data-ad-client="ca-pub-5619117265675077"
+       data-ad-slot="SLOT_ID_3"
+       data-ad-format="auto"
+       data-full-width-responsive="true"></ins>
+  <script>(adsbygoogle=window.adsbygoogle||[]).push({})</script>
+</div>
+
+<footer>
+  <p>Income data are illustrative estimates derived from StatCan T1FF microdata summaries. Housing values are based on CMHC Toronto affordability data.</p>
+  <p style="margin-top:6px">&copy; 2024 Eric Liu &middot; For informational purposes only &middot; Not financial advice</p>
+</footer>
+
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.6/dist/chart.umd.js"></script>
@@ -214,53 +236,39 @@ const DATA=[
  {age:"65–69",p10:6200,p25:21800,p50:39200,p75:68500,p90:106000,p95:158000,p97:215000,p99:340000,top1:480000},
  {age:"70+",p10:4200,p25:18200,p50:32800,p75:57600,p90:91000,p95:135000,p97:182000,p99:295000,top1:430000}
 ];
-
 const HOUSING={
  all:{label:"All dwellings",price:1096710,down:84671,months:101.1,mortgage:5843,mortgagePct:69.8,qualifying:246584,medianIncome:100505,ownership:65},
  condo:{label:"Condo",price:651350,down:40135,months:47.9,mortgage:3470,mortgagePct:41.4,qualifying:148923,medianIncome:100505,ownership:16,rent:2905},
  noncondo:{label:"Other dwellings",price:1127744,down:87774,months:104.8,mortgage:6008,mortgagePct:71.7,qualifying:253390,medianIncome:100505,ownership:49}
 };
-
-const CORAL='#c94a2b',TEAL='#1a7a5e',INK='#1a1915',INK3='#9b9a92';
+const CORAL='#c94a2b',TEAL='#1a7a5e',INK3='#9b9a92';
 const money=n=>'$'+Math.round(n).toLocaleString();
 const pct=n=>n.toFixed(1)+'%';
-
 let incomeView='upper',housingView='all',tableView='annual',selected='35–44',myIncome=100000;
 let incomeChart,housingChart;
 
-// Percentile rank helper
 function pctRankFor(age,income){
   const d=DATA.find(x=>x.age===age);
-  const pts=[
-    {p:10,v:d.p10},{p:25,v:d.p25},{p:50,v:d.p50},{p:75,v:d.p75},
-    {p:90,v:d.p90},{p:95,v:d.p95},{p:97,v:d.p97},{p:99,v:d.p99},{p:99.9,v:d.top1}
-  ];
+  const pts=[{p:10,v:d.p10},{p:25,v:d.p25},{p:50,v:d.p50},{p:75,v:d.p75},{p:90,v:d.p90},{p:95,v:d.p95},{p:97,v:d.p97},{p:99,v:d.p99},{p:99.9,v:d.top1}];
   if(income<=pts[0].v)return '<10th';
   if(income>=pts[pts.length-1].v)return 'top 0.1%';
   for(let i=1;i<pts.length;i++){
     if(income<=pts[i].v){
       const frac=(income-pts[i-1].v)/(pts[i].v-pts[i-1].v);
-      const rank=pts[i-1].p+frac*(pts[i].p-pts[i-1].p);
-      return 'P'+Math.round(rank);
+      return 'P'+Math.round(pts[i-1].p+frac*(pts[i].p-pts[i-1].p));
     }
   }
   return 'P99+';
 }
-
-// Fraction of cohort that can afford
 function affordFrac(age,qualifying){
   const d=DATA.find(x=>x.age===age);
-  const pts=[
-    {p:0,v:d.p10},{p:25,v:d.p25},{p:50,v:d.p50},{p:75,v:d.p75},
-    {p:90,v:d.p90},{p:95,v:d.p95},{p:97,v:d.p97},{p:99,v:d.p99},{p:100,v:d.top1}
-  ];
+  const pts=[{p:0,v:d.p10},{p:25,v:d.p25},{p:50,v:d.p50},{p:75,v:d.p75},{p:90,v:d.p90},{p:95,v:d.p95},{p:97,v:d.p97},{p:99,v:d.p99},{p:100,v:d.top1}];
   if(qualifying<=pts[0].v)return 100;
   if(qualifying>=pts[pts.length-1].v)return 0.1;
   for(let i=1;i<pts.length;i++){
     if(qualifying<=pts[i].v){
       const frac=(qualifying-pts[i-1].v)/(pts[i].v-pts[i-1].v);
-      const rank=pts[i-1].p+frac*(pts[i].p-pts[i-1].p);
-      return Math.round((100-rank)*10)/10;
+      return Math.round((100-(pts[i-1].p+frac*(pts[i].p-pts[i-1].p)))*10)/10;
     }
   }
   return 1;
@@ -268,14 +276,8 @@ function affordFrac(age,qualifying){
 
 function init(){
   const sel=document.getElementById('ageSelect');
-  DATA.forEach(d=>{
-    const o=document.createElement('option');
-    o.value=d.age;o.textContent=d.age;
-    if(d.age===selected)o.selected=true;
-    sel.appendChild(o);
-  });
+  DATA.forEach(d=>{const o=document.createElement('option');o.value=d.age;o.textContent=d.age;if(d.age===selected)o.selected=true;sel.appendChild(o)});
   sel.onchange=e=>{selected=e.target.value;renderAll()};
-
   document.querySelectorAll('#incomeTabs .tab').forEach(b=>b.onclick=()=>{
     incomeView=b.dataset.v;
     document.querySelectorAll('#incomeTabs .tab').forEach(x=>x.classList.toggle('active',x===b));
@@ -291,23 +293,12 @@ function init(){
     document.querySelectorAll('#viewTabs .tab').forEach(x=>x.classList.toggle('active',x===b));
     renderHousingTable();
   });
-
   const inc=document.getElementById('myIncome');
   inc.oninput=()=>{myIncome=+inc.value;document.getElementById('myIncomeVal').textContent=money(myIncome);renderAfford();renderSavings()};
-
   renderAll();
 }
 
-function renderAll(){
-  renderBanner();
-  renderSummary();
-  drawIncome();
-  drawHousing();
-  renderHousingTable();
-  renderIncomeTable();
-  renderAfford();
-  renderSavings();
-}
+function renderAll(){renderBanner();renderSummary();drawIncome();drawHousing();renderHousingTable();renderIncomeTable();renderAfford();renderSavings()}
 
 function renderBanner(){
   const h=HOUSING[housingView];
@@ -316,18 +307,17 @@ function renderBanner(){
   const title=document.getElementById('bannerTitle');
   const body=document.getElementById('bannerBody');
   const badge=document.getElementById('affordBadge');
-
   if(frac<15){
     banner.className='banner warn';
     title.textContent=`Only the top ${frac}% of ${selected}-year-olds can qualify for a ${h.label.toLowerCase()} in Toronto`;
     body.textContent=`A qualifying income of ${money(h.qualifying)}/yr is needed — far above the median of ${money(h.medianIncome)}.`;
     badge.textContent=`Top ${frac}% only`;badge.className='pill coral';
-  } else if(frac<35){
+  }else if(frac<35){
     banner.className='banner warn';
     title.textContent=`Roughly the top ${frac}% of ${selected}-year-olds can qualify`;
     body.textContent=`Qualifying income: ${money(h.qualifying)}/yr vs. median ${money(h.medianIncome)}.`;
     badge.textContent=`Top ${frac}%`;badge.className='pill amber';
-  } else {
+  }else{
     banner.className='banner ok';
     title.textContent=`About ${frac}% of ${selected}-year-olds meet the income threshold`;
     body.textContent=`Qualifying income: ${money(h.qualifying)}/yr — within reach for upper-middle earners in this cohort.`;
@@ -336,81 +326,49 @@ function renderBanner(){
 }
 
 function renderSummary(){
-  const h=HOUSING[housingView];
-  const d=DATA.find(x=>x.age===selected);
-  const frac=affordFrac(selected,h.qualifying);
+  const h=HOUSING[housingView];const d=DATA.find(x=>x.age===selected);const frac=affordFrac(selected,h.qualifying);
   document.getElementById('summaryCards').innerHTML=`
     <div class="card-sm"><div class="stat-label">Median price</div><div class="stat-val mono">${money(h.price)}</div></div>
     <div class="card-sm"><div class="stat-label">Qualifying income</div><div class="stat-val coral mono">${money(h.qualifying)}</div></div>
     <div class="card-sm"><div class="stat-label">Cohort P90 income</div><div class="stat-val mono">${money(d.p90)}</div></div>
     <div class="card-sm"><div class="stat-label">Cohort P99 income</div><div class="stat-val teal mono">${money(d.p99)}</div></div>
     <div class="card-sm"><div class="stat-label">Monthly mortgage</div><div class="stat-val mono">${money(h.mortgage)}/mo</div></div>
-    <div class="card-sm"><div class="stat-label">% of cohort qualifying</div><div class="stat-val ${frac<20?'coral':'teal'} mono">${frac}%</div></div>
-  `;
+    <div class="card-sm"><div class="stat-label">% of cohort qualifying</div><div class="stat-val ${frac<20?'coral':'teal'} mono">${frac}%</div></div>`;
 }
 
-Chart.defaults.font.family="'DM Sans',sans-serif";
-Chart.defaults.color=INK3;
+Chart.defaults.font.family="'DM Sans',sans-serif";Chart.defaults.color=INK3;
 
 function drawIncome(){
   if(incomeChart)incomeChart.destroy();
-  const labels=DATA.map(d=>d.age);
-  let datasets;
+  const labels=DATA.map(d=>d.age);let datasets;
   const palette=['#bfa88a','#9b8a6e','#c94a2b','#1a7a5e','#1a1915'];
-
   if(incomeView==='upper'){
-    const keys=['p90','p95','p97','p99','top1'];
-    datasets=keys.map((k,i)=>({label:k.toUpperCase(),data:DATA.map(d=>d[k]),tension:.3,borderWidth:k==='p99'?2.5:1.5,pointRadius:k==='p99'?4:2.5,borderColor:palette[i],backgroundColor:palette[i]+'22',fill:false}));
+    datasets=['p90','p95','p97','p99','top1'].map((k,i)=>({label:k.toUpperCase(),data:DATA.map(d=>d[k]),tension:.3,borderWidth:k==='p99'?2.5:1.5,pointRadius:k==='p99'?4:2.5,borderColor:palette[i],fill:false}));
   }else if(incomeView==='gap'){
     datasets=[{label:'P99 minus P90 gap',data:DATA.map(d=>d.p99-d.p90),backgroundColor:DATA.map(d=>d.age===selected?CORAL:TEAL+'66'),borderRadius:4,type:'bar'}];
   }else{
-    const keys=['p10','p25','p50','p75','p90','p95','p99'];
     const cols=['#d4cfc6','#c0b89e','#9b8a6e','#7a6e57','#bfa88a','#c94a2b','#1a1915'];
-    datasets=keys.map((k,i)=>({label:k.toUpperCase(),data:DATA.map(d=>d[k]),tension:.3,borderWidth:k==='p50'?2.5:1.5,pointRadius:2,borderColor:cols[i],fill:false}));
+    datasets=['p10','p25','p50','p75','p90','p95','p99'].map((k,i)=>({label:k.toUpperCase(),data:DATA.map(d=>d[k]),tension:.3,borderWidth:k==='p50'?2.5:1.5,pointRadius:2,borderColor:cols[i],fill:false}));
   }
-
-  incomeChart=new Chart(document.getElementById('incomeChart'),{
-    type:'line',data:{labels,datasets},
-    options:{responsive:true,maintainAspectRatio:false,interaction:{mode:'index',intersect:false},
-      plugins:{legend:{labels:{boxWidth:8,usePointStyle:true,font:{size:11}}},tooltip:{callbacks:{label:c=>`${c.dataset.label}: ${money(c.raw)}`},padding:10,cornerRadius:8}},
-      scales:{x:{grid:{display:false},border:{display:false}},y:{ticks:{callback:v=>money(v),font:{size:11}},grid:{color:'rgba(26,25,21,0.06)'},border:{display:false}}}
-    }
-  });
+  incomeChart=new Chart(document.getElementById('incomeChart'),{type:'line',data:{labels,datasets},options:{responsive:true,maintainAspectRatio:false,interaction:{mode:'index',intersect:false},plugins:{legend:{labels:{boxWidth:8,usePointStyle:true,font:{size:11}}},tooltip:{callbacks:{label:c=>`${c.dataset.label}: ${money(c.raw)}`},padding:10,cornerRadius:8}},scales:{x:{grid:{display:false},border:{display:false}},y:{ticks:{callback:v=>money(v),font:{size:11}},grid:{color:'rgba(26,25,21,0.06)'},border:{display:false}}}}});
 }
 
 function drawHousing(){
   if(housingChart)housingChart.destroy();
-  const h=HOUSING[housingView];
-  const d=DATA.find(x=>x.age===selected)||DATA[2];
+  const h=HOUSING[housingView];const d=DATA.find(x=>x.age===selected)||DATA[2];
   const vals=[d.p50,d.p75,d.p90,d.p95,d.p99,h.qualifying];
   const colors=vals.map((v,i)=>i===5?CORAL:v>=h.qualifying?TEAL:TEAL+'88');
-  const labels=['P50','P75','P90','P95','P99','Qualifying\nincome'];
-
-  // overlay rent line if condo
   const datasets=[{label:'Income / threshold',data:vals,backgroundColor:colors,borderRadius:6}];
   if(housingView==='condo'&&h.rent){
-    const annualRent=h.rent*12;
-    datasets.push({label:'Annual rent cost',data:Array(6).fill(annualRent),type:'line',borderColor:'#b8640a',borderWidth:2,borderDash:[5,3],pointRadius:0,tension:0,fill:false});
+    datasets.push({label:'Annual rent cost',data:Array(6).fill(h.rent*12),type:'line',borderColor:'#b8640a',borderWidth:2,borderDash:[5,3],pointRadius:0,tension:0,fill:false});
   }
-
-  housingChart=new Chart(document.getElementById('housingChart'),{
-    type:'bar',data:{labels,datasets},
-    options:{responsive:true,maintainAspectRatio:false,
-      plugins:{
-        legend:{display:housingView==='condo',labels:{boxWidth:8,usePointStyle:true,font:{size:11}}},
-        tooltip:{callbacks:{label:c=>money(c.raw)},padding:10,cornerRadius:8},
-        annotation:{} // placeholder
-      },
-      scales:{x:{grid:{display:false},border:{display:false},ticks:{font:{size:11}}},
-              y:{ticks:{callback:v=>money(v),font:{size:11}},grid:{color:'rgba(26,25,21,0.06)'},border:{display:false}}}
-    }
-  });
+  housingChart=new Chart(document.getElementById('housingChart'),{type:'bar',data:{labels:['P50','P75','P90','P95','P99','Qualifying\nincome'],datasets},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:housingView==='condo',labels:{boxWidth:8,usePointStyle:true,font:{size:11}}},tooltip:{callbacks:{label:c=>money(c.raw)},padding:10,cornerRadius:8}},scales:{x:{grid:{display:false},border:{display:false},ticks:{font:{size:11}}},y:{ticks:{callback:v=>money(v),font:{size:11}},grid:{color:'rgba(26,25,21,0.06)'},border:{display:false}}}}});
 }
 
 function renderHousingTable(){
   const h=HOUSING[housingView];
   if(tableView==='monthly'){
-    const mo=income=>money(income/12);
+    const mo=n=>money(n/12);
     document.getElementById('housingTable').innerHTML=`
     <div style="font-size:11px;color:var(--ink3);margin-bottom:10px;font-style:italic">Monthly cashflow view — income ÷ 12</div>
     <table><thead><tr><th>Metric</th><th>Annual</th><th>Monthly equiv.</th></tr></thead><tbody>
@@ -421,7 +379,7 @@ function renderHousingTable(){
     ${h.rent?`<tr><td>Avg. monthly rent</td><td>${money(h.rent*12)}</td><td class="hlt">${money(h.rent)}</td></tr>`:''}
     ${h.rent?`<tr><td>Rent vs. mortgage delta</td><td>—</td><td class="${h.rent<h.mortgage?'hlt':'hl'}">${money(h.mortgage-h.rent)}/mo more to own</td></tr>`:''}
     </tbody></table>`;
-  } else {
+  }else{
     document.getElementById('housingTable').innerHTML=`
     <table><thead><tr><th>Metric</th><th>Value</th></tr></thead><tbody>
     <tr><td>Home price</td><td>${money(h.price)}</td></tr>
@@ -437,45 +395,35 @@ function renderHousingTable(){
 }
 
 function renderAfford(){
-  const d=DATA.find(x=>x.age===selected)||DATA[2];
   const rank=pctRankFor(selected,myIncome);
   const results=Object.entries(HOUSING).map(([k,h])=>{
     const can=myIncome>=h.qualifying;
-    return `<div class="card-sm">
-      <div class="stat-label">${h.label}</div>
-      <div style="font-size:18px;font-family:'DM Mono',monospace;font-weight:500;color:${can?'var(--teal)':'var(--coral)'};margin:6px 0">${can?'✓ Qualify':'✗ Below'}</div>
-      <div style="font-size:11px;color:var(--ink2)">Need ${money(h.qualifying)}</div>
-      ${can?`<div style="font-size:11px;color:var(--teal);margin-top:2px">+${money(myIncome-h.qualifying)} above threshold</div>`:`<div style="font-size:11px;color:var(--coral);margin-top:2px">${money(h.qualifying-myIncome)} shortfall</div>`}
-    </div>`;
+    return `<div class="card-sm"><div class="stat-label">${h.label}</div>
+    <div style="font-size:18px;font-family:'DM Mono',monospace;font-weight:500;color:${can?'var(--teal)':'var(--coral)'};margin:6px 0">${can?'✓ Qualify':'✗ Below'}</div>
+    <div style="font-size:11px;color:var(--ink2)">Need ${money(h.qualifying)}</div>
+    <div style="font-size:11px;color:${can?'var(--teal)':'var(--coral)'};margin-top:2px">${can?'+'+money(myIncome-h.qualifying)+' above':money(h.qualifying-myIncome)+' shortfall'}</div></div>`;
   }).join('');
   document.getElementById('affordResult').innerHTML=`
-    <div class="card-sm"><div class="stat-label">Your percentile (${selected})</div><div style="font-size:18px;font-family:'DM Mono',monospace;font-weight:500;margin:6px 0">${rank}</div><div style="font-size:11px;color:var(--ink2)">${money(myIncome)}/yr</div></div>
-    ${results}`;
+    <div class="card-sm"><div class="stat-label">Your percentile (${selected})</div><div style="font-size:18px;font-family:'DM Mono',monospace;font-weight:500;margin:6px 0">${rank}</div><div style="font-size:11px;color:var(--ink2)">${money(myIncome)}/yr</div></div>${results}`;
 }
 
 function renderSavings(){
   const h=HOUSING[housingView];
-  const rates=[{r:.1,label:'Save 10%'},{r:.2,label:'Save 20%'},{r:.3,label:'Save 30%'}];
-  document.getElementById('savingsGrid').innerHTML=rates.map(({r,label})=>{
-    const annualSaving=myIncome*r;
-    const years=annualSaving>0?h.down/annualSaving:Infinity;
-    const display=years>99?'99+ yrs':(years<1?'<1 yr':years.toFixed(1)+' yrs');
-    return `<div class="savings-cell">
-      <div class="savings-rate">${label} — ${money(annualSaving)}/yr</div>
-      <div class="savings-years" style="color:${years>15?'var(--coral)':years>8?'var(--amber)':'var(--teal)'}">${display}</div>
-      <div class="savings-mo">to save ${money(h.down)} downpayment</div>
-    </div>`;
+  document.getElementById('savingsGrid').innerHTML=[{r:.1,label:'Save 10%'},{r:.2,label:'Save 20%'},{r:.3,label:'Save 30%'}].map(({r,label})=>{
+    const ann=myIncome*r;const yrs=ann>0?h.down/ann:Infinity;
+    const disp=yrs>99?'99+ yrs':yrs<1?'<1 yr':yrs.toFixed(1)+' yrs';
+    return `<div class="savings-cell"><div class="savings-rate">${label} — ${money(ann)}/yr</div>
+    <div class="savings-years" style="color:${yrs>15?'var(--coral)':yrs>8?'var(--amber)':'var(--teal)'}">${disp}</div>
+    <div class="savings-mo">to save ${money(h.down)} downpayment</div></div>`;
   }).join('');
 }
 
 function renderIncomeTable(){
   document.getElementById('incomeTable').innerHTML=`<table><thead><tr>
     <th>Age</th><th>P50</th><th>P75</th><th>P90</th><th>P95</th><th>P97</th><th>P99</th><th>Top 1%</th>
-  </tr></thead><tbody>${DATA.map(d=>`<tr>
-    <td>${d.age}</td><td>${money(d.p50)}</td><td>${money(d.p75)}</td>
-    <td class="hl">${money(d.p90)}</td><td>${money(d.p95)}</td>
-    <td>${money(d.p97)}</td><td class="hlt">${money(d.p99)}</td><td>${money(d.top1)}</td>
-  </tr>`).join('')}</tbody></table>`;
+  </tr></thead><tbody>${DATA.map(d=>`<tr><td>${d.age}</td><td>${money(d.p50)}</td><td>${money(d.p75)}</td>
+    <td class="hl">${money(d.p90)}</td><td>${money(d.p95)}</td><td>${money(d.p97)}</td>
+    <td class="hlt">${money(d.p99)}</td><td>${money(d.top1)}</td></tr>`).join('')}</tbody></table>`;
 }
 
 init();
