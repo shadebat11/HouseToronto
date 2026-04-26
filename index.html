@@ -3,149 +3,216 @@
 <head>
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1"/>
-<meta name="description" content="See how your income compares to Toronto housing thresholds. Explore income distribution by age using StatCan and CMHC data from FY2024. Free affordability tool."/>
-<meta name="google-adsense-account" content="ca-pub-5619117265675077">
-<title>Toronto Income & Housing Affordability</title>
+<title>Toronto Housing Affordability Calculator | Income Percentiles, Mortgage Stress Test &amp; Rent vs. Buy (2024)</title>
+<meta name="description" content="Free Toronto housing affordability calculator. See your income percentile by age, run the mortgage stress test, compare rent vs. buy, and explore prices across the GTA. StatCan and CMHC data, FY2024."/>
+<link rel="canonical" href="https://www.torontoaffordability.com/"/>
+<meta name="robots" content="index,follow"/>
+<meta name="author" content="Eric Liu"/>
+<meta name="theme-color" content="#f5f4f0"/>
 
-<!-- Google FAQ Schema -->
+<!-- Open Graph -->
+<meta property="og:type" content="website"/>
+<meta property="og:url" content="https://www.torontoaffordability.com/"/>
+<meta property="og:title" content="Toronto Housing Affordability Calculator"/>
+<meta property="og:description" content="Free tool: see where your income lands by age, run the mortgage stress test, and compare rent vs. buy across the GTA."/>
+<meta property="og:site_name" content="Toronto Affordability"/>
+<meta property="og:locale" content="en_CA"/>
+
+<!-- Twitter card -->
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:title" content="Toronto Housing Affordability Calculator"/>
+<meta name="twitter:description" content="See your income percentile, run the stress test, and compare rent vs. buy across the GTA."/>
+
+<meta name="google-adsense-account" content="ca-pub-5619117265675077"/>
+
+<!-- FAQ Schema -->
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
   "@type": "FAQPage",
   "mainEntity": [
-    {
-      "@type": "Question",
-      "name": "What income do you need to buy a house in Toronto?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "To qualify for an average Toronto home, you typically need an annual income well above the median. Based on CMHC affordability data, most detached homes require a qualifying income of $150,000–$200,000+, depending on your downpayment and mortgage rate."
-      }
-    },
-    {
-      "@type": "Question",
-      "name": "Can I afford a condo in Toronto on an average salary?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "Condos are the most accessible entry point in Toronto. Depending on the price and your downpayment, a qualifying income of roughly $80,000–$120,000 may be sufficient for a condo purchase as of 2024."
-      }
-    },
-    {
-      "@type": "Question",
-      "name": "How does Toronto housing affordability compare across age groups?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "Income varies significantly by age cohort in Toronto. Younger earners (20s–30s) tend to be concentrated in lower percentiles, making homeownership harder, while those in their 40s–50s are more likely to meet qualifying income thresholds based on StatCan T1FF data."
-      }
-    },
-    {
-      "@type": "Question",
-      "name": "What percentile is my income in Toronto?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "You can use the Toronto Income & Housing Affordability tool at torontoaffordability.com to enter your annual income and instantly see which income percentile you fall into for your age cohort, based on Statistics Canada data."
-      }
-    },
-    {
-      "@type": "Question",
-      "name": "How long does it take to save a downpayment in Toronto?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "The time to save a downpayment in Toronto depends on your income and savings rate. The affordability calculator on this site lets you model different savings rates and see how many years it would take to reach a downpayment based on your income."
-      }
-    }
+    {"@type":"Question","name":"What income do you need to buy a house in Toronto?","acceptedAnswer":{"@type":"Answer","text":"To qualify for an average Toronto home, you typically need an annual income well above the median. Based on CMHC affordability data, most detached homes require a qualifying income of $150,000–$200,000+, depending on your downpayment and mortgage rate."}},
+    {"@type":"Question","name":"Can I afford a condo in Toronto on an average salary?","acceptedAnswer":{"@type":"Answer","text":"Condos are the most accessible entry point in Toronto. Depending on the price and your downpayment, a qualifying income of roughly $80,000–$120,000 may be sufficient for a condo purchase as of 2024."}},
+    {"@type":"Question","name":"How does Toronto housing affordability compare across age groups?","acceptedAnswer":{"@type":"Answer","text":"Income varies significantly by age cohort in Toronto. Younger earners (20s–30s) tend to be concentrated in lower percentiles, making homeownership harder, while those in their 40s–50s are more likely to meet qualifying income thresholds based on StatCan T1FF data."}},
+    {"@type":"Question","name":"What percentile is my income in Toronto?","acceptedAnswer":{"@type":"Answer","text":"You can use the Toronto Income & Housing Affordability tool at torontoaffordability.com to enter your annual income and instantly see which income percentile you fall into for your age cohort, based on Statistics Canada data."}},
+    {"@type":"Question","name":"How long does it take to save a downpayment in Toronto?","acceptedAnswer":{"@type":"Answer","text":"The time to save a downpayment in Toronto depends on your income and savings rate. The affordability calculator on this site lets you model different savings rates and see how many years it would take to reach a downpayment based on your income."}},
+    {"@type":"Question","name":"How does the Canadian mortgage stress test work?","acceptedAnswer":{"@type":"Answer","text":"Under OSFI's B-20 rules, lenders must qualify borrowers at the higher of (a) the contract mortgage rate plus 2 percentage points or (b) 5.25%. The stress test calculator on this page shows your qualifying payment and the income required to pass."}}
   ]
 }
 </script>
-  
+
+<!-- Article Schema -->
+<script type="application/ld+json">
+{
+  "@context":"https://schema.org",
+  "@type":"Article",
+  "headline":"Toronto Housing Affordability Calculator: Income Percentiles, Mortgage Stress Test, Rent vs. Buy",
+  "description":"Interactive tool comparing Toronto income distributions by age against housing affordability thresholds, with mortgage stress test and rent-vs-buy calculators.",
+  "datePublished":"2024-09-01",
+  "dateModified":"2026-04-26",
+  "author":{"@type":"Person","name":"Eric Liu"},
+  "publisher":{"@type":"Organization","name":"Toronto Affordability","url":"https://www.torontoaffordability.com/"},
+  "mainEntityOfPage":"https://www.torontoaffordability.com/"
+}
+</script>
+
+<!-- Organization Schema -->
+<script type="application/ld+json">
+{
+  "@context":"https://schema.org",
+  "@type":"Organization",
+  "name":"Toronto Affordability",
+  "url":"https://www.torontoaffordability.com/",
+  "founder":{"@type":"Person","name":"Eric Liu"}
+}
+</script>
+
 <!-- Google AdSense -->
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5619117265675077" crossorigin="anonymous"></script>
 
 <style>
-@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@400;500&display=swap');
+@import url('https://rsms.me/inter/inter.css');
 *{box-sizing:border-box;margin:0;padding:0}
 :root{
-  --bg:#f5f4f0;--surface:#ffffff;--surface2:#f0efe9;
-  --ink:#1a1915;--ink2:#6b6a62;--ink3:#9b9a92;
+  --bg:#f5efe1;--surface:#ffffff;--surface2:#fafafc;
+  --hero-bg:#143838;
+  --ink:#1d1d1f;--ink2:#6e6e73;--ink3:#86868b;
   --coral:#c94a2b;--coral-bg:#fdf0ec;--coral-border:#f3c5b5;
-  --teal:#1a7a5e;--teal-bg:#e8f6f1;--teal-border:#9fd8c6;
+  --teal:#0a8054;--teal-bg:#e8f6f1;--teal-border:#9fd8c6;
   --amber:#b8640a;--amber-bg:#fdf4e3;
-  --border:rgba(26,25,21,0.1);--border2:rgba(26,25,21,0.06);--mono:'DM Mono',monospace;
-  --radius:12px;--radius-sm:8px;
+  --border:rgba(0,0,0,0.08);--border2:rgba(0,0,0,0.04);
+  --action:#0066cc;
+  --mono:'SF Mono','Menlo',ui-monospace,monospace;
+  --radius:18px;--radius-sm:8px;--radius-pill:980px;
+  --press-scale:.97;
 }
-body{font-family: 'DM Sans', sans-serif;background:var(--bg);color:var(--ink);font-size:14px;line-height:1.6}
-.mono{font-family:'DM Mono',monospace}
-  
+body{font-family:'Inter','SF Pro Text',system-ui,-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,Arial,sans-serif;background:var(--bg);color:var(--ink);font-size:15px;line-height:1.5;letter-spacing:-0.01em;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}
+.mono{font-family:var(--mono);font-feature-settings:"tnum"}
+
+/* Skip link for accessibility */
+.skip-link{position:absolute;left:-9999px;top:auto;width:1px;height:1px;overflow:hidden;z-index:999}
+.skip-link:focus{position:fixed;left:8px;top:8px;width:auto;height:auto;background:var(--ink);color:#fff;padding:8px 14px;border-radius:6px;font-size:13px}
+
 .shell{max-width:1100px;margin:0 auto;padding:32px 24px 56px}
-header{margin-bottom:24px;padding-bottom:24px;border-bottom:1px solid var(--border)}
-.eyebrow{font-size:11px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:var(--ink3);margin-bottom:10px}
-h1{font-size:28px;font-weight:300;letter-spacing:-.03em;line-height:1.2;color:var(--ink)}
+header.site{background:var(--hero-bg);color:#fff;margin:-32px calc(50% - 50vw) 32px;padding:72px calc(50vw - 50% + 24px) 60px;border:none;border-radius:0}
+header.site h1{color:#fff}
+header.site .eyebrow{color:rgba(255,255,255,0.55)}
+header.site .sub{color:rgba(255,255,255,0.78);max-width:720px}
+header.site .updated{color:rgba(255,255,255,0.50)}
+html,body{overflow-x:clip}
+
+/* Item 3 — Scroll-triggered fade-up on sections */
+.fade-section{opacity:0;transform:translateY(24px);transition:opacity .7s cubic-bezier(.25,.1,.25,1),transform .7s cubic-bezier(.25,.1,.25,1);will-change:opacity,transform}
+.fade-section.is-visible{opacity:1;transform:translateY(0)}
+@media (prefers-reduced-motion:reduce){
+  .fade-section{opacity:1;transform:none;transition:none}
+}
+.eyebrow{font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--ink3);margin-bottom:10px}
+h1{font-size:34px;font-weight:600;letter-spacing:-0.022em;line-height:1.1;color:var(--ink)}
+h2{font-size:17px;font-weight:600;margin-bottom:4px;color:var(--ink);letter-spacing:-0.01em}
+h3{font-size:14px;font-weight:600;margin:14px 0 6px;color:var(--ink);letter-spacing:-0.01em}
 .sub{color:var(--ink2);font-size:13px;margin-top:8px;max-width:680px}
+.updated{font-family:var(--mono);font-size:11px;color:var(--ink3);margin-top:10px}
 .card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:20px 22px}
 .card-sm{background:var(--surface2);border-radius:var(--radius-sm);padding:14px 16px}
 .grid4{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;margin:20px 0}
-.stat-label{font-size:11px;font-weight:500;text-transform:uppercase;letter-spacing:.06em;color:var(--ink3);margin-bottom:6px}
-.stat-val{font-family:'DM Mono',monospace;font-size:22px;font-weight:500;color:var(--ink)}
+.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px;margin:14px 0}
+.stat-label{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:var(--ink3);margin-bottom:6px}
+.stat-val{font-family:'DM Mono',monospace;font-size:22px;font-weight:600;color:var(--ink)}
 .stat-val.coral{color:var(--coral)}
 .stat-val.teal{color:var(--teal)}
+.stat-val.amber{color:var(--amber)}
 .banner{border-radius:var(--radius);padding:18px 22px;margin:20px 0;display:flex;align-items:center;gap:16px}
 .banner.warn{background:var(--coral-bg);border:1px solid var(--coral-border)}
 .banner.ok{background:var(--teal-bg);border:1px solid var(--teal-border)}
 .banner-icon{font-size:22px;flex-shrink:0}
-.banner-text strong{font-weight:500;color:var(--ink)}
+.banner-text strong{font-weight:600;color:var(--ink)}
 .banner-text p{font-size:13px;color:var(--ink2);margin-top:2px}
 .tabs{display:flex;gap:4px;flex-wrap:wrap;margin-bottom:16px}
-.tab{border:1px solid var(--border);background:transparent;border-radius:var(--radius-sm);padding:7px 14px;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:500;color:var(--ink2);cursor:pointer;transition:all .15s}
-.tab.active{background:var(--ink);color:#fff;border-color:var(--ink)}
-.tab:hover:not(.active){background:var(--surface2)}
-select{border:1px solid var(--border);background:var(--surface);border-radius:var(--radius-sm);padding:7px 12px;font-family:'DM Sans',sans-serif;font-size:13px;color:var(--ink);cursor:pointer}
+.tab{border:1px solid var(--border);background:transparent;border-radius:var(--radius-sm);padding:7px 14px;font-family:inherit;font-size:13px;font-weight:600;color:var(--ink2);cursor:pointer;transition:transform 100ms ease-out, background .15s, color .15s, border-color .15s}
+.tab.active{background:var(--action);color:#fff;border-color:var(--action)}
+.tab:hover:not(.active){background:var(--surface2);color:var(--ink)}
+.tab:active{transform:scale(var(--press-scale))}
+select,input[type=number]{border:1px solid var(--border);background:var(--surface);border-radius:var(--radius-sm);padding:7px 12px;font-family:'DM Sans',sans-serif;font-size:13px;color:var(--ink);cursor:pointer}
+input[type=number]{font-family:var(--mono);width:120px}
 .chart-wrap{position:relative;height:360px;margin-top:16px}
 table{width:100%;border-collapse:collapse;font-size:13px}
-th{font-size:11px;font-weight:500;text-transform:uppercase;letter-spacing:.05em;color:var(--ink3);padding:8px 10px;border-bottom:1px solid var(--border);text-align:right}
+th{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.05em;color:var(--ink3);padding:8px 10px;border-bottom:1px solid var(--border);text-align:right}
 th:first-child{text-align:left}
 td{padding:9px 10px;border-bottom:1px solid var(--border2);text-align:right;font-family:'DM Mono',monospace;font-size:12.5px}
 td:first-child{text-align:left;font-family:'DM Sans',sans-serif;font-size:13px}
 tr:last-child td{border-bottom:none}
-.hl{color:var(--coral);font-weight:500}
-.hlt{color:var(--teal);font-weight:500}
-.slider-row{display:flex;align-items:center;gap:12px;margin:16px 0}
+.hl{color:var(--coral);font-weight:600}
+.hlt{color:var(--teal);font-weight:600}
+.slider-row{display:flex;align-items:center;gap:12px;margin:12px 0;flex-wrap:wrap}
 .slider-row label{font-size:13px;color:var(--ink2);white-space:nowrap;min-width:130px}
-input[type=range]{flex:1;accent-color:var(--ink)}
-.slider-val{font-family:'DM Mono',monospace;font-size:13px;font-weight:500;min-width:90px;text-align:right}
+input[type=range]{flex:1;min-width:140px;accent-color:var(--ink)}
+.slider-val{font-family:'DM Mono',monospace;font-size:13px;font-weight:600;min-width:90px;text-align:right}
 section{margin-bottom:20px}
-.section-title{font-size:15px;font-weight:500;margin-bottom:4px}
 .section-sub{font-size:12px;color:var(--ink2);margin-bottom:16px}
 .divider{height:1px;background:var(--border);margin:24px 0}
-.pill{display:inline-block;padding:3px 10px;border-radius:999px;font-size:11px;font-weight:500}
+.pill{display:inline-block;padding:3px 10px;border-radius:999px;font-size:11px;font-weight:600}
 .pill.coral{background:var(--coral-bg);color:var(--coral)}
 .pill.teal{background:var(--teal-bg);color:var(--teal)}
 .pill.amber{background:var(--amber-bg);color:var(--amber)}
 .savings-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:14px}
 .savings-cell{background:var(--surface2);border-radius:var(--radius-sm);padding:12px 14px}
-.savings-rate{font-size:11px;font-weight:500;text-transform:uppercase;letter-spacing:.05em;color:var(--ink3);margin-bottom:4px}
-.savings-years{font-family:'DM Mono',monospace;font-size:20px;font-weight:500}
+.savings-rate{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.05em;color:var(--ink3);margin-bottom:4px}
+.savings-years{font-family:'DM Mono',monospace;font-size:20px;font-weight:600}
 .savings-mo{font-size:11px;color:var(--ink2);margin-top:2px}
 
-.ad-unit{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:8px;margin:20px 0;text-align:center;overflow:hidden}
-.ad-label{font-size:10px;font-weight:500;text-transform:uppercase;letter-spacing:.08em;color:var(--ink3);margin-bottom:6px}
+.ad-unit{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:16px 12px;margin:24px 0;text-align:center;overflow:hidden;min-height:120px}
+.ad-label{font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:var(--ink3);margin-bottom:6px}
+
+/* Calculator cards */
+.calc-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:18px 22px;margin-top:14px}
+.calc-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:12px;margin-top:14px}
+.calc-result{background:var(--surface2);border-radius:var(--radius-sm);padding:14px 16px}
+.calc-result .stat-val{font-size:18px}
+.calc-pass{color:var(--teal);font-weight:600}
+.calc-fail{color:var(--coral);font-weight:600}
+.calc-input-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px}
+.calc-input-row label{display:flex;flex-direction:column;gap:4px;font-size:12px;color:var(--ink2)}
+.calc-input-row label span{color:var(--ink3);font-size:11px;text-transform:uppercase;letter-spacing:.05em;font-weight:600}
+
+/* Explainer / FAQ block */
+.explainer{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:24px 26px;margin-top:8px}
+.explainer h2{font-size:18px;font-weight:400;letter-spacing:-.01em;margin-bottom:8px}
+.explainer h3{font-size:14px;font-weight:600;margin:18px 0 6px;color:var(--ink)}
+.explainer p{font-size:13.5px;color:var(--ink);line-height:1.7;margin-bottom:10px}
+.explainer ul{padding-left:18px;margin:6px 0 12px}
+.explainer li{font-size:13.5px;color:var(--ink);line-height:1.7;margin-bottom:4px}
+.explainer details{border-top:1px solid var(--border2);padding:12px 0}
+.explainer details summary{cursor:pointer;font-weight:600;font-size:14px;color:var(--ink);list-style:none}
+.explainer details summary::-webkit-details-marker{display:none}
+.explainer details summary::before{content:'+';display:inline-block;width:16px;color:var(--coral);font-weight:400}
+.explainer details[open] summary::before{content:'–'}
+.explainer details p{margin-top:8px;color:var(--ink2)}
 
 footer{margin-top:32px;padding-top:20px;border-top:1px solid var(--border);font-size:12px;color:var(--ink3);line-height:1.7}
+footer a{color:var(--action);text-decoration:none}
 footer a{color:var(--ink2);text-decoration:underline}
-
+footer .foot-nav{display:flex;flex-wrap:wrap;gap:14px;margin-bottom:10px;font-size:12.5px}
+footer .foot-nav a{color:var(--ink);text-decoration:none}
+footer .foot-nav a:hover{text-decoration:underline}
+footer .disclaimer{margin-top:8px;font-style:italic}
 
 /* prop-type toggle */
 .prop-toggle{display:flex;gap:8px;margin-bottom:20px}
-.prop-btn{display:flex;align-items:center;gap:8px;padding:10px 18px;border:1.5px solid var(--border);border-radius:var(--radius-sm);background:transparent;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:500;color:var(--ink2);cursor:pointer;transition:all .15s}
+.prop-btn{display:flex;align-items:center;gap:8px;padding:10px 18px;border:1.5px solid var(--border);border-radius:var(--radius-sm);background:transparent;font-family:inherit;font-size:13px;font-weight:600;color:var(--ink2);cursor:pointer;transition:transform 100ms ease-out, background .15s, color .15s, border-color .15s}
 .prop-btn svg{width:18px;height:18px;flex-shrink:0;stroke:currentColor;fill:none;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
-.prop-btn.active{background:var(--ink);color:#fff;border-color:var(--ink)}
-.prop-btn:hover:not(.active){background:var(--surface2)}
+.prop-btn.active{background:var(--action);color:#fff;border-color:var(--action)}
+.prop-btn:hover:not(.active){background:var(--surface2);color:var(--ink)}
+.prop-btn:active{transform:scale(var(--press-scale))}
+
 /* neighbourhood map layout */
 .neigh-layout{display:grid;grid-template-columns:minmax(0,1fr) 310px;gap:20px;align-items:start;margin-top:16px}
-.map-wrap{background:linear-gradient(180deg,#fff 0%,#fbfaf6 100%);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;box-shadow:0 10px 30px rgba(26,25,21,.05)}
+.map-wrap{background:#ffffff;border:1px solid var(--border);border-radius:var(--radius);overflow:hidden}
 .map-head{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 14px 8px}
-.map-title{font-size:11px;font-weight:500;text-transform:uppercase;letter-spacing:.06em;color:var(--ink3)}
+.map-title{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:var(--ink3)}
 .map-chip{font-family:var(--mono);font-size:10px;color:var(--ink2);background:var(--surface2);border-radius:999px;padding:3px 8px;white-space:nowrap}
 #regionMap{width:100%;padding:2px 8px 10px}
-#regionMap svg{width:100%;height:auto;display:block;filter:drop-shadow(0 4px 12px rgba(26,25,21,.04))}
+#regionMap svg{width:100%;height:auto;display:block}
 #regionMap .rgn{fill:#e8e6df;stroke:#fff;stroke-width:1.8;cursor:pointer;transition:fill .18s,opacity .18s,filter .18s}
 #regionMap .rgn:hover{opacity:.88;filter:brightness(.98)}
 #regionMap .sub{fill:rgba(255,255,255,.18);stroke:#fff;stroke-width:1.15;cursor:pointer;transition:fill .18s,opacity .18s,filter .18s;opacity:.95}
@@ -156,21 +223,12 @@ footer a{color:var(--ink2);text-decoration:underline}
 #regionMap .sub.sel-house,#regionMap .rgn.sel-house{fill:#c94a2b;filter:drop-shadow(0 4px 8px rgba(26,25,21,.18))}
 #regionMap .sub.sel-condo{stroke:#0f4f3d;stroke-width:2.25}
 #regionMap .sub.sel-house{stroke:#8f321d;stroke-width:2.25}
-#regionMap .sub.sel-condo+text,
-#regionMap .sub.sel-house+text,
-
-#regionMap .sub.sel-condo+text+text,
-#regionMap .sub.sel-house+text+text,
-
-#regionMap .rgn.sel-condo+text,
-#regionMap .rgn.sel-house+text,
-#regionMap .rgn.sel-condo+text+text,
-#regionMap .rgn.sel-house+text+text{
-  fill:#1a1915;
-  font-weight:800;
-  font-size:13px;
+#regionMap .sub.sel-condo+text,#regionMap .sub.sel-house+text,
+#regionMap .sub.sel-condo+text+text,#regionMap .sub.sel-house+text+text,
+#regionMap .rgn.sel-condo+text,#regionMap .rgn.sel-house+text,
+#regionMap .rgn.sel-condo+text+text,#regionMap .rgn.sel-house+text+text{
+  fill:#1a1915;font-weight:800;font-size:13px;
 }
-  
 #regionMap text{font-family:'DM Sans',sans-serif;font-size:9px;fill:#6b6a62;pointer-events:none;text-anchor:middle}
 .map-legend{display:flex;gap:8px;flex-wrap:wrap;padding:0 14px 14px}
 .legend-item{display:flex;align-items:center;gap:6px;font-size:11px;color:var(--ink2)}
@@ -178,40 +236,60 @@ footer a{color:var(--ink2);text-decoration:underline}
 .legend-dot.condo{background:var(--teal)}
 .legend-dot.house{background:var(--coral)}
 .neigh-panel{display:flex;flex-direction:column;gap:12px;position:sticky;top:16px}
-.neigh-label{font-size:11px;font-weight:500;text-transform:uppercase;letter-spacing:.06em;color:var(--ink3);margin-bottom:4px}
+.neigh-label{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:var(--ink3);margin-bottom:4px}
 #neighSelect{width:100%}
 .neigh-cards{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 .neigh-card .stat-val{font-size:18px}
 .neigh-note{font-size:11px;color:var(--ink3);line-height:1.45}
 .region-rank{display:flex;align-items:center;justify-content:space-between;gap:10px;border-top:1px solid var(--border2);padding-top:9px;margin-top:9px;font-size:12px;color:var(--ink2)}
+
+/* Rate scenario bar */
+.rate-bar{background:rgba(255,255,255,0.78);border:1px solid var(--border);border-radius:var(--radius);padding:14px 18px;margin:8px 0 20px;display:flex;align-items:center;gap:16px;flex-wrap:wrap;position:sticky;top:8px;z-index:50;backdrop-filter:saturate(180%) blur(20px);-webkit-backdrop-filter:saturate(180%) blur(20px)}
+.rate-bar-label{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:var(--ink3)}
+.rate-bar input[type=range]{flex:1;min-width:200px}
+.rate-bar .rate-val{font-family:var(--mono);font-size:18px;font-weight:600;color:var(--coral);min-width:80px;text-align:right}
+
 @media(max-width:780px){.neigh-layout{grid-template-columns:1fr}.neigh-panel{position:static}#regionMap{padding:0 4px 8px}}
 @media(max-width:680px){h1{font-size:22px}.savings-grid{grid-template-columns:1fr 1fr}.neigh-cards{grid-template-columns:1fr}}
-
 </style>
 </head>
 <body>
+<a class="skip-link" href="#main">Skip to main content</a>
+<noscript><div style="background:#fdf0ec;border:1px solid #f3c5b5;padding:12px;text-align:center;font-size:13px;color:#1a1915">This calculator requires JavaScript to be enabled.</div></noscript>
+
 <div class="shell">
 
-<header>
-  <div class="eyebrow">Toronto &middot; 2024</div>
-  <h1>Toronto Income &amp; Housing Affordability Analysis</h1>
-  <p class="sub">See how your income compares to Toronto housing thresholds. Explore income distribution by age using StatCan and CMHC data from FY2024. Free affordability tool.</p>
+<header class="site">
+  <div class="eyebrow">Toronto &middot; Greater Toronto Area &middot; 2024 data</div>
+  <h1>Toronto Income &amp; Housing Affordability</h1>
+  <p class="sub">See how your income compares to Toronto housing thresholds. Run the mortgage stress test, compare rent vs. buy, and explore prices across the GTA. Built on StatCan T1FF and CMHC data.</p>
+  <p class="updated">Last updated: 2026-04-26 &middot; Data: FY2024 &middot; TRREB Q2 2025 regional</p>
 </header>
 
-<div class="ad-unit">
+<main id="main">
+
+<div class="ad-unit" role="complementary" aria-label="Advertisement">
   <div class="ad-label">Advertisement</div>
   <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-5619117265675077" data-ad-slot="SLOT_ID_1" data-ad-format="auto" data-full-width-responsive="true"></ins>
   <script>(adsbygoogle=window.adsbygoogle||[]).push({})</script>
 </div>
 
-<div style="display:flex;align-items:center;gap:12px;margin-bottom:20px">
-  <span style="font-size:13px;color:var(--ink2)">Age cohort:</span>
-  <select id="ageSelect"></select>
-  <span id="affordBadge" class="pill coral"></span>
+<!-- Global rate scenario bar -->
+<div class="rate-bar" role="region" aria-label="Mortgage rate scenario">
+  <span class="rate-bar-label">Mortgage rate scenario</span>
+  <input type="range" id="rateSlider" min="3.0" max="8.0" step="0.05" value="5.49" aria-label="Mortgage rate"/>
+  <span class="rate-val" id="rateVal">5.49%</span>
+  <span style="font-size:11px;color:var(--ink3);font-style:italic">Updates all charts &amp; tables below</span>
 </div>
 
-<div id="affordBanner" class="banner warn">
-  <div class="banner-icon">&#9888;</div>
+<div style="display:flex;align-items:center;gap:12px;margin-bottom:20px;flex-wrap:wrap">
+  <label for="ageSelect" style="font-size:13px;color:var(--ink2)">Age cohort:</label>
+  <select id="ageSelect" aria-label="Age cohort"></select>
+  <span id="affordBadge" class="pill coral" role="status"></span>
+</div>
+
+<div id="affordBanner" class="banner warn" role="status">
+  <div class="banner-icon" aria-hidden="true">&#9888;</div>
   <div class="banner-text">
     <strong id="bannerTitle"></strong>
     <p id="bannerBody"></p>
@@ -222,57 +300,56 @@ footer a{color:var(--ink2);text-decoration:underline}
 
 <div class="divider"></div>
 
-<section>
-  <div class="section-title">Income distribution by age</div>
-  <div class="section-sub">Upper-tail percentiles across Toronto earners</div>
-  <div class="tabs" id="incomeTabs">
-    <button class="tab active" data-v="upper">Upper tail (P90–P99)</button>
-    <button class="tab" data-v="all">Full curve</button>
-    <button class="tab" data-v="gap">P90 → P99 gap</button>
+<section aria-labelledby="h2-income">
+  <h2 id="h2-income">Income distribution by age</h2>
+  <div class="section-sub">Upper-tail percentiles across Toronto earners (StatCan T1FF, FY2024)</div>
+  <div class="tabs" id="incomeTabs" role="tablist">
+    <button class="tab active" data-v="upper" role="tab">Upper tail (P90–P99)</button>
+    <button class="tab" data-v="all" role="tab">Full curve</button>
   </div>
-  <div class="chart-wrap"><canvas id="incomeChart"></canvas></div>
+  <div class="chart-wrap"><canvas id="incomeChart" aria-label="Income distribution chart"></canvas></div>
 </section>
 
 <div class="divider"></div>
 
-<div class="ad-unit">
+<div class="ad-unit" role="complementary" aria-label="Advertisement">
   <div class="ad-label">Advertisement</div>
   <ins class="adsbygoogle" style="display:block;text-align:center" data-ad-layout="in-article" data-ad-format="fluid" data-ad-client="ca-pub-5619117265675077" data-ad-slot="SLOT_ID_2"></ins>
   <script>(adsbygoogle=window.adsbygoogle||[]).push({})</script>
 </div>
 
-<section>
-  <div class="section-title">Housing affordability &amp; neighbourhood</div>
+<section aria-labelledby="h2-housing">
+  <h2 id="h2-housing">Housing affordability &amp; neighbourhood</h2>
   <div class="section-sub">Select a property type — charts, stats and region data all update together</div>
-  <div class="prop-toggle">
-    <button class="prop-btn active" id="btnCondo" onclick="setPropType('condo')">
-      <svg viewBox="0 0 24 24"><rect x="3" y="8" width="18" height="13"/><path d="M1 8l11-5 11 5"/><line x1="9" y1="21" x2="9" y2="13"/><line x1="15" y1="21" x2="15" y2="13"/><rect x="9" y="13" width="6" height="8"/></svg>
+  <div class="prop-toggle" role="group" aria-label="Property type">
+    <button class="prop-btn active" id="btnCondo" onclick="setPropType('condo')" aria-pressed="true">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="6" y="2" width="12" height="20"/><line x1="6" y1="7" x2="18" y2="7"/><line x1="6" y1="11" x2="18" y2="11"/><line x1="6" y1="15" x2="18" y2="15"/><rect x="11" y="18" width="2" height="4"/></svg>
       Condo
     </button>
-    <button class="prop-btn" id="btnHouse" onclick="setPropType('house')">
-      <svg viewBox="0 0 24 24"><path d="M3 9.5L12 3l9 6.5V21H3V9.5z"/><rect x="9" y="14" width="6" height="7"/></svg>
+    <button class="prop-btn" id="btnHouse" onclick="setPropType('house')" aria-pressed="false">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 9.5L12 3l9 6.5V21H3V9.5z"/><rect x="9" y="14" width="6" height="7"/></svg>
       House / Other
     </button>
   </div>
   <div class="grid4" id="housingCards"></div>
-  <div class="chart-wrap"><canvas id="housingChart"></canvas></div>
+  <div class="chart-wrap"><canvas id="housingChart" aria-label="Housing affordability chart"></canvas></div>
   <div style="margin-top:20px">
-    <div class="tabs" id="viewTabs">
-      <button class="tab active" data-view="annual">Annual income view</button>
-      <button class="tab" data-view="monthly">Monthly cashflow view</button>
+    <div class="tabs" id="viewTabs" role="tablist">
+      <button class="tab active" data-view="annual" role="tab">Annual income view</button>
+      <button class="tab" data-view="monthly" role="tab">Monthly cashflow view</button>
     </div>
     <div id="housingTable" style="margin-top:14px"></div>
   </div>
   <div class="divider"></div>
   <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;margin-bottom:4px">
-    <div class="section-title">Region breakdown</div>
-    <div class="prop-toggle" style="margin-bottom:0">
-      <button class="prop-btn active" id="btnCondo2" onclick="setPropType('condo')">
-        <svg viewBox="0 0 24 24"><rect x="3" y="8" width="18" height="13"/><path d="M1 8l11-5 11 5"/><line x1="9" y1="21" x2="9" y2="13"/><line x1="15" y1="21" x2="15" y2="13"/><rect x="9" y="13" width="6" height="8"/></svg>
+    <h3 id="h3-region" style="margin:0">Region breakdown</h3>
+    <div class="prop-toggle" style="margin-bottom:0" role="group" aria-label="Property type (regional)">
+      <button class="prop-btn active" id="btnCondo2" onclick="setPropType('condo')" aria-pressed="true">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="6" y="2" width="12" height="20"/><line x1="6" y1="7" x2="18" y2="7"/><line x1="6" y1="11" x2="18" y2="11"/><line x1="6" y1="15" x2="18" y2="15"/><rect x="11" y="18" width="2" height="4"/></svg>
         Condo
       </button>
-      <button class="prop-btn" id="btnHouse2" onclick="setPropType('house')">
-        <svg viewBox="0 0 24 24"><path d="M3 9.5L12 3l9 6.5V21H3V9.5z"/><rect x="9" y="14" width="6" height="7"/></svg>
+      <button class="prop-btn" id="btnHouse2" onclick="setPropType('house')" aria-pressed="false">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 9.5L12 3l9 6.5V21H3V9.5z"/><rect x="9" y="14" width="6" height="7"/></svg>
         House / Other
       </button>
     </div>
@@ -281,89 +358,33 @@ footer a{color:var(--ink2);text-decoration:underline}
   <div class="neigh-layout">
     <div class="map-wrap">
       <div class="map-head"><div class="map-title">Greater Toronto Area — click a region</div><div class="map-chip" id="mapChip">Condo view</div></div>
-      <div id="regionMap"><svg viewBox="0 0 400 320" xmlns="http://www.w3.org/2000/svg">
-  <!-- Lake Ontario -->
-  <rect x="0" y="255" width="400" height="65" fill="#d6eaf4" opacity=".7"/>
-  <text x="200" y="290" style="font-size:9px;fill:#7aabcc;text-anchor:middle;font-family:'DM Sans',sans-serif">Lake Ontario</text>
-  <!-- Halton region base -->
-  <g onclick="selectRegion('halton')">
-    <polygon id="svg-halton" class="rgn" points="20,160 95,160 95,175 105,200 95,255 20,255"/>
-    <text x="55" y="215">Halton</text>
-  </g>
-  <!-- Oakville (within Halton) -->
-  <g onclick="selectRegion('oakville')">
-    <polygon id="svg-oakville" class="sub" points="22,205 93,205 93,253 22,253"/>
-    <text x="57" y="233" style="font-size:7.5px;fill:#6b6a62;pointer-events:none;text-anchor:middle">Oakville</text>
-  </g>
-  <!-- Peel region base -->
-  <g onclick="selectRegion('peel')">
-    <polygon id="svg-peel" class="rgn" points="95,145 160,140 165,170 170,255 105,200 95,175"/>
-    <text x="128" y="168">Peel</text>
-  </g>
-  <!-- Brampton (upper Peel) -->
-  <g onclick="selectRegion('brampton')">
-    <polygon id="svg-brampton" class="sub" points="97,176 158,172 162,210 107,202"/>
-    <text x="129" y="192" style="font-size:7px;fill:#6b6a62;pointer-events:none;text-anchor:middle">Brampton</text>
-  </g>
-  <!-- Mississauga (lower Peel) -->
-  <g onclick="selectRegion('mississauga')">
-    <polygon id="svg-mississauga" class="sub" points="107,202 162,210 166,253 108,253"/>
-    <text x="135" y="232" style="font-size:7px;fill:#6b6a62;pointer-events:none;text-anchor:middle">Mississauga</text>
-  </g>
-  <!-- City of Toronto -->
-  <g onclick="selectRegion('toronto')">
-    <polygon id="svg-toronto" class="rgn" points="160,140 230,138 235,180 230,255 170,255 165,170"/>
-    <text x="197" y="193">City of</text>
-    <text x="197" y="204">Toronto</text>
-  </g>
-  <!-- Durham region base -->
-  <g onclick="selectRegion('durham')">
-    <polygon id="svg-durham" class="rgn" points="230,138 320,130 330,160 330,255 230,255 235,180"/>
-    <text x="285" y="165">Durham</text>
-  </g>
-  <!-- Pickering (western Durham) -->
-  <g onclick="selectRegion('pickering')">
-    <polygon id="svg-pickering" class="sub" points="232,180 275,175 275,225 232,228"/>
-    <text x="253" y="204" style="font-size:7px;fill:#6b6a62;pointer-events:none;text-anchor:middle">Pickering</text>
-  </g>
-  <!-- Oshawa (eastern Durham) -->
-  <g onclick="selectRegion('oshawa')">
-    <polygon id="svg-oshawa" class="sub" points="275,175 325,168 328,253 275,253"/>
-    <text x="300" y="215" style="font-size:7px;fill:#6b6a62;pointer-events:none;text-anchor:middle">Oshawa</text>
-  </g>
-  <!-- York region base -->
-  <g onclick="selectRegion('york')">
-    <polygon id="svg-york" class="rgn" points="95,60 320,50 330,130 330,160 320,130 235,138 160,140 95,145 95,60"/>
-    <text x="130" y="90">York</text>
-  </g>
-  <!-- Vaughan (left York) -->
-  <g onclick="selectRegion('vaughan')">
-    <polygon id="svg-vaughan" class="sub" points="97,100 165,95 163,138 97,143"/>
-    <text x="130" y="122" style="font-size:7px;fill:#6b6a62;pointer-events:none;text-anchor:middle">Vaughan</text>
-  </g>
-  <!-- Richmond Hill (mid York) -->
-  <g onclick="selectRegion('richmond')">
-    <polygon id="svg-richmond" class="sub" points="165,95 230,90 228,138 163,138"/>
-    <text x="196" y="117" style="font-size:7px;fill:#6b6a62;pointer-events:none;text-anchor:middle">Richmond Hill</text>
-  </g>
-  <!-- Markham (right York) -->
-  <g onclick="selectRegion('markham')">
-    <polygon id="svg-markham" class="sub" points="230,90 318,82 320,130 228,138"/>
-    <text x="272" y="112" style="font-size:7px;fill:#6b6a62;pointer-events:none;text-anchor:middle">Markham</text>
-  </g>
-  <!-- Simcoe label -->
-  <rect x="80" y="10" width="250" height="36" rx="4" fill="#f0efe9" stroke="#dddcd5" stroke-width="1"/>
-  <text x="205" y="32" style="font-size:8.5px;fill:#9b9a92;text-anchor:middle;font-family:'DM Sans',sans-serif">Simcoe County (not selectable)</text>
-  <!-- Compass -->
-  <text x="375" y="22" style="font-size:9px;fill:#9b9a92;font-family:'DM Sans',sans-serif;text-anchor:middle">N</text>
-  <line x1="375" y1="26" x2="375" y2="38" stroke="#9b9a92" stroke-width="1"/>
-</svg></div>
+      <div id="regionMap"><svg viewBox="0 0 400 320" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Map of Greater Toronto Area regions">
+        <rect x="0" y="255" width="400" height="65" fill="#d6eaf4" opacity=".7"/>
+        <text x="200" y="290" style="font-size:9px;fill:#7aabcc;text-anchor:middle;font-family:'DM Sans',sans-serif">Lake Ontario</text>
+        <g onclick="selectRegion('halton')"><polygon id="svg-halton" class="rgn" points="20,160 95,160 95,175 105,200 95,255 20,255"/><text x="55" y="215">Halton</text></g>
+        <g onclick="selectRegion('oakville')"><polygon id="svg-oakville" class="sub" points="22,205 93,205 93,253 22,253"/><text x="57" y="233" style="font-size:7.5px;fill:#6b6a62;pointer-events:none;text-anchor:middle">Oakville</text></g>
+        <g onclick="selectRegion('peel')"><polygon id="svg-peel" class="rgn" points="95,145 160,140 165,170 170,255 105,200 95,175"/><text x="128" y="168">Peel</text></g>
+        <g onclick="selectRegion('brampton')"><polygon id="svg-brampton" class="sub" points="97,176 158,172 162,210 107,202"/><text x="129" y="192" style="font-size:7px;fill:#6b6a62;pointer-events:none;text-anchor:middle">Brampton</text></g>
+        <g onclick="selectRegion('mississauga')"><polygon id="svg-mississauga" class="sub" points="107,202 162,210 166,253 108,253"/><text x="135" y="232" style="font-size:7px;fill:#6b6a62;pointer-events:none;text-anchor:middle">Mississauga</text></g>
+        <g onclick="selectRegion('toronto')"><polygon id="svg-toronto" class="rgn" points="160,140 230,138 235,180 230,255 170,255 165,170"/><text x="197" y="193">City of</text><text x="197" y="204">Toronto</text></g>
+        <g onclick="selectRegion('durham')"><polygon id="svg-durham" class="rgn" points="230,138 320,130 330,160 330,255 230,255 235,180"/><text x="285" y="165">Durham</text></g>
+        <g onclick="selectRegion('pickering')"><polygon id="svg-pickering" class="sub" points="232,180 275,175 275,225 232,228"/><text x="253" y="204" style="font-size:7px;fill:#6b6a62;pointer-events:none;text-anchor:middle">Pickering</text></g>
+        <g onclick="selectRegion('oshawa')"><polygon id="svg-oshawa" class="sub" points="275,175 325,168 328,253 275,253"/><text x="300" y="215" style="font-size:7px;fill:#6b6a62;pointer-events:none;text-anchor:middle">Oshawa</text></g>
+        <g onclick="selectRegion('york')"><polygon id="svg-york" class="rgn" points="95,60 320,50 330,130 330,160 320,130 235,138 160,140 95,145 95,60"/><text x="130" y="90">York</text></g>
+        <g onclick="selectRegion('vaughan')"><polygon id="svg-vaughan" class="sub" points="97,100 165,95 163,138 97,143"/><text x="130" y="122" style="font-size:7px;fill:#6b6a62;pointer-events:none;text-anchor:middle">Vaughan</text></g>
+        <g onclick="selectRegion('richmond')"><polygon id="svg-richmond" class="sub" points="165,95 230,90 228,138 163,138"/><text x="196" y="117" style="font-size:7px;fill:#6b6a62;pointer-events:none;text-anchor:middle">Richmond Hill</text></g>
+        <g onclick="selectRegion('markham')"><polygon id="svg-markham" class="sub" points="230,90 318,82 320,130 228,138"/><text x="272" y="112" style="font-size:7px;fill:#6b6a62;pointer-events:none;text-anchor:middle">Markham</text></g>
+        <rect x="80" y="10" width="250" height="36" rx="4" fill="#f0efe9" stroke="#dddcd5" stroke-width="1"/>
+        <text x="205" y="32" style="font-size:8.5px;fill:#9b9a92;text-anchor:middle;font-family:'DM Sans',sans-serif">Simcoe County (not selectable)</text>
+        <text x="375" y="22" style="font-size:9px;fill:#9b9a92;font-family:'DM Sans',sans-serif;text-anchor:middle">N</text>
+        <line x1="375" y1="26" x2="375" y2="38" stroke="#9b9a92" stroke-width="1"/>
+      </svg></div>
       <div class="map-legend"><span class="legend-item"><span class="legend-dot"></span>Available region</span><span class="legend-item"><span class="legend-dot condo"></span>Condo selected</span><span class="legend-item"><span class="legend-dot house"></span>House selected</span></div>
     </div>
     <div class="neigh-panel">
       <div>
         <div class="neigh-label">Region</div>
-        <select id="neighSelect" onchange="selectRegion(this.value)">
+        <select id="neighSelect" onchange="selectRegion(this.value)" aria-label="Select region">
           <option value="gta">All GTA</option>
           <option value="toronto">City of Toronto</option>
           <option value="york">York Region</option>
@@ -396,11 +417,30 @@ footer a{color:var(--ink2);text-decoration:underline}
 
 <div class="divider"></div>
 
-<section>
-  <div class="section-title">What can I afford?</div>
+<!-- Mortgage Stress Test Calculator -->
+<section aria-labelledby="h2-stress">
+  <h2 id="h2-stress">Mortgage stress test calculator</h2>
+  <div class="section-sub">OSFI B-20 rule: lenders qualify you at the higher of (contract rate + 2%) or 5.25%</div>
+  <div class="calc-card">
+    <div class="calc-input-row">
+      <label><span>Home price</span><input type="number" id="stPrice" min="100000" max="5000000" step="10000" value="800000"/></label>
+      <label><span>Downpayment %</span><input type="number" id="stDown" min="5" max="100" step="1" value="20"/></label>
+      <label><span>Contract rate %</span><input type="number" id="stRate" min="1" max="15" step="0.05" value="5.49"/></label>
+      <label><span>Amortization (yrs)</span>
+        <select id="stAmort"><option value="25">25</option><option value="30">30</option></select>
+      </label>
+    </div>
+    <div class="calc-grid" id="stressResult"></div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<section aria-labelledby="h2-afford">
+  <h2 id="h2-afford">What can I afford?</h2>
   <div class="section-sub">Enter your income to see where you land in the distribution and what you can qualify for</div>
   <div class="slider-row">
-    <label>My annual income</label>
+    <label for="myIncome">My annual income</label>
     <input type="range" id="myIncome" min="30000" max="600000" step="5000" value="100000"/>
     <span class="slider-val" id="myIncomeVal">$100,000</span>
   </div>
@@ -409,35 +449,115 @@ footer a{color:var(--ink2);text-decoration:underline}
 
 <div class="divider"></div>
 
-<section>
-  <div class="section-title">Downpayment savings runway</div>
+<section aria-labelledby="h2-savings">
+  <h2 id="h2-savings">Downpayment savings runway</h2>
   <div class="section-sub">Years to save a downpayment at different savings rates — based on your income above</div>
   <div id="savingsGrid" class="savings-grid"></div>
 </section>
 
 <div class="divider"></div>
 
-<section>
-  <div class="section-title">Full income percentile table</div>
+<section aria-labelledby="h2-table">
+  <h2 id="h2-table">Full income percentile table</h2>
   <div id="incomeTable"></div>
 </section>
 
-<div class="ad-unit" style="margin-top:32px">
+<div class="divider"></div>
+
+<!-- Explainer / FAQ section for SEO + indexable content -->
+<section class="explainer" aria-labelledby="h2-explainer">
+  <h2 id="h2-explainer">Toronto housing affordability — explained</h2>
+  <p>Toronto's housing market is one of the most expensive in North America. The median home price is now over $1.0M, while condos typically sit in the high $600Ks. Since 2015, the gap between what households earn and what they need to qualify for a mortgage has grown significantly. This page is designed to give you a quick, realistic snapshot of where you stand — by age group, region, and under different interest-rate scenarios.</p>
+
+  <details>
+    <summary>How the calculators work</summary>
+    <p>Across this page, the estimated qualifying income uses a simplified benchmark: about 22.5% of the home price as required gross household income per year. This is based on a typical 30% Gross Debt Service (GDS) ratio using common Toronto mortgage assumptions.</p>
+    <p>Mortgage payment estimates assume:</p>
+    <ul>
+      <li>20% down payment (80% loan-to-value)</li>
+      <li>25-year amortization</li>
+      <li>The interest rate selected in the global rate slider at the top of the page</li>
+    </ul>
+    <p>The mortgage stress test calculator uses OSFI's B-20 qualification rule, which requires lenders to test borrowers at the higher of:</p>
+    <ul>
+      <li>your contract mortgage rate plus 2%, or</li>
+      <li>5.25%</li>
+    </ul>
+    <p>This means the qualifying payment shown there reflects what lenders will actually use to assess affordability, even if your real monthly payment would be lower.</p>
+  </details>
+
+  <details>
+    <summary>How to read the income percentile data</summary>
+    <p>Income figures are based on Statistics Canada T1FF microdata summaries for the Toronto CMA (FY2024). The income distribution chart at the top of the page allows you to switch between:</p>
+    <ul>
+      <li>Upper-income range (P90–P99)</li>
+      <li>Full distribution (P10–P99)</li>
+    </ul>
+    <p>This gives you a quick view of how incomes are spread across households — and how inequality changes within each age or regional group.</p>
+  </details>
+
+  <h3>Common questions</h3>
+
+  <details>
+    <summary>What income do I need to buy a house in Toronto?</summary>
+    <p>For an average detached or semi-detached home at around $1.13M, you'd need a qualifying household income of roughly $250,000 at today's rates. That's well above Toronto's median household income of about $100,500. For a condo at $651K, the threshold drops to about $149,000. These numbers move when mortgage rates change — adjust the rate slider at the top of the page to see how.</p>
+  </details>
+
+  <details>
+    <summary>What is the FHSA and how does it help with a Toronto downpayment?</summary>
+    <p>The First Home Savings Account (FHSA) lets eligible first-time buyers contribute up to $8,000 per year (lifetime cap of $40,000) on a tax-deductible basis, then withdraw the funds tax-free when buying a qualifying home. Combined with the RRSP Home Buyers' Plan ($60,000 per person as of 2024), a couple can put up to $200,000 of tax-advantaged savings toward a downpayment. For a $651K Toronto condo with 20% down ($130,200), that's enough to cover the full downpayment.</p>
+  </details>
+
+  <details>
+    <summary>How does the mortgage stress test work in 2024–2025?</summary>
+    <p>Federally regulated lenders have to qualify uninsured borrowers at the higher of your contract rate plus 2%, or 5.25%. With five-year fixed rates currently sitting around 5.0–5.5%, the qualifying rate is typically 7.0–7.5%. In plain terms: even though your actual monthly payment is based on the lower contract rate, the bank decides whether you "qualify" using the higher stress-tested payment. The stress test calculator on this page lets you see how this affects your numbers.</p>
+  </details>
+
+  <details>
+    <summary>Why does my income percentile change when I switch age cohorts?</summary>
+    <p>Income tends to peak in the 45–54 age group, then decline through retirement. So a $100,000 income puts a 25–34-year-old around the 80th percentile, but a 45–54-year-old closer to the 60th. This is why housing affordability hits younger Torontonians hardest — they face the same qualifying income thresholds, but the income distribution in their cohort sits much further below those thresholds.</p>
+  </details>
+
+  <details>
+    <summary>How long will it take me to save a downpayment?</summary>
+    <p>The downpayment savings runway section above shows how many years it would take at 10%, 20%, or 30% savings rates of your gross income (set by the income slider). At a $100,000 income with a 20% savings rate ($20,000/yr), the minimum downpayment for an average condo (~$40,000) takes about two years to save. A 20% downpayment ($130,000) takes closer to seven. These numbers don't include investment returns on your savings, which can shorten the timeline noticeably.</p>
+  </details>
+
+  <h3>Methodology &amp; sources</h3>
+  <ul>
+    <li>Income distributions: Statistics Canada T1FF custom tabulations, FY2024, Toronto CMA</li>
+    <li>Housing prices (city-wide): CMHC Housing Market Information Portal, Toronto CMA, 2024</li>
+    <li>Regional pricing: Toronto Regional Real Estate Board (TRREB) Q2 2025 market watch</li>
+    <li>Stress test rule: OSFI Guideline B-20</li>
+    <li>FHSA / RRSP HBP figures: Canada Revenue Agency, current as of 2024</li>
+  </ul>
+  <p style="font-size:12px;color:var(--ink3);margin-top:12px">The methodology is intentionally simplified for transparency. Property tax, condo fees, insurance, and CMHC mortgage insurance premiums on insured mortgages aren't separately modelled in every calculator on this page — see the per-tool notes.</p>
+</section>
+
+<div class="ad-unit" style="margin-top:32px" role="complementary" aria-label="Advertisement">
   <div class="ad-label">Advertisement</div>
   <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-5619117265675077" data-ad-slot="SLOT_ID_3" data-ad-format="auto" data-full-width-responsive="true"></ins>
   <script>(adsbygoogle=window.adsbygoogle||[]).push({})</script>
 </div>
 
+</main>
+
 <footer>
-  <p>Income data are illustrative estimates derived from StatCan T1FF microdata summaries. Housing values are based on CMHC Toronto affordability data.</p>
-  <p style="margin-top:6px">&copy; 2024 Eric Liu &middot; For informational purposes only &middot; Not financial advice</p>
+  <nav class="foot-nav" aria-label="Footer">
+    <a href="/about">About</a>
+    <a href="/methodology">Methodology</a>
+    <a href="/privacy">Privacy Policy</a>
+    <a href="/terms">Terms of Use</a>
+    <a href="/contact">Contact</a>
+  </nav>
+  <p>Income data are illustrative estimates derived from StatCan T1FF microdata summaries. Housing values are based on CMHC Toronto affordability data and TRREB Q2 2025 market watch.</p>
+  <p class="disclaimer">&copy; 2024–2026 Eric Liu &middot; For informational purposes only &middot; Not financial, tax, or investment advice. Consult a licensed mortgage broker, financial planner, or real estate professional before making purchase decisions.</p>
 </footer>
 
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.6/dist/chart.umd.js"></script>
 <script>
-// top1 removed — P99 is the ceiling (top 1% threshold)
 const DATA=[
  {age:"18–24",p10:0,p25:4200,p50:14200,p75:28600,p90:46500,p95:62000,p97:76000,p99:112000},
  {age:"25–34",p10:9800,p25:26500,p50:45200,p75:72500,p90:108000,p95:142000,p97:178000,p99:255000},
@@ -447,17 +567,105 @@ const DATA=[
  {age:"65–69",p10:6200,p25:21800,p50:39200,p75:68500,p90:106000,p95:158000,p97:215000,p99:340000},
  {age:"70+",p10:4200,p25:18200,p50:32800,p75:57600,p90:91000,p95:135000,p97:182000,p99:295000}
 ];
+
+// Housing — prices fixed; mortgage/qualifying recomputed when rate changes
 const HOUSING={
- all:{label:"All dwellings",price:1096710,down:84671,down20:1096710*.20,months:101.1,mortgage:5843,mortgagePct:69.8,qualifying:246584,medianIncome:100505,ownership:65},
- condo:{label:"Condo",price:651350,down:40135,down20:651350*.20,months:47.9,mortgage:3470,mortgagePct:41.4,qualifying:148923,medianIncome:100505,ownership:16,rent:2905},
- noncondo:{label:"Other dwellings",price:1127744,down:87774,down20:1127744*.20,months:104.8,mortgage:6008,mortgagePct:71.7,qualifying:253390,medianIncome:100505,ownership:49}
+ all:{label:"All dwellings",price:1096710,medianIncome:100505,ownership:65},
+ condo:{label:"Condo",price:651350,medianIncome:100505,ownership:16,rent:2905},
+ noncondo:{label:"Other dwellings",price:1127744,medianIncome:100505,ownership:49}
 };
-const CORAL='#c94a2b',TEAL='#1a7a5e',INK3='#9b9a92';
+
+const CORAL='#c94a2b',TEAL='#1a7a5e',AMBER='#b8640a',INK3='#9b9a92';
 const money=n=>'$'+Math.round(n).toLocaleString();
 const pct=n=>n.toFixed(1)+'%';
+
+const REDUCED_MOTION=window.matchMedia&&window.matchMedia('(prefers-reduced-motion:reduce)').matches;
+
+// Item 3 — Scroll-triggered fade-up on sections
+function initFadeUp(){
+  const sections=document.querySelectorAll('main section');
+  sections.forEach(s=>s.classList.add('fade-section'));
+  if(!('IntersectionObserver' in window)||REDUCED_MOTION){
+    sections.forEach(s=>s.classList.add('is-visible'));
+    return;
+  }
+  const obs=new IntersectionObserver(entries=>{
+    entries.forEach(e=>{
+      if(e.isIntersecting){e.target.classList.add('is-visible');obs.unobserve(e.target);}
+    });
+  },{threshold:0.08,rootMargin:'0px 0px -40px 0px'});
+  sections.forEach(s=>obs.observe(s));
+}
+
+// Item 4 — Map region ripple on click
+function spawnRipple(regionKey){
+  if(REDUCED_MOTION)return;
+  const el=document.getElementById('svg-'+regionKey);
+  const svg=document.querySelector('#regionMap svg');
+  if(!el||!svg)return;
+  const bbox=el.getBBox();
+  const cx=bbox.x+bbox.width/2,cy=bbox.y+bbox.height/2;
+  const c=document.createElementNS('http://www.w3.org/2000/svg','circle');
+  c.setAttribute('cx',cx);c.setAttribute('cy',cy);c.setAttribute('r',0);
+  c.setAttribute('fill',neighType==='condo'?'#1a7a5e':'#c94a2b');
+  c.setAttribute('opacity','0.45');c.setAttribute('pointer-events','none');
+  svg.appendChild(c);
+  const t0=performance.now();
+  (function step(t){
+    const p=Math.min(1,(t-t0)/600);
+    c.setAttribute('r',(p*60).toFixed(1));
+    c.setAttribute('opacity',(0.45*(1-p)).toFixed(3));
+    if(p<1)requestAnimationFrame(step);else c.remove();
+  })(performance.now());
+}
+
+// Number count-up animator — animates any .stat-val whose numeric value changed since last render
+function tweenContainer(root){
+  root.querySelectorAll('.stat-val').forEach(e=>{
+    const cur=e.textContent.trim(),prev=e.dataset.prev;
+    e.dataset.prev=cur;
+    if(!prev||prev===cur)return;
+    const num=parseFloat(cur.replace(/[^\d.-]/g,'')),oldNum=parseFloat(prev.replace(/[^\d.-]/g,''));
+    if(isNaN(num)||isNaN(oldNum)||num===oldNum)return;
+    const prefix=cur.match(/^[^\d.-]*/)[0],suffix=cur.match(/[^\d.]*$/)[0];
+    const decPart=(cur.split('.')[1]||'').match(/\d+/);
+    const decimals=decPart?decPart[0].length:0;
+    const t0=performance.now();
+    function step(t){
+      const p=Math.min(1,(t-t0)/450),eased=1-Math.pow(1-p,3);
+      const v=oldNum+(num-oldNum)*eased;
+      e.textContent=prefix+(decimals>0?v.toFixed(decimals):Math.round(v).toLocaleString())+suffix;
+      if(p<1)requestAnimationFrame(step);
+    }
+    requestAnimationFrame(step);
+  });
+}
+
 let incomeView='upper',housingView='condo',tableView='annual',selected='35–44',myIncome=100000;
 let neighType='condo',neighRegion='gta';
+let rate=0.0549; // global rate
 let incomeChart,housingChart;
+
+// PMT for 25-yr amortization at given annual rate, 80% LTV
+function calcMortgage(price, annualRate, amortYears){
+  const m=annualRate/12;
+  const n=amortYears*12;
+  const principal=price*0.80;
+  if(m===0) return principal/n;
+  return principal*m/(1-Math.pow(1+m,-n));
+}
+
+// Recompute mortgage, qualifying, mortgagePct, months for all HOUSING entries based on current rate
+function recomputeHousing(){
+  Object.values(HOUSING).forEach(h=>{
+    h.down = h.price<=500000 ? h.price*0.05 : 25000+(h.price-500000)*0.10;
+    h.down20 = h.price*0.20;
+    h.mortgage = calcMortgage(h.price, rate, 25);
+    h.qualifying = h.price*0.225; // simplified GDS-like rule
+    h.mortgagePct = (h.mortgage*12)/h.medianIncome*100;
+    h.months = Math.round((h.down / (h.medianIncome*0.10)) * 12 * 10)/10; // months at 10% savings rate
+  });
+}
 
 function pctRankFor(age,income){
   const d=DATA.find(x=>x.age===age);
@@ -493,20 +701,53 @@ function init(){
   sel.onchange=e=>{selected=e.target.value;renderAll()};
   document.querySelectorAll('#incomeTabs .tab').forEach(b=>b.onclick=()=>{
     incomeView=b.dataset.v;
-    document.querySelectorAll('#incomeTabs .tab').forEach(x=>x.classList.toggle('active',x===b));
+    document.querySelectorAll('#incomeTabs .tab').forEach(x=>{x.classList.toggle('active',x===b);x.setAttribute('aria-selected',x===b)});
     drawIncome();
   });
   document.querySelectorAll('#viewTabs .tab').forEach(b=>b.onclick=()=>{
     tableView=b.dataset.view;
-    document.querySelectorAll('#viewTabs .tab').forEach(x=>x.classList.toggle('active',x===b));
+    document.querySelectorAll('#viewTabs .tab').forEach(x=>{x.classList.toggle('active',x===b);x.setAttribute('aria-selected',x===b)});
     renderHousingTable();
   });
   const inc=document.getElementById('myIncome');
   inc.oninput=()=>{myIncome=+inc.value;document.getElementById('myIncomeVal').textContent=money(myIncome);renderAfford();renderSavings();renderNeigh()};
+
+  // Rate slider ↔ stress test contract rate (two-way sync)
+  const rs=document.getElementById('rateSlider');
+  rs.oninput=()=>{applyRate(+rs.value);runStressTest()};
+
+  // Stress test inputs — price/down/amort only affect stress test; rate is shared via applyRate
+  ['stPrice','stDown','stAmort'].forEach(id=>{
+    document.getElementById(id).oninput=runStressTest;
+    document.getElementById(id).onchange=runStressTest;
+  });
+  const stRateEl=document.getElementById('stRate');
+  stRateEl.oninput=()=>{applyRate(+stRateEl.value);runStressTest()};
+  stRateEl.onchange=()=>{applyRate(+stRateEl.value);runStressTest()};
+
+  recomputeHousing();
   renderAll();
+  syncStressToHousing();
 }
 
-function renderAll(){renderBanner();renderSummary();drawIncome();drawHousing();renderHousingTable();renderIncomeTable();renderAfford();renderSavings();renderNeigh()}
+// Two-way rate sync helpers
+function applyRate(percent){
+  rate=percent/100;
+  document.getElementById('rateVal').textContent=percent.toFixed(2)+'%';
+  document.getElementById('rateSlider').value=percent;
+  document.getElementById('stRate').value=percent.toFixed(2);
+  recomputeHousing();
+  renderAll();
+}
+function syncStressToHousing(){
+  const h=HOUSING[housingView];
+  document.getElementById('stPrice').value=Math.round(h.price);
+  document.getElementById('stDown').value=20;
+  document.getElementById('stRate').value=(rate*100).toFixed(2);
+  runStressTest();
+}
+
+function renderAll(){renderBanner();renderSummary();drawIncome();drawHousing();renderHousingTable();renderIncomeTable();renderAfford();renderSavings();renderNeigh();tweenContainer(document.body)}
 
 function renderBanner(){
   const h=HOUSING[housingView];
@@ -551,15 +792,12 @@ function drawIncome(){
   const labels=DATA.map(d=>d.age);let datasets;
   const palette=['#bfa88a','#9b8a6e','#c94a2b','#1a7a5e'];
   if(incomeView==='upper'){
-    // top1 removed — P99 is now the ceiling
     datasets=['p90','p95','p97','p99'].map((k,i)=>({label:k.toUpperCase(),data:DATA.map(d=>d[k]),tension:.3,borderWidth:k==='p99'?2.5:1.5,pointRadius:k==='p99'?4:2.5,borderColor:palette[i],fill:false}));
-  }else if(incomeView==='gap'){
-    datasets=[{label:'P99 minus P90 gap',data:DATA.map(d=>d.p99-d.p90),backgroundColor:DATA.map(d=>d.age===selected?CORAL:TEAL+'66'),borderRadius:4,type:'bar'}];
   }else{
     const cols=['#d4cfc6','#c0b89e','#9b8a6e','#7a6e57','#bfa88a','#c94a2b','#1a1915'];
     datasets=['p10','p25','p50','p75','p90','p95','p99'].map((k,i)=>({label:k.toUpperCase(),data:DATA.map(d=>d[k]),tension:.3,borderWidth:k==='p50'?2.5:1.5,pointRadius:2,borderColor:cols[i],fill:false}));
   }
-  incomeChart=new Chart(document.getElementById('incomeChart'),{type:'line',data:{labels,datasets},options:{responsive:true,maintainAspectRatio:false,interaction:{mode:'index',intersect:false},plugins:{legend:{labels:{boxWidth:8,usePointStyle:true,font:{size:11}}},tooltip:{callbacks:{label:c=>`${c.dataset.label}: ${money(c.raw)}`},padding:10,cornerRadius:8}},scales:{x:{grid:{display:false},border:{display:false}},y:{ticks:{callback:v=>money(v),font:{size:11}},grid:{color:'rgba(26,25,21,0.06)'},border:{display:false}}}}});
+  incomeChart=new Chart(document.getElementById('incomeChart'),{type:'line',data:{labels,datasets},options:{responsive:true,maintainAspectRatio:false,interaction:{mode:'index',intersect:false},animation:{duration:600,easing:'easeOutCubic'},plugins:{legend:{labels:{boxWidth:8,usePointStyle:true,font:{size:11}}},tooltip:{callbacks:{label:c=>`${c.dataset.label}: ${money(c.raw)}`},padding:10,cornerRadius:8}},scales:{x:{grid:{display:false},border:{display:false}},y:{ticks:{callback:v=>money(v),font:{size:11}},grid:{color:'rgba(0,0,0,0.06)'},border:{display:false}}}}});
 }
 
 function drawHousing(){
@@ -571,7 +809,7 @@ function drawHousing(){
   if(housingView==='condo'&&h.rent){
     datasets.push({label:'Annual rent cost',data:Array(6).fill(h.rent*12),type:'line',borderColor:'#b8640a',borderWidth:2,borderDash:[5,3],pointRadius:0,tension:0,fill:false});
   }
-  housingChart=new Chart(document.getElementById('housingChart'),{type:'bar',data:{labels:['P50','P75','P90','P95','P99','Qualifying\nincome'],datasets},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:housingView==='condo',labels:{boxWidth:8,usePointStyle:true,font:{size:11}}},tooltip:{callbacks:{label:c=>money(c.raw)},padding:10,cornerRadius:8}},scales:{x:{grid:{display:false},border:{display:false},ticks:{font:{size:11}}},y:{ticks:{callback:v=>money(v),font:{size:11}},grid:{color:'rgba(26,25,21,0.06)'},border:{display:false}}}}});
+  housingChart=new Chart(document.getElementById('housingChart'),{type:'bar',data:{labels:['P50','P75','P90','P95','P99','Qualifying\nincome'],datasets},options:{responsive:true,maintainAspectRatio:false,animation:{duration:600,easing:'easeOutCubic'},plugins:{legend:{display:housingView==='condo',labels:{boxWidth:8,usePointStyle:true,font:{size:11}}},tooltip:{callbacks:{label:c=>money(c.raw)},padding:10,cornerRadius:8}},scales:{x:{grid:{display:false},border:{display:false},ticks:{font:{size:11}}},y:{ticks:{callback:v=>money(v),font:{size:11}},grid:{color:'rgba(0,0,0,0.06)'},border:{display:false}}}}});
 }
 
 function renderHousingTable(){
@@ -594,7 +832,6 @@ function renderHousingTable(){
     <tr><td>Home price</td><td>${money(h.price)}</td></tr>
     <tr><td>Minimum downpayment</td><td>${money(h.down)}</td></tr>
     <tr><td>20% downpayment</td><td>${money(h.down20)}</td></tr>
-    <tr><td>Months saving for down (median income)</td><td>${h.months} mo</td></tr>
     <tr><td>Annual mortgage cost</td><td>${money(h.mortgage*12)}</td></tr>
     <tr><td>Mortgage as % of median income</td><td class="hl">${pct(h.mortgagePct)}</td></tr>
     <tr><td>Qualifying income</td><td class="hl">${money(h.qualifying)}</td></tr>
@@ -609,12 +846,12 @@ function renderAfford(){
   const results=Object.entries(HOUSING).map(([k,h])=>{
     const can=myIncome>=h.qualifying;
     return `<div class="card-sm"><div class="stat-label">${h.label}</div>
-    <div style="font-size:18px;font-family:'DM Mono',monospace;font-weight:500;color:${can?'var(--teal)':'var(--coral)'};margin:6px 0">${can?'✓ Qualify':'✗ Below'}</div>
+    <div style="font-size:18px;font-family:'DM Mono',monospace;font-weight:600;color:${can?'var(--teal)':'var(--coral)'};margin:6px 0">${can?'✓ Qualify':'✗ Below'}</div>
     <div style="font-size:11px;color:var(--ink2)">Need ${money(h.qualifying)}</div>
     <div style="font-size:11px;color:${can?'var(--teal)':'var(--coral)'};margin-top:2px">${can?'+'+money(myIncome-h.qualifying)+' above':money(h.qualifying-myIncome)+' shortfall'}</div></div>`;
   }).join('');
   document.getElementById('affordResult').innerHTML=`
-    <div class="card-sm"><div class="stat-label">Your percentile (${selected})</div><div style="font-size:18px;font-family:'DM Mono',monospace;font-weight:500;margin:6px 0">${rank}</div><div style="font-size:11px;color:var(--ink2)">${money(myIncome)}/yr</div></div>${results}`;
+    <div class="card-sm"><div class="stat-label">Your percentile (${selected})</div><div style="font-size:18px;font-family:'DM Mono',monospace;font-weight:600;margin:6px 0">${rank}</div><div style="font-size:11px;color:var(--ink2)">${money(myIncome)}/yr</div></div>${results}`;
 }
 
 function renderSavings(){
@@ -629,7 +866,6 @@ function renderSavings(){
 }
 
 function renderIncomeTable(){
-  // Top 1% column removed — P99 is the top 1% threshold
   document.getElementById('incomeTable').innerHTML=`<table><thead><tr>
     <th>Age</th><th>P50</th><th>P75</th><th>P90</th><th>P95</th><th>P97</th><th>P99</th>
   </tr></thead><tbody>${DATA.map(d=>`<tr><td>${d.age}</td><td>${money(d.p50)}</td><td>${money(d.p75)}</td>
@@ -637,8 +873,41 @@ function renderIncomeTable(){
     <td class="hlt">${money(d.p99)}</td></tr>`).join('')}</tbody></table>`;
 }
 
+// ── Stress Test Calculator ──
+function runStressTest(){
+  const price=+document.getElementById('stPrice').value;
+  const downPct=+document.getElementById('stDown').value/100;
+  const contract=+document.getElementById('stRate').value/100;
+  const amort=+document.getElementById('stAmort').value;
+  if(!price||!contract||!amort)return;
+  const principal=price*(1-downPct);
+  const qualRate=Math.max(contract+0.02, 0.0525);
+  // monthly payment at contract rate
+  const m=contract/12;const n=amort*12;
+  const contractPay = m===0?principal/n:principal*m/(1-Math.pow(1+m,-n));
+  // monthly payment at qualifying rate
+  const qm=qualRate/12;
+  const qualPay = qm===0?principal/n:principal*qm/(1-Math.pow(1+qm,-n));
+  // qualifying income: assume ~30% GDS, plus property tax (0.65% of price/12) + heat (~$150/mo)
+  const monthlyTax=price*0.0065/12;
+  const monthlyHeat=150;
+  const qualMonthlyHousing=qualPay+monthlyTax+monthlyHeat;
+  const qualifyingIncome=qualMonthlyHousing*12/0.30;
+  const downAmount=price*downPct;
+  const minDown = price<=500000 ? price*0.05 : 25000+(price-500000)*0.10;
+  const meetsMinDown = downAmount>=minDown;
 
-// ── Neighbourhood data (TRREB Q2 2025 median/average-style market snapshot) ──
+  document.getElementById('stressResult').innerHTML=`
+    <div class="calc-result"><div class="stat-label">Qualifying rate (B-20)</div><div class="stat-val coral mono">${(qualRate*100).toFixed(2)}%</div><div style="font-size:11px;color:var(--ink2);margin-top:2px">max(contract+2%, 5.25%)</div></div>
+    <div class="calc-result"><div class="stat-label">Contract payment</div><div class="stat-val mono">${money(contractPay)}/mo</div><div style="font-size:11px;color:var(--ink2);margin-top:2px">at ${(contract*100).toFixed(2)}%</div></div>
+    <div class="calc-result"><div class="stat-label">Qualifying payment</div><div class="stat-val coral mono">${money(qualPay)}/mo</div><div style="font-size:11px;color:var(--ink2);margin-top:2px">used by lender</div></div>
+    <div class="calc-result"><div class="stat-label">Required income (30% GDS)</div><div class="stat-val coral mono">${money(qualifyingIncome)}</div><div style="font-size:11px;color:var(--ink2);margin-top:2px">incl. tax + heat proxy</div></div>
+    <div class="calc-result"><div class="stat-label">Downpayment</div><div class="stat-val mono">${money(downAmount)}</div><div style="font-size:11px;color:${meetsMinDown?'var(--teal)':'var(--coral)'};margin-top:2px">${meetsMinDown?'✓ Meets min':'Below min '+money(minDown)}</div></div>
+    <div class="calc-result"><div class="stat-label">Loan amount</div><div class="stat-val mono">${money(principal)}</div><div style="font-size:11px;color:var(--ink2);margin-top:2px">${amort}-yr amortization</div></div>`;
+  tweenContainer(document.getElementById('stressResult'));
+}
+
+// ── Neighbourhood data (TRREB Q2 2025) ──
 const NEIGH={
   condo:{
     gta:{label:'All GTA',avg:685961},toronto:{label:'City of Toronto',avg:717210},
@@ -660,20 +929,21 @@ const NEIGH={
   }
 };
 
-// Map propType -> HOUSING key
 const PROP_TO_HOUSING={condo:'condo',house:'noncondo'};
 
 function setPropType(t){
   neighType=t;
   housingView=PROP_TO_HOUSING[t];
-  ['btnCondo','btnCondo2'].forEach(id=>{const el=document.getElementById(id);if(el)el.classList.toggle('active',t==='condo');});
-  ['btnHouse','btnHouse2'].forEach(id=>{const el=document.getElementById(id);if(el)el.classList.toggle('active',t==='house');});
+  ['btnCondo','btnCondo2'].forEach(id=>{const el=document.getElementById(id);if(el){el.classList.toggle('active',t==='condo');el.setAttribute('aria-pressed',t==='condo')}});
+  ['btnHouse','btnHouse2'].forEach(id=>{const el=document.getElementById(id);if(el){el.classList.toggle('active',t==='house');el.setAttribute('aria-pressed',t==='house')}});
   drawHousing();renderHousingTable();renderBanner();renderSummary();renderNeigh();updateMapHighlight();
+  syncStressToHousing();
 }
 
 function selectRegion(r){
   neighRegion=r;
   document.getElementById('neighSelect').value=r;
+  spawnRipple(r);
   renderNeigh();updateMapHighlight();
 }
 
@@ -682,7 +952,7 @@ function renderNeigh(){
   const list=Object.entries(NEIGH[neighType]).map(([key,val])=>({key,...val})).sort((a,b)=>a.avg-b.avg);
   const rank=list.findIndex(x=>x.key===neighRegion)+1;
   const qualifying=Math.round(r.avg*0.225);
-  const mortgage=Math.round(r.avg*0.8*(0.0549/12)/(1-Math.pow(1+0.0549/12,-300)));
+  const mortgage=Math.round(calcMortgage(r.avg, rate, 25));
   const down=r.avg<=500000?r.avg*0.05:25000+(r.avg-500000)*0.1;
   const down20=r.avg*0.20;
   const can=myIncome>=qualifying;
@@ -697,10 +967,10 @@ function renderNeigh(){
     '<div class="neigh-card card-sm"><div class="stat-label">20% downpayment</div><div class="stat-val mono">'+money(down20)+'</div></div>';
   document.getElementById('neighQualify').innerHTML=
     '<div class="stat-label" style="margin-bottom:6px">Your income vs. '+r.label+'</div>'+
-    '<div style="font-size:18px;font-family:var(--mono);font-weight:500;color:'+(can?'var(--teal)':'var(--coral)')+';margin-bottom:4px">'+(can?'&#10003; You qualify':'&#10007; Shortfall')+'</div>'+
+    '<div style="font-size:18px;font-family:var(--mono);font-weight:600;color:'+(can?'var(--teal)':'var(--coral)')+';margin-bottom:4px">'+(can?'✓ You qualify':'✗ Shortfall')+'</div>'+
     '<div style="font-size:12px;color:var(--ink2)">'+(can?'+'+money(gap)+' above':money(gap)+' below')+' threshold &middot; need '+money(qualifying)+'/yr</div>'+
     '<div class="region-rank"><span>Price rank</span><strong>'+rank+' / '+list.length+' cheapest</strong></div>'+
-    '<div class="neigh-note" style="margin-top:8px">Assumes 20% down for mortgage estimate and a simple 22.5% price-to-income qualifying rule for regional comparison.</div>';
+    '<div class="neigh-note" style="margin-top:8px">Mortgage uses live rate slider above ('+(rate*100).toFixed(2)+'%), 25-yr amortization, 80% LTV. Qualifying income uses a simplified 22.5% price-to-income rule.</div>';
 }
 
 // ── SVG map highlight ──
@@ -726,6 +996,7 @@ function updateMapHighlight(){
 
 init();
 initMap();
+initFadeUp();
 </script>
 </body>
 </html>
