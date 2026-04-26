@@ -244,10 +244,18 @@ footer .disclaimer{margin-top:8px;font-style:italic}
 .region-rank{display:flex;align-items:center;justify-content:space-between;gap:10px;border-top:1px solid var(--border2);padding-top:9px;margin-top:9px;font-size:12px;color:var(--ink2)}
 
 /* Rate scenario bar */
-.rate-bar{background:rgba(255,255,255,0.78);border:1px solid var(--border);border-radius:var(--radius);padding:14px 18px;margin:8px 0 20px;display:flex;align-items:center;gap:16px;flex-wrap:wrap;position:sticky;top:8px;z-index:50;backdrop-filter:saturate(180%) blur(20px);-webkit-backdrop-filter:saturate(180%) blur(20px)}
-.rate-bar-label{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:var(--ink3)}
-.rate-bar input[type=range]{flex:1;min-width:200px}
-.rate-bar .rate-val{font-family:var(--mono);font-size:18px;font-weight:600;color:var(--coral);min-width:80px;text-align:right}
+.rate-bar{background:rgba(255,255,255,0.92);border:1.5px solid rgba(0,0,0,0.18);border-radius:var(--radius);padding:18px 24px;margin:8px 0 20px;display:flex;align-items:center;gap:18px;flex-wrap:wrap;position:sticky;top:8px;z-index:50;backdrop-filter:saturate(180%) blur(20px);-webkit-backdrop-filter:saturate(180%) blur(20px)}
+.rate-bar-label{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:var(--ink)}
+.rate-bar input[type=range]{flex:1;min-width:140px}
+.rate-bar .rate-val{font-family:var(--mono);font-size:20px;font-weight:600;color:var(--coral);min-width:90px;text-align:right}
+.rate-bar select{color:var(--ink);font-weight:600}
+.rate-bar-sep{width:1px;height:28px;background:rgba(0,0,0,0.15);align-self:center}
+@media(max-width:780px){
+  .rate-bar{padding:12px 16px;gap:12px;top:6px}
+  .rate-bar-sep{display:none}
+  .rate-bar .rate-val{font-size:16px;min-width:60px}
+  .rate-bar input[type=range]{min-width:100px}
+}
 
 @media(max-width:780px){.neigh-layout{grid-template-columns:1fr}.neigh-panel{position:static}#regionMap{padding:0 4px 8px}}
 @media(max-width:680px){h1{font-size:22px}.savings-grid{grid-template-columns:1fr 1fr}.neigh-cards{grid-template-columns:1fr}}
@@ -274,18 +282,15 @@ footer .disclaimer{margin-top:8px;font-style:italic}
   <script>(adsbygoogle=window.adsbygoogle||[]).push({})</script>
 </div>
 
-<!-- Global rate scenario bar -->
-<div class="rate-bar" role="region" aria-label="Mortgage rate scenario">
-  <span class="rate-bar-label">Mortgage rate scenario</span>
-  <input type="range" id="rateSlider" min="3.0" max="8.0" step="0.05" value="5.49" aria-label="Mortgage rate"/>
-  <span class="rate-val" id="rateVal">5.49%</span>
-  <span style="font-size:11px;color:var(--ink3);font-style:italic">Updates all charts &amp; tables below</span>
-</div>
-
-<div style="display:flex;align-items:center;gap:12px;margin-bottom:20px;flex-wrap:wrap">
-  <label for="ageSelect" style="font-size:13px;color:var(--ink2)">Age cohort:</label>
+<!-- Global controls bar (sticky) -->
+<div class="rate-bar" role="region" aria-label="Global controls">
+  <label for="ageSelect" class="rate-bar-label" style="margin:0">Age</label>
   <select id="ageSelect" aria-label="Age cohort"></select>
   <span id="affordBadge" class="pill coral" role="status"></span>
+  <span class="rate-bar-sep" aria-hidden="true"></span>
+  <span class="rate-bar-label">Mortgage rate</span>
+  <input type="range" id="rateSlider" min="3.0" max="8.0" step="0.05" value="5.49" aria-label="Mortgage rate"/>
+  <span class="rate-val" id="rateVal">5.49%</span>
 </div>
 
 <div id="affordBanner" class="banner warn" role="status">
@@ -425,7 +430,7 @@ footer .disclaimer{margin-top:8px;font-style:italic}
     <div class="calc-input-row">
       <label><span>Home price</span><input type="number" id="stPrice" min="100000" max="5000000" step="10000" value="800000"/></label>
       <label><span>Downpayment %</span><input type="number" id="stDown" min="5" max="100" step="1" value="20"/></label>
-      <label><span>Contract rate %</span><input type="number" id="stRate" min="1" max="15" step="0.05" value="5.49"/></label>
+      <label><span>Mortgage rate %</span><input type="number" id="stRate" min="1" max="15" step="0.05" value="5.49"/></label>
       <label><span>Amortization (yrs)</span>
         <select id="stAmort"><option value="25">25</option><option value="30">30</option></select>
       </label>
@@ -467,7 +472,7 @@ footer .disclaimer{margin-top:8px;font-style:italic}
 <!-- Explainer / FAQ section for SEO + indexable content -->
 <section class="explainer" aria-labelledby="h2-explainer">
   <h2 id="h2-explainer">Toronto housing affordability — explained</h2>
-  <p>Toronto's housing market is one of the most expensive in North America. The median home price is now over $1.0M, while condos typically sit in the high $600Ks. Since 2015, the gap between what households earn and what they need to qualify for a mortgage has grown significantly. This page is designed to give you a quick, realistic snapshot of where you stand — by age group, region, and under different interest-rate scenarios.</p>
+  <p>Toronto's housing market is one of the most expensive in North America. The median home price is now over $1.0M, while condos typically sit in the high $600Ks. Since 2015, the gap between what households earn and what they need to qualify for a mortgage has grown significantly. This page is designed to give you a quick, realistic snapshot of where you stand: by age group, region, and across different interest-rate scenarios.</p>
 
   <details>
     <summary>How the calculators work</summary>
@@ -493,14 +498,14 @@ footer .disclaimer{margin-top:8px;font-style:italic}
       <li>Upper-income range (P90–P99)</li>
       <li>Full distribution (P10–P99)</li>
     </ul>
-    <p>This gives you a quick view of how incomes are spread across households — and how inequality changes within each age or regional group.</p>
+    <p>This gives you a quick view of how incomes are spread across households, and how inequality changes within each age or regional group.</p>
   </details>
 
   <h3>Common questions</h3>
 
   <details>
     <summary>What income do I need to buy a house in Toronto?</summary>
-    <p>For an average detached or semi-detached home at around $1.13M, you'd need a qualifying household income of roughly $250,000 at today's rates. That's well above Toronto's median household income of about $100,500. For a condo at $651K, the threshold drops to about $149,000. These numbers move when mortgage rates change — adjust the rate slider at the top of the page to see how.</p>
+    <p>For an average detached or semi-detached home at around $1.13M, you'd need a qualifying household income of roughly $250,000 at today's rates. That's well above Toronto's median household income of about $100,500. For a condo at $651K, the threshold drops to about $149,000. These numbers move when mortgage rates change. Adjust the rate slider at the top of the page to see how.</p>
   </details>
 
   <details>
@@ -515,7 +520,7 @@ footer .disclaimer{margin-top:8px;font-style:italic}
 
   <details>
     <summary>Why does my income percentile change when I switch age cohorts?</summary>
-    <p>Income tends to peak in the 45–54 age group, then decline through retirement. So a $100,000 income puts a 25–34-year-old around the 80th percentile, but a 45–54-year-old closer to the 60th. This is why housing affordability hits younger Torontonians hardest — they face the same qualifying income thresholds, but the income distribution in their cohort sits much further below those thresholds.</p>
+    <p>Income tends to peak in the 45–54 age group, then decline through retirement. So a $100,000 income puts a 25–34-year-old around the 80th percentile, but a 45–54-year-old closer to the 60th. This is why housing affordability hits younger Torontonians hardest. They face the same qualifying income thresholds, but the income distribution in their cohort sits much further below them.</p>
   </details>
 
   <details>
@@ -531,7 +536,7 @@ footer .disclaimer{margin-top:8px;font-style:italic}
     <li>Stress test rule: OSFI Guideline B-20</li>
     <li>FHSA / RRSP HBP figures: Canada Revenue Agency, current as of 2024</li>
   </ul>
-  <p style="font-size:12px;color:var(--ink3);margin-top:12px">The methodology is intentionally simplified for transparency. Property tax, condo fees, insurance, and CMHC mortgage insurance premiums on insured mortgages aren't separately modelled in every calculator on this page — see the per-tool notes.</p>
+  <p style="font-size:12px;color:var(--ink3);margin-top:12px">The methodology is intentionally simplified for transparency. Property tax, condo fees, insurance, and CMHC mortgage insurance premiums on insured mortgages aren't separately modelled in every calculator on this page. See the per-tool notes.</p>
 </section>
 
 <div class="ad-unit" style="margin-top:32px" role="complementary" aria-label="Advertisement">
@@ -797,7 +802,7 @@ function drawIncome(){
     const cols=['#d4cfc6','#c0b89e','#9b8a6e','#7a6e57','#bfa88a','#c94a2b','#1a1915'];
     datasets=['p10','p25','p50','p75','p90','p95','p99'].map((k,i)=>({label:k.toUpperCase(),data:DATA.map(d=>d[k]),tension:.3,borderWidth:k==='p50'?2.5:1.5,pointRadius:2,borderColor:cols[i],fill:false}));
   }
-  incomeChart=new Chart(document.getElementById('incomeChart'),{type:'line',data:{labels,datasets},options:{responsive:true,maintainAspectRatio:false,interaction:{mode:'index',intersect:false},animation:{duration:600,easing:'easeOutCubic'},plugins:{legend:{labels:{boxWidth:8,usePointStyle:true,font:{size:11}}},tooltip:{callbacks:{label:c=>`${c.dataset.label}: ${money(c.raw)}`},padding:10,cornerRadius:8}},scales:{x:{grid:{display:false},border:{display:false}},y:{ticks:{callback:v=>money(v),font:{size:11}},grid:{color:'rgba(0,0,0,0.06)'},border:{display:false}}}}});
+  incomeChart=new Chart(document.getElementById('incomeChart'),{type:'line',data:{labels,datasets},options:{responsive:true,maintainAspectRatio:false,interaction:{mode:'index',intersect:false},animation:{duration:600,easing:'easeOutCubic'},plugins:{legend:{labels:{boxWidth:8,usePointStyle:true,font:{size:11}}},tooltip:{reverse:true,callbacks:{label:c=>`${c.dataset.label}: ${money(c.raw)}`},padding:10,cornerRadius:8}},scales:{x:{grid:{display:false},border:{display:false}},y:{ticks:{callback:v=>money(v),font:{size:11}},grid:{color:'rgba(0,0,0,0.06)'},border:{display:false}}}}});
 }
 
 function drawHousing(){
@@ -898,8 +903,8 @@ function runStressTest(){
   const meetsMinDown = downAmount>=minDown;
 
   document.getElementById('stressResult').innerHTML=`
-    <div class="calc-result"><div class="stat-label">Qualifying rate (B-20)</div><div class="stat-val coral mono">${(qualRate*100).toFixed(2)}%</div><div style="font-size:11px;color:var(--ink2);margin-top:2px">max(contract+2%, 5.25%)</div></div>
-    <div class="calc-result"><div class="stat-label">Contract payment</div><div class="stat-val mono">${money(contractPay)}/mo</div><div style="font-size:11px;color:var(--ink2);margin-top:2px">at ${(contract*100).toFixed(2)}%</div></div>
+    <div class="calc-result"><div class="stat-label">Qualifying rate (B-20)</div><div class="stat-val coral mono">${(qualRate*100).toFixed(2)}%</div><div style="font-size:11px;color:var(--ink2);margin-top:2px">max(rate+2%, 5.25%)</div></div>
+    <div class="calc-result"><div class="stat-label">Mortgage payment</div><div class="stat-val mono">${money(contractPay)}/mo</div><div style="font-size:11px;color:var(--ink2);margin-top:2px">at ${(contract*100).toFixed(2)}%</div></div>
     <div class="calc-result"><div class="stat-label">Qualifying payment</div><div class="stat-val coral mono">${money(qualPay)}/mo</div><div style="font-size:11px;color:var(--ink2);margin-top:2px">used by lender</div></div>
     <div class="calc-result"><div class="stat-label">Required income (30% GDS)</div><div class="stat-val coral mono">${money(qualifyingIncome)}</div><div style="font-size:11px;color:var(--ink2);margin-top:2px">incl. tax + heat proxy</div></div>
     <div class="calc-result"><div class="stat-label">Downpayment</div><div class="stat-val mono">${money(downAmount)}</div><div style="font-size:11px;color:${meetsMinDown?'var(--teal)':'var(--coral)'};margin-top:2px">${meetsMinDown?'✓ Meets min':'Below min '+money(minDown)}</div></div>
