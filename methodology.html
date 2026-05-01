@@ -1,0 +1,296 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Methodology — Toronto Housing Affordability Calculator</title>
+<meta name="description" content="Sources, formulas, and assumptions behind the Toronto Housing Affordability Calculator. Income data from StatCan T1FF, housing prices from CMHC and TRREB, mortgage qualification under OSFI Guideline B-20."/>
+<link rel="canonical" href="https://www.torontoaffordability.com/methodology"/>
+<meta name="robots" content="index,follow"/>
+<meta name="author" content="Eric Liu"/>
+<meta name="theme-color" content="#000000"/>
+
+<meta property="og:type" content="article"/>
+<meta property="og:url" content="https://www.torontoaffordability.com/methodology"/>
+<meta property="og:title" content="Methodology — Toronto Housing Affordability Calculator"/>
+<meta property="og:description" content="Sources, formulas, and assumptions behind the calculator. StatCan T1FF, CMHC, TRREB Q2 2025, OSFI B-20."/>
+<meta property="og:locale" content="en_CA"/>
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Methodology — Toronto Housing Affordability"/>
+<meta name="twitter:description" content="Sources, formulas, and assumptions used to calculate Toronto housing affordability."/>
+
+<meta name="google-adsense-account" content="ca-pub-5619117265675077"/>
+
+<script type="application/ld+json">
+{
+  "@context":"https://schema.org",
+  "@type":"TechArticle",
+  "headline":"Methodology — Toronto Housing Affordability Calculator",
+  "description":"Sources, formulas, and assumptions behind the Toronto Housing Affordability Calculator.",
+  "datePublished":"2026-04-30",
+  "dateModified":"2026-04-30",
+  "author":{"@type":"Person","name":"Eric Liu"},
+  "publisher":{"@type":"Organization","name":"Toronto Affordability","url":"https://www.torontoaffordability.com/"},
+  "mainEntityOfPage":"https://www.torontoaffordability.com/methodology"
+}
+</script>
+
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5619117265675077" crossorigin="anonymous"></script>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;700&family=Inter:wght@400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#ffffff;--surface:#ffffff;--surface2:#f0f0f0;
+  --ink:#000000;--ink2:#666666;--ink3:#969696;
+  --border:#e3e3e3;--border2:#f0f0f0;
+  --mono:'DM Mono','SF Mono','Menlo',ui-monospace,monospace;
+  --radius:14px;--radius-sm:8px;--radius-pill:64px;
+  --press-scale:.97;
+  --font-head:'Manrope',Inter,-apple-system,system-ui,sans-serif;
+  --font-body:'Inter',-apple-system,system-ui,sans-serif;
+  --hero-accent:#0a8054;
+}
+html,body{overflow-x:clip}
+body{font-family:var(--font-body);background:var(--bg);color:var(--ink);font-size:16px;line-height:1.6;letter-spacing:-0.01em;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}
+.shell{max-width:1100px;margin:0 auto;padding:0 24px}
+
+/* Hero — black, matches main page */
+header.site{background:#000;color:#fff;padding:clamp(64px,8vw,120px) 0 clamp(48px,6vw,96px);margin:0 calc(50% - 50vw);position:relative}
+header.site .hero-inner{max-width:1100px;margin:0 auto;padding:0 24px}
+header.site .crumb{display:inline-flex;align-items:center;gap:8px;color:rgba(255,255,255,0.65);font-family:var(--font-head);font-size:13px;font-weight:500;text-decoration:none;margin-bottom:24px}
+header.site .crumb:hover{color:#fff}
+header.site .crumb svg{width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+header.site .eyebrow{font-family:var(--font-head);font-size:12px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,0.65)}
+header.site h1{font-family:var(--font-head);font-size:clamp(36px,5.5vw,64px);font-weight:700;line-height:1.05;letter-spacing:-0.03em;color:#fff;margin-top:14px;max-width:780px}
+header.site .lede{font-size:clamp(16px,1.6vw,20px);color:rgba(255,255,255,0.78);max-width:680px;margin-top:24px;line-height:1.5}
+
+/* Typography */
+h2{font-family:var(--font-head);font-size:clamp(24px,3vw,32px);font-weight:700;line-height:1.15;letter-spacing:-0.02em;color:var(--ink);margin:0 0 12px}
+h3{font-family:var(--font-head);font-size:18px;font-weight:600;line-height:1.3;letter-spacing:-0.01em;color:var(--ink);margin:24px 0 8px}
+p{font-size:16px;color:var(--ink);line-height:1.65;margin-bottom:14px}
+ul,ol{padding-left:22px;margin:6px 0 14px}
+li{font-size:16px;color:var(--ink);line-height:1.65;margin-bottom:6px}
+a{color:var(--ink);text-decoration:underline;text-underline-offset:2px}
+a:hover{color:var(--hero-accent)}
+strong{font-weight:600;color:var(--ink)}
+
+/* Section block */
+main{padding:clamp(48px,6vw,96px) 0}
+.section{margin-bottom:clamp(40px,5vw,72px);max-width:780px}
+.section .label{font-family:var(--font-head);font-size:12px;font-weight:500;text-transform:uppercase;letter-spacing:.12em;color:var(--ink3);margin-bottom:16px}
+.section .label .num{color:var(--hero-accent);margin-right:8px}
+
+/* Formula card */
+.formula{background:var(--surface2);border-radius:var(--radius);padding:20px 24px;margin:18px 0;font-family:var(--mono);font-size:14px;color:var(--ink);line-height:1.6;overflow-x:auto;white-space:pre-wrap}
+.formula .var{color:var(--hero-accent);font-weight:500}
+.formula .comment{color:var(--ink3)}
+
+/* Source list table-ish layout */
+.sources{display:grid;grid-template-columns:160px 1fr;gap:8px 20px;margin:14px 0;align-items:baseline}
+.sources dt{font-family:var(--font-head);font-size:13px;font-weight:600;color:var(--ink3);text-transform:uppercase;letter-spacing:.06em}
+.sources dd{font-size:15px;color:var(--ink)}
+@media(max-width:560px){
+  .sources{grid-template-columns:1fr;gap:4px 0}
+  .sources dt{margin-top:8px}
+}
+
+/* Caveat box */
+.caveat{background:#fdf0ec;border-left:3px solid #c94a2b;border-radius:var(--radius-sm);padding:16px 20px;margin:18px 0;font-size:15px;color:var(--ink2);line-height:1.55}
+.caveat strong{color:#c94a2b}
+
+/* AdSense slot */
+.ad-unit{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:16px 12px;margin:32px 0;text-align:center;overflow:hidden;min-height:120px}
+.ad-label{font-family:var(--font-head);font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:var(--ink3);margin-bottom:6px}
+
+/* Black endcap footer */
+.endcap{background:#000;color:#fff;padding:clamp(48px,6vw,96px) clamp(24px,4vw,48px);margin:clamp(40px,6vw,72px) calc(50% - 50vw) 0}
+.endcap-inner{max-width:1100px;margin:0 auto}
+.endcap h2{color:#fff;font-size:clamp(28px,4vw,44px);margin-bottom:20px;max-width:680px}
+.endcap .lede{color:rgba(255,255,255,0.78);font-size:clamp(15px,1.4vw,18px);margin-bottom:32px;max-width:580px;line-height:1.5}
+.endcap .cta-row{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:clamp(40px,5vw,64px)}
+.endcap .cta{display:inline-flex;align-items:center;gap:10px;background:#f0f0f0;color:#000;text-decoration:none;border-radius:var(--radius-pill);padding:14px 26px;font-family:var(--font-head);font-size:15px;font-weight:500;border:1px solid transparent;transition:transform .1s,background .15s}
+.endcap .cta:hover{background:#fff;color:#000}
+.endcap .cta:active{transform:scale(var(--press-scale))}
+.endcap .cta svg{width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.endcap .copy{padding-top:28px;border-top:1px solid rgba(255,255,255,0.14);font-size:13px;color:rgba(255,255,255,0.5)}
+
+/* Fade-up on scroll */
+.fade-section{opacity:0;transform:translateY(28px);transition:opacity .8s cubic-bezier(.22,.61,.36,1),transform .8s cubic-bezier(.22,.61,.36,1);will-change:opacity,transform}
+.fade-section.is-visible{opacity:1;transform:translateY(0)}
+@media (prefers-reduced-motion:reduce){
+  .fade-section{opacity:1;transform:none;transition:none}
+}
+</style>
+</head>
+<body>
+
+<div class="shell">
+
+<header class="site" role="banner">
+  <div class="hero-inner">
+    <a href="2026-04-30-index-v3.html" class="crumb">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+      Back to calculator
+    </a>
+    <div class="eyebrow">Methodology &middot; v2026.04.30</div>
+    <h1>How we calculate Toronto housing affordability.</h1>
+    <p class="lede">Every number on the calculator comes from public data and a transparent formula. This page lays out the sources, the assumptions, and the limitations — so you can trust the numbers, and reproduce them yourself.</p>
+  </div>
+</header>
+
+<main>
+
+<section class="section fade-section" aria-labelledby="s-data">
+  <div class="label"><span class="num">01</span>Data sources</div>
+  <h2 id="s-data">Where the numbers come from</h2>
+  <p>The calculator pulls from three public datasets, all current as of the FY2024 reporting cycle. Nothing is sourced from listings sites, scraped data, or vendor estimates.</p>
+  <dl class="sources">
+    <dt>Income</dt>
+    <dd>Statistics Canada T1FF custom tabulations, Toronto CMA, FY2024 — household income percentiles by 7 age cohorts (P10–P99).</dd>
+    <dt>City prices</dt>
+    <dd>CMHC Housing Market Information Portal, Toronto CMA, 2024 — average condo and detached/semi prices.</dd>
+    <dt>Regional prices</dt>
+    <dd>Toronto Regional Real Estate Board (TRREB) Q2 2025 Market Watch — region-level average sale prices for the GTA.</dd>
+    <dt>Mortgage rules</dt>
+    <dd>Office of the Superintendent of Financial Institutions (OSFI) Guideline B-20 — minimum qualifying rate for uninsured mortgages.</dd>
+  </dl>
+</section>
+
+<section class="section fade-section" aria-labelledby="s-qual">
+  <div class="label"><span class="num">02</span>Qualifying income</div>
+  <h2 id="s-qual">The 22.5% rule</h2>
+  <p>For each home price shown on the page, the calculator estimates the gross household income required to qualify for a typical mortgage. The estimate uses a simplified 22.5% benchmark:</p>
+  <div class="formula"><span class="comment"># Required gross household income per year:</span>
+<span class="var">qualifying_income</span> = <span class="var">home_price</span> &times; 0.225</div>
+  <p>This figure is derived from a typical 30% Gross Debt Service (GDS) ratio, where mortgage principal + interest + property tax + heat must not exceed 30% of gross income, and the mortgage payment dominates that ratio.</p>
+  <p>It's a benchmark, not a precise underwriting calculation. Actual lender qualification depends on your full debt load, credit profile, downpayment size, and the specific stress-test rate (covered in section 04).</p>
+</section>
+
+<section class="section fade-section" aria-labelledby="s-mort">
+  <div class="label"><span class="num">03</span>Mortgage payment</div>
+  <h2 id="s-mort">Standard amortization formula</h2>
+  <p>Monthly mortgage payments use the standard amortization formula. Inputs are the loan principal, the monthly interest rate, and the number of monthly payments over the amortization period:</p>
+  <div class="formula"><span class="comment"># P = principal, r = monthly rate, n = total months</span>
+payment = P &times; r / (1 &minus; (1 + r)<sup>&minus;n</sup>)
+
+<span class="comment"># Default assumptions (overrideable in the stress test):</span>
+<span class="var">downpayment</span>     = 20%
+<span class="var">amortization</span>    = 25 years (300 months)
+<span class="var">contract_rate</span>   = global rate slider (default 5.49%)</div>
+  <p>The "Mortgage rate" slider at the top of the calculator drives this formula across every section — the summary cards, the housing chart, the savings runway, and the stress test all recompute when you move the slider.</p>
+</section>
+
+<div class="ad-unit" role="complementary" aria-label="Advertisement">
+  <div class="ad-label">Advertisement</div>
+  <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-5619117265675077" data-ad-slot="SLOT_ID_M1" data-ad-format="auto" data-full-width-responsive="true"></ins>
+  <script>(adsbygoogle=window.adsbygoogle||[]).push({})</script>
+</div>
+
+<section class="section fade-section" aria-labelledby="s-stress">
+  <div class="label"><span class="num">04</span>Mortgage stress test</div>
+  <h2 id="s-stress">OSFI Guideline B-20</h2>
+  <p>Federally regulated lenders must qualify uninsured borrowers at the higher of two rates:</p>
+  <ol>
+    <li>The contract mortgage rate plus 2 percentage points, or</li>
+    <li>5.25% (the regulatory floor)</li>
+  </ol>
+  <div class="formula"><span class="var">qualifying_rate</span> = max(contract_rate + 2.00%, 5.25%)</div>
+  <p>The stress test calculator on the main page uses this rule. It shows two payments side-by-side: the <strong>contract payment</strong> (what you'd actually pay each month at the contract rate) and the <strong>qualifying payment</strong> (what the lender uses to decide whether you qualify). The difference is what gets people approved or denied.</p>
+  <p>The income required to qualify is then derived by treating the qualifying payment as 30% of gross household income — consistent with the GDS benchmark in section 02.</p>
+</section>
+
+<section class="section fade-section" aria-labelledby="s-region">
+  <div class="label"><span class="num">05</span>Regional prices</div>
+  <h2 id="s-region">GTA region map</h2>
+  <p>The map under "Region breakdown" uses TRREB Q2 2025 average sale prices. The 14 regions cover the GTA in two tiers:</p>
+  <ul>
+    <li><strong>Top-level regions</strong>: City of Toronto, York, Peel, Durham, Halton — averages across all sub-municipalities</li>
+    <li><strong>Sub-municipalities</strong>: Markham, Vaughan, Richmond Hill (York); Mississauga, Brampton (Peel); Oakville (Halton); Oshawa, Pickering (Durham)</li>
+  </ul>
+  <p>The choropleth color scale uses a teal ramp for condo prices ($440K–$810K) and a coral ramp for detached/semi prices ($770K–$1.5M). Toggling between Condo and House recomputes both the choropleth and the qualifying-income comparison in the right-hand panel.</p>
+</section>
+
+<section class="section fade-section" aria-labelledby="s-percentile">
+  <div class="label"><span class="num">06</span>Income percentiles</div>
+  <h2 id="s-percentile">By age cohort</h2>
+  <p>The income distribution chart and the full percentile reference table both use the same StatCan T1FF data, segmented into seven age cohorts:</p>
+  <ul>
+    <li>18–24, 25–34, 35–44, 45–54, 55–64, 65–69, 70+</li>
+  </ul>
+  <p>Each cohort has eight breakpoints: P10, P25, P50 (median), P75, P90, P95, P97, P99. The "Full curve" tab plots P10 through P99; the "Upper tail" tab focuses on P90 through P99 to make the high-income detail readable.</p>
+  <p>The "% of cohort qualifying" badge in the summary cards is computed by finding the lowest percentile breakpoint that meets the qualifying income, then converting to a "top X%" share. This is a discrete approximation — actual cohort qualification curves are continuous, but the breakpoints are the only public data.</p>
+</section>
+
+<section class="section fade-section" aria-labelledby="s-limits">
+  <div class="label"><span class="num">07</span>Limitations</div>
+  <h2 id="s-limits">What the calculator does not model</h2>
+  <p>The methodology is intentionally simplified for transparency. These items are <em>not</em> separately modeled in every calculator on the page — keep them in mind when interpreting the numbers:</p>
+  <ul>
+    <li><strong>Property taxes</strong> — varies by municipality (Toronto ~0.66%, Mississauga ~0.79%, Oshawa ~1.32%); folded into the GDS benchmark but not itemized</li>
+    <li><strong>Condo maintenance fees</strong> — typically $0.65–$0.85 per square foot per month in the GTA; can shift qualifying income by $20K–$40K on a typical condo</li>
+    <li><strong>CMHC insurance premiums</strong> — apply to insured (less than 20% down) mortgages; can add 2.8–4.0% to the loan principal</li>
+    <li><strong>Home insurance</strong> — typically $1,500–$3,000/year; folded into GDS but not itemized</li>
+    <li><strong>Heat</strong> — a real GDS input; modeled as a small fixed overhead inside the 30% benchmark</li>
+    <li><strong>Closing costs</strong> — land transfer tax (Ontario + Toronto), legal fees, title insurance — not in the savings runway</li>
+    <li><strong>Investment returns on savings</strong> — the runway projects linear savings; real returns from FHSA, RRSP, or TFSA holdings would shorten it</li>
+  </ul>
+  <div class="caveat">
+    <strong>Bottom line:</strong> The calculator is a fast, transparent first-pass. It is not a substitute for a mortgage pre-approval from a lender, a real estate agent's market analysis, or financial planning advice. Use the numbers to frame a conversation, not to commit to a purchase.
+  </div>
+</section>
+
+<section class="section fade-section" aria-labelledby="s-repro">
+  <div class="label"><span class="num">08</span>Reproducibility</div>
+  <h2 id="s-repro">Verifying the numbers</h2>
+  <p>Every figure on the page can be reproduced from public sources:</p>
+  <ol>
+    <li>Pull the StatCan T1FF custom tabulation for Toronto CMA, FY2024, by age cohort and income percentile.</li>
+    <li>Apply the qualifying-income formula in section 02 to any home price in the CMHC or TRREB data.</li>
+    <li>Run the standard amortization formula in section 03 to get the monthly payment at any rate / amortization combination.</li>
+    <li>Apply the OSFI B-20 stress rule in section 04 to derive the qualifying payment and required income.</li>
+  </ol>
+  <p>If you spot a discrepancy, please get in touch — corrections are welcome.</p>
+</section>
+
+</main>
+
+</div>
+
+<section class="endcap" role="contentinfo">
+  <div class="endcap-inner">
+    <h2>Use the calculator.</h2>
+    <p class="lede">All of this methodology is wired into a single interactive page — adjust your age, your income, the mortgage rate, and the property type to see how the numbers move.</p>
+    <div class="cta-row">
+      <a href="2026-04-30-index-v3.html" class="cta">Back to calculator
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+      </a>
+    </div>
+    <div class="copy">&copy; 2024–2026 Eric Liu &middot; For informational purposes only &middot; Not financial advice</div>
+  </div>
+</section>
+
+<script>
+// Scroll-triggered fade-up
+(function(){
+  const reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion:reduce)').matches;
+  const targets = document.querySelectorAll('.fade-section');
+  if (!('IntersectionObserver' in window) || reduced) {
+    targets.forEach(t => t.classList.add('is-visible'));
+    return;
+  }
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) { e.target.classList.add('is-visible'); obs.unobserve(e.target); }
+    });
+  }, { threshold: 0.08, rootMargin: '0px 0px -60px 0px' });
+  targets.forEach(t => obs.observe(t));
+})();
+</script>
+
+</body>
+</html>
