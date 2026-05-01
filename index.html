@@ -701,13 +701,13 @@ input[type="range"]::-webkit-slider-thumb{
     </div>
   </div>
 
-  <!-- ============ SECTION 4: WHAT CAN I AFFORD ============ -->
+  <!-- ============ SECTION 4: AFFORDABILITY + SAVINGS RUNWAY ============ -->
   <div class="section">
     <div class="section-head">
       <div>
         <div class="section-label">04 &middot; Affordability</div>
-        <div class="section-title">What Can I Afford?</div>
-        <div class="section-sub">Enter your income to see your percentile and what you qualify for</div>
+        <div class="section-title">What Can I Afford &amp; How Long to Save?</div>
+        <div class="section-sub">Set your income to see your percentile, what you qualify for, and your downpayment runway</div>
       </div>
     </div>
     <div class="section-body">
@@ -717,28 +717,20 @@ input[type="range"]::-webkit-slider-thumb{
         <span class="slider-val" id="myIncomeVal">$100,000</span>
       </div>
       <div class="kpi-strip" id="affordResult"></div>
-    </div>
-  </div>
 
-  <!-- ============ SECTION 5: SAVINGS RUNWAY ============ -->
-  <div class="section">
-    <div class="section-head">
-      <div>
-        <div class="section-label">05 &middot; Savings</div>
-        <div class="section-title">Downpayment Savings Runway</div>
-        <div class="section-sub">Years to save a downpayment at different savings rates · based on income above</div>
+      <div style="margin-top:24px">
+        <div class="section-label">Downpayment savings runway</div>
+        <div style="font-size:12px;color:var(--ink3);margin:-4px 0 12px;font-family:var(--mono)">Years to save 20% down at different savings rates</div>
+        <div class="savings-grid" id="savingsGrid"></div>
       </div>
     </div>
-    <div class="section-body">
-      <div class="savings-grid" id="savingsGrid"></div>
-    </div>
   </div>
 
-  <!-- ============ SECTION 6: FULL PERCENTILE TABLE ============ -->
+  <!-- ============ SECTION 5: FULL PERCENTILE TABLE ============ -->
   <div class="section">
     <div class="section-head">
       <div>
-        <div class="section-label">06 &middot; Reference</div>
+        <div class="section-label">05 &middot; Reference</div>
         <div class="section-title">Full Income Percentile Table</div>
         <div class="section-sub">All age cohorts × all percentiles · StatCan T1FF FY2024</div>
       </div>
@@ -769,7 +761,6 @@ input[type="range"]::-webkit-slider-thumb{
       <a href="methodology.html" class="cta">Read full methodology
         <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
       </a>
-      <a href="/contact" class="cta ghost">Contact</a>
     </div>
 
     <details>
@@ -956,7 +947,11 @@ function drawIncome(){
       interaction:{mode:'index',intersect:false},
       plugins:{
         legend:{labels:{boxWidth:8,usePointStyle:true,font:{size:11}}},
-        tooltip:{callbacks:{label:c=>`${c.dataset.label}: ${money(c.raw)}`},padding:10,cornerRadius:8},
+        tooltip:{
+          itemSort:(a,b)=>b.parsed.y - a.parsed.y,
+          callbacks:{label:c=>`${c.dataset.label}: ${money(c.raw)}`},
+          padding:10,cornerRadius:8
+        },
       },
       scales:{
         x:{grid:{display:false},border:{display:false},title:{display:true,text:'Age cohort',font:{size:11}}},
