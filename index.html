@@ -1,9 +1,31 @@
 <!doctype html>
-<html lang="en" data-theme="light">
+<html lang="en">
 <head>
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1"/>
-<title> Toronto Affordability Tool </title>
+<title>Toronto Housing Affordability Calculator | Income Percentiles, Mortgage Stress Test &amp; Rent vs. Buy</title>
+<meta name="description" content="Free Toronto housing affordability calculator. See your income percentile by age, run the mortgage stress test, compare rent vs. buy, and explore GTA prices on an interactive map. StatCan and CMHC data."/>
+<link rel="canonical" href="https://www.torontoaffordability.com/"/>
+<meta name="robots" content="index,follow"/>
+<meta name="author" content="Eric Liu"/>
+<meta name="theme-color" content="#000000"/>
+<meta property="og:type" content="website"/>
+<meta property="og:url" content="https://www.torontoaffordability.com/"/>
+<meta property="og:title" content="Toronto Housing Affordability Calculator"/>
+<meta property="og:description" content="See where your income lands by age, run the mortgage stress test, and explore prices across the GTA."/>
+<meta property="og:site_name" content="Toronto Affordability"/>
+<meta property="og:locale" content="en_CA"/>
+
+<!-- Theme: set data-theme before paint to avoid FOUC -->
+<script>
+(function(){
+  try {
+    var s = localStorage.getItem('ta-theme');
+    var t = (s === 'light' || s === 'dark') ? s : (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+    document.documentElement.setAttribute('data-theme', t);
+  } catch (e) {}
+})();
+</script>
 
 <meta name="google-adsense-account" content="ca-pub-5619117265675077"/>
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5619117265675077" crossorigin="anonymous"></script>
@@ -20,8 +42,6 @@
 <meta name="twitter:card" content="summary_large_image"/>
 <meta name="twitter:title" content="Toronto Housing Affordability Calculator"/>
 <meta name="twitter:description" content="See your income percentile, run the stress test, and compare rent vs. buy across the GTA."/>
-
-<meta name="google-adsense-account" content="ca-pub-5619117265675077"/>
 
 <!-- FAQ Schema -->
 <script type="application/ld+json">
@@ -172,8 +192,9 @@ h3{font-size:20px;font-weight:500;letter-spacing:-0.01em}
 
 /* Hero Toronto image (sits on black hero) */
 .hero-img{
-  display:block;width:calc(100% - 48px);max-width:1100px;margin:32px auto 0;
-  border-radius:var(--radius);aspect-ratio:21/9;object-fit:cover;
+  display:block;width:calc(100% - 48px);max-width:1100px;margin:24px auto 0;
+  border-radius:var(--radius);aspect-ratio:1024/338;
+  object-fit:cover;object-position:center;
   background:#1a1a1a;
 }
 .hero-img.is-error{display:none}
@@ -511,6 +532,21 @@ input[type="range"]::-webkit-slider-thumb{
   .hero h1{font-size:28px}
 }
 </style>
+<link rel="icon" href="favicon.svg" type="image/svg+xml"/>
+<link rel="alternate icon" href="favicon.ico"/>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"Organization","name":"Toronto Affordability","url":"https://www.torontoaffordability.com/","founder":{"@type":"Person","name":"Eric Liu"}}
+</script>
+<style>
+/* Supplemental: header nav on the black hero + footer nav on the black methodology endcap */
+.site-hero .site-nav{display:flex;flex-wrap:wrap;gap:18px;margin:22px 0 0;font-family:var(--font-head);font-size:14px}
+.site-hero .site-nav a{color:rgba(255,255,255,0.82);text-decoration:none;font-weight:500;transition:color .15s}
+.site-hero .site-nav a:hover{color:#fff;text-decoration:underline}
+.site-hero .site-nav a[aria-current="page"]{color:#fff;font-weight:700}
+.explainer .foot-nav{display:flex;flex-wrap:wrap;gap:16px;margin:26px 0 14px;font-family:var(--font-head);font-size:14px}
+.explainer .foot-nav a{color:rgba(255,255,255,0.85);text-decoration:none;font-weight:500}
+.explainer .foot-nav a:hover{color:#fff;text-decoration:underline}
+</style>
 </head>
 <body>
 
@@ -521,18 +557,25 @@ input[type="range"]::-webkit-slider-thumb{
       <div class="eyebrow fade-up d1">Toronto &middot; Greater Toronto Area &middot; FY2024 data</div>
       <h1 aria-label="Can you afford Toronto?"><span class="word w1">Can</span> <span class="word w2">you</span> <span class="word w3">afford</span> <span class="word w4 toronto">Toronto?</span></h1>
       <div class="updated fade-up d3">Last updated: 2026-04-30 &middot; Data: FY2024 &middot; TRREB Q2 2025 regional</div>
+      <nav class="site-nav fade-up d4" aria-label="Primary">
+        <a href="/" aria-current="page">Home</a>
+        <a href="/income-percentile-to-afford-toronto">Who can afford Toronto?</a>
+        <a href="/mortgage-stress-test-guide">Stress test guide</a>
+        <a href="/methodology">Methodology</a>
+        <a href="/about">About</a>
+      </nav>
     </div>
     <div class="hero-meta fade-up d1">
       <button class="theme-toggle" id="themeToggle">Dark mode</button>
     </div>
   </div>
 
-  <!-- Toronto skyline image — drop "Toronto.jpg" into the "New Material" folder -->
+  <!-- Toronto skyline image (Toronto.jpg lives at the site root) -->
   <img class="hero-img fade-up d4"
-       src="New Material/Toronto.jpg"
+       src="Toronto.jpg"
        alt="Toronto skyline"
        loading="eager" fetchpriority="high"
-       width="2200" height="943"
+       width="1024" height="338"
        onerror="this.classList.add('is-error')"/>
 
   <!-- Marquee sub-text scrolling along the banner -->
@@ -796,7 +839,7 @@ input[type="range"]::-webkit-slider-thumb{
     <p class="lede">Sources, assumptions, and common questions — so you can trust the numbers and reproduce them yourself.</p>
 
     <div class="cta-row">
-      <a href="methodology.html" class="cta">Read full methodology
+      <a href="/methodology" class="cta">Read full methodology
         <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
       </a>
     </div>
@@ -823,6 +866,16 @@ input[type="range"]::-webkit-slider-thumb{
       </ul>
     </details>
 
+    <nav class="foot-nav" aria-label="Footer">
+      <a href="/">Home</a>
+      <a href="/income-percentile-to-afford-toronto">Who can afford Toronto?</a>
+      <a href="/mortgage-stress-test-guide">Stress test guide</a>
+      <a href="/methodology">Methodology</a>
+      <a href="/about">About</a>
+      <a href="/privacy">Privacy Policy</a>
+      <a href="/terms">Terms of Use</a>
+      <a href="/contact">Contact</a>
+    </nav>
     <div class="copy-row">
       <div>&copy; 2024–2026 Eric Liu &middot; For informational purposes only &middot; Not financial advice</div>
     </div>
@@ -1318,12 +1371,20 @@ document.querySelectorAll('#propTypeRow .prop-btn').forEach(c=>{
   });
 });
 
-document.getElementById('themeToggle').addEventListener('click',()=>{
-  const cur = document.documentElement.getAttribute('data-theme');
-  const next = cur==='dark'?'light':'dark';
-  document.documentElement.setAttribute('data-theme', next);
-  document.getElementById('themeToggle').textContent = next==='dark'?'Light mode':'Dark mode';
-});
+(function(){
+  var btn = document.getElementById('themeToggle');
+  function sync(){
+    var isDark = document.documentElement.getAttribute('data-theme')==='dark';
+    if(btn){ btn.textContent = isDark?'Light mode':'Dark mode'; btn.setAttribute('aria-pressed', String(isDark)); }
+  }
+  sync();
+  if(btn){ btn.addEventListener('click',function(){
+    var next = document.documentElement.getAttribute('data-theme')==='dark'?'light':'dark';
+    document.documentElement.setAttribute('data-theme', next);
+    try{ localStorage.setItem('ta-theme', next); }catch(e){}
+    sync();
+  }); }
+})();
 
 document.getElementById('rateSlider').oninput = (e)=>{
   rate = +e.target.value/100;
