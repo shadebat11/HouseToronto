@@ -1,0 +1,203 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Methodology &amp; Data Sources | How Toronto Affordability Is Calculated</title>
+<meta name="description" content="A full, transparent breakdown of the data and formulas behind Toronto Affordability: the 22.5% qualifying-income benchmark, the OSFI B-20 stress test, mortgage and tax assumptions, FHSA/RRSP figures, and the limitations of the model."/>
+<link rel="canonical" href="https://www.torontoaffordability.com/methodology"/>
+<meta name="robots" content="index,follow"/>
+<meta name="author" content="Eric Liu"/>
+<meta name="theme-color" content="#143838"/>
+<meta property="og:type" content="article"/>
+<meta property="og:url" content="https://www.torontoaffordability.com/methodology"/>
+<meta property="og:title" content="Methodology &amp; Data Sources | Toronto Affordability"/>
+<meta property="og:description" content="The data and formulas behind every number on the site, documented in full — including a worked example and an honest list of limitations."/>
+<meta property="og:site_name" content="Toronto Affordability"/>
+<meta property="og:locale" content="en_CA"/>
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="google-adsense-account" content="ca-pub-5619117265675077"/>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[
+{"@type":"ListItem","position":1,"name":"Home","item":"https://www.torontoaffordability.com/"},
+{"@type":"ListItem","position":2,"name":"Methodology","item":"https://www.torontoaffordability.com/methodology"}]}
+</script>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"Article","headline":"Methodology & Data Sources: How Toronto Affordability Is Calculated","description":"A transparent breakdown of the data and formulas behind the Toronto Affordability calculators.","datePublished":"2026-06-07","dateModified":"2026-06-07","author":{"@type":"Person","name":"Eric Liu"},"publisher":{"@type":"Organization","name":"Toronto Affordability","url":"https://www.torontoaffordability.com/"},"mainEntityOfPage":"https://www.torontoaffordability.com/methodology"}
+</script>
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5619117265675077" crossorigin="anonymous"></script>
+<script>
+(function(){
+  try {
+    var s = localStorage.getItem('ta-theme');
+    var t = (s === 'light' || s === 'dark') ? s : (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+    document.documentElement.setAttribute('data-theme', t);
+  } catch (e) {}
+})();
+</script>
+<link rel="stylesheet" href="../styles.css"/>
+<link rel="icon" href="../favicon.svg" type="image/svg+xml"/>
+<link rel="alternate icon" href="../favicon.ico"/>
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to main content</a>
+<div class="shell">
+
+<header class="site">
+  <div class="hero-inner fade-up d1">
+  <button id="themeToggle" class="theme-toggle" type="button" aria-pressed="false" aria-label="Switch to dark mode">Dark mode</button>
+  <nav class="site-nav" aria-label="Primary">
+    <a href="/">Home</a>
+    <a href="/income-percentile-to-afford-toronto">Who can afford Toronto?</a>
+    <a href="/mortgage-stress-test-guide">Stress test guide</a>
+    <a href="/methodology" aria-current="page">Methodology</a>
+    <a href="/about">About</a>
+  </nav>
+  <nav class="breadcrumb" aria-label="Breadcrumb"><a href="/">Home</a> / Methodology</nav>
+  <div class="eyebrow">Methodology &amp; sources</div>
+  <h1>How the numbers are calculated</h1>
+  <p class="sub">Every threshold on this site can be traced to a stated data source and a stated formula. Here they all are.</p>
+  <p class="updated">Last updated: 2026-06-07 &middot; Data: StatCan T1FF FY2024 · CMHC 2024 · TRREB Q2 2025</p>
+  </div>
+  <div class="hero-marquee fade-up d5" aria-label="See where your income lands by age, run the mortgage stress test, and explore prices across the GTA. Built on StatCan T1FF and CMHC data.">
+    <div class="marquee-track" aria-hidden="true">
+      <span>See where your income lands by age <span class="dot"></span> Run the mortgage stress test <span class="dot"></span> Explore prices across the GTA <span class="dot"></span> Built on StatCan T1FF and CMHC data <span class="dot"></span></span>
+      <span>See where your income lands by age <span class="dot"></span> Run the mortgage stress test <span class="dot"></span> Explore prices across the GTA <span class="dot"></span> Built on StatCan T1FF and CMHC data <span class="dot"></span></span>
+    </div>
+  </div>
+</header>
+
+<main id="main">
+<article class="article">
+  <p class="lead">Affordability tools are only as trustworthy as the assumptions buried inside them. This page exposes ours in full — the data we use, the formulas the calculators apply, and the things the model deliberately leaves out. If you only read one supporting page on this site, read this one.</p>
+
+  <h2>1. Where the data comes from</h2>
+  <p>The site combines three published datasets plus a set of standard mortgage rules:</p>
+  <ul>
+    <li><strong>Income distributions</strong> — Statistics Canada T1FF (Tax-filer) microdata summaries for the Toronto Census Metropolitan Area, fiscal year 2024. These give income thresholds at each percentile, broken out by seven age cohorts (18–24 through 70+).</li>
+    <li><strong>City-wide housing prices</strong> — CMHC Housing Market Information Portal figures for the Toronto CMA (2024), used for the all-dwellings, condo, and "other dwellings" benchmark prices and the average condo rent.</li>
+    <li><strong>Regional prices</strong> — Toronto Regional Real Estate Board (TRREB) Q2 2025 market data, used for the fourteen-region map (the City of Toronto, the four surrounding regions, and ten of their major municipalities).</li>
+    <li><strong>Mortgage qualification rules</strong> — OSFI Guideline B-20 (the stress test) and the federal minimum down-payment rules.</li>
+    <li><strong>Savings-program figures</strong> — Canada Revenue Agency rules for the First Home Savings Account (FHSA) and the RRSP Home Buyers' Plan, current as of 2024.</li>
+  </ul>
+  <p>The income figures are best understood as <strong>illustrative estimates</strong> derived from public T1FF summaries rather than a live feed; they are meant to show the <em>shape</em> of the distribution and the order of magnitude of each threshold, not to be quoted to the dollar.</p>
+
+  <h2>2. The benchmark prices</h2>
+  <p>The headline city figures used across the calculators are:</p>
+  <div class="data-card">
+    <table>
+      <thead><tr><th>Dwelling type</th><th>Benchmark price</th><th>Ownership share</th></tr></thead>
+      <tbody>
+        <tr><td>All dwellings</td><td>$1,096,710</td><td>65%</td></tr>
+        <tr><td>Condo</td><td>$651,350</td><td>16%</td></tr>
+        <tr><td>Other dwellings (house / semi)</td><td>$1,127,744</td><td>49%</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="data-cap">The average condo rent used in the rent-vs-buy comparison is $2,905 per month. Toronto's median household income is taken as $100,505.</p>
+
+  <h2>3. The qualifying-income benchmark (the 22.5% rule)</h2>
+  <p>Most of the affordability checks on the site use a single, transparent shortcut: the <strong>gross household income needed to buy a home is roughly 22.5% of the purchase price, per year.</strong> So a $651,350 condo implies a qualifying income of about <strong>$146,554</strong> (0.225 × 651,350), and a $1,127,744 detached home implies about <strong>$253,742</strong>.</p>
+  <p>Where does 22.5% come from? It approximates a typical <strong>30% Gross Debt Service (GDS) ratio</strong> under common Toronto conditions — a 20% down payment, a 25-year amortization, and a mortgage rate in the mid-single digits, with property tax and heating costs folded in. Lenders cap the share of your gross income that can go to housing costs (mortgage principal and interest, property tax, and heat) at roughly 30–39%; the 22.5%-of-price benchmark is what that cap works out to once you back-solve for income at representative rates. It is a deliberately simple, stable yardstick so that prices across regions and property types can be compared on a like-for-like basis.</p>
+  <div class="callout">
+    <p><strong>Important:</strong> the 22.5% benchmark is a comparison tool, not a pre-approval. The dedicated <a href="/mortgage-stress-test-guide">stress test calculator</a> on the home page models the mortgage payment, property tax, and heat explicitly at the official qualifying rate, and will usually return a somewhat <em>higher</em> required income than the flat 22.5% shortcut. When the two disagree, treat the stress-test figure as the more conservative, lender-like estimate.</p>
+  </div>
+
+  <h2>4. The mortgage payment formula</h2>
+  <p>Monthly mortgage payments use the standard amortization formula on the financed portion of the price:</p>
+  <div class="worked">
+    <div class="row"><span>Loan principal</span><span>price × (1 − down-payment %)</span></div>
+    <div class="row"><span>Monthly rate (m)</span><span>annual rate ÷ 12</span></div>
+    <div class="row"><span>Number of payments (n)</span><span>amortization years × 12</span></div>
+    <div class="row"><span>Monthly payment</span><span>principal × m ÷ (1 − (1 + m)<sup>−n</sup>)</span></div>
+  </div>
+  <p>Unless you change them, the calculators assume a <strong>20% down payment (80% loan-to-value)</strong> and a <strong>25-year amortization</strong>, with the interest rate set by the global rate slider at the top of the home page (default 5.49%).</p>
+
+  <h2>5. The mortgage stress test (OSFI B-20)</h2>
+  <p>Federally regulated lenders must qualify borrowers not at their actual contract rate, but at a higher <strong>qualifying rate</strong> defined by OSFI Guideline B-20:</p>
+  <div class="callout">
+    <p><strong>Qualifying rate = the greater of (your contract rate + 2.00%) or 5.25%.</strong></p>
+  </div>
+  <p>So at a 5.49% contract rate, the stress-test qualifying rate is 7.49%. The calculator computes the mortgage payment at that qualifying rate, adds estimated property tax and heat, and then divides by the GDS limit to find the income a lender would require. Your <em>actual</em> monthly payment is still based on the lower contract rate — the stress test only governs whether you qualify.</p>
+
+  <h2>6. Property tax, heat, and the income requirement</h2>
+  <p>To turn a monthly payment into a required income, the stress-test calculator estimates total monthly housing cost and applies a 30% GDS ratio:</p>
+  <ul>
+    <li><strong>Property tax</strong> — estimated at 0.65% of the home's price per year (divided by 12 for a monthly figure).</li>
+    <li><strong>Heat</strong> — a flat $150 per month proxy, the standard placeholder lenders use in GDS calculations.</li>
+    <li><strong>Required income</strong> — (qualifying payment + monthly property tax + heat) × 12 ÷ 0.30.</li>
+  </ul>
+
+  <h2>7. A worked example</h2>
+  <p>Here is the full calculation for the calculator's default scenario — an $800,000 home, 20% down, 25-year amortization, 5.49% contract rate:</p>
+  <div class="worked">
+    <div class="row"><span>Home price</span><span>$800,000</span></div>
+    <div class="row"><span>Down payment (20%)</span><span>$160,000</span></div>
+    <div class="row"><span>Loan principal</span><span>$640,000</span></div>
+    <div class="row"><span>Qualifying rate (5.49% + 2%)</span><span>7.49%</span></div>
+    <div class="row"><span>Actual payment @ 5.49%</span><span>≈ $3,926 / mo</span></div>
+    <div class="row"><span>Qualifying payment @ 7.49%</span><span>≈ $4,725 / mo</span></div>
+    <div class="row"><span>Property tax (0.65%/yr ÷ 12)</span><span>≈ $433 / mo</span></div>
+    <div class="row"><span>Heat proxy</span><span>$150 / mo</span></div>
+    <div class="row"><span>Required income (÷ 30% GDS)</span><span>≈ $212,000 / yr</span></div>
+  </div>
+  <p class="data-cap">Notice the gap: the flat 22.5% benchmark would estimate $180,000 for an $800,000 home, while the full stress-test model returns about $212,000. Both appear on the site by design — the benchmark for fast cross-region comparison, the stress test for a lender-like figure.</p>
+
+  <h2>8. Minimum down payment rules</h2>
+  <p>The down-payment checks follow Canada's tiered federal minimums: 5% on homes priced at $500,000 or less; 5% on the first $500,000 plus 10% on the portion above $500,000 for homes between $500,000 and $1,000,000; and 20% on homes priced at $1,000,000 or more. The calculators flag whether your chosen down payment clears that minimum.</p>
+
+  <h2>9. FHSA and RRSP Home Buyers' Plan</h2>
+  <p>For the savings-runway and first-home sections, we use the CRA program limits: the <strong>First Home Savings Account (FHSA)</strong> allows up to $8,000 in contributions per year, to a $40,000 lifetime maximum; the <strong>RRSP Home Buyers' Plan (HBP)</strong> allows a withdrawal of up to $60,000 per person. A couple combining both can therefore direct up to roughly $200,000 of tax-advantaged savings toward a down payment.</p>
+
+  <h2>10. What the model does <em>not</em> capture</h2>
+  <p>This is the honest part. To stay transparent and comparable, the calculators leave several real-world costs out:</p>
+  <ul>
+    <li><strong>CMHC mortgage insurance premiums</strong> on insured (less-than-20%-down) mortgages are not added to the loan.</li>
+    <li><strong>Condo maintenance fees</strong>, which can materially change condo affordability, are not modelled in every tool.</li>
+    <li><strong>Home insurance, closing costs, and land transfer taxes</strong> (including Toronto's municipal land transfer tax and the first-time-buyer rebates) are not included.</li>
+    <li><strong>Other debts</strong> — car loans, student loans, credit-card balances — which lenders fold into the separate Total Debt Service (TDS) ratio, are not considered.</li>
+    <li><strong>Investment growth</strong> on your savings, which would shorten the down-payment timeline, is not assumed.</li>
+    <li><strong>Income figures are estimates</strong> and reflect a point-in-time snapshot of the distribution, not your verified, lender-assessed income.</li>
+  </ul>
+  <p>In short: the site is excellent for understanding the <em>scale</em> of the affordability gap and comparing scenarios, and it is not a substitute for a lender's assessment or professional advice. See our <a href="/terms">Terms of Use</a> for the full disclaimer.</p>
+
+  <h2>Sources</h2>
+  <ul>
+    <li>Income distributions: Statistics Canada T1FF custom tabulations, FY2024, Toronto CMA.</li>
+    <li>Housing prices (city-wide): CMHC Housing Market Information Portal, Toronto CMA, 2024.</li>
+    <li>Regional pricing: Toronto Regional Real Estate Board (TRREB) Q2 2025 market watch.</li>
+    <li>Stress test rule: OSFI Guideline B-20.</li>
+    <li>FHSA / RRSP HBP figures: Canada Revenue Agency, current as of 2024.</li>
+  </ul>
+
+  <div class="related">
+    <div class="stat-label">Keep reading</div>
+    <div class="related-links">
+      <a href="/income-percentile-to-afford-toronto">Who can afford Toronto?</a>
+      <a href="/mortgage-stress-test-guide">The stress test, explained</a>
+      <a href="/about">About this site</a>
+      <a href="/">Try the calculator</a>
+    </div>
+  </div>
+</article>
+</main>
+
+<footer>
+  <nav class="foot-nav" aria-label="Footer">
+    <a href="/">Home</a>
+    <a href="/income-percentile-to-afford-toronto">Who can afford Toronto?</a>
+    <a href="/mortgage-stress-test-guide">Stress test guide</a>
+    <a href="/methodology">Methodology</a>
+    <a href="/about">About</a>
+    <a href="/privacy">Privacy Policy</a>
+    <a href="/terms">Terms of Use</a>
+    <a href="/contact">Contact</a>
+  </nav>
+  <p>Income data are illustrative estimates derived from StatCan T1FF microdata summaries. Housing values are based on CMHC Toronto affordability data and TRREB Q2 2025 market watch.</p>
+  <p class="disclaimer">&copy; 2024–2026 Eric Liu &middot; For informational purposes only &middot; Not financial, tax, or investment advice. Consult a licensed mortgage broker, financial planner, or real estate professional before making purchase decisions.</p>
+</footer>
+
+</div>
+<script src="../site.js"></script>
+</body>
+</html>

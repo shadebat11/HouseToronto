@@ -1,0 +1,158 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>The Canadian Mortgage Stress Test, Explained With Real Toronto Numbers</title>
+<meta name="description" content="How OSFI's B-20 mortgage stress test works in plain English: the qualifying rate rule, worked examples at three interest rates on an $800,000 Toronto home, and how much income each scenario really requires."/>
+<link rel="canonical" href="https://www.torontoaffordability.com/mortgage-stress-test-guide"/>
+<meta name="robots" content="index,follow"/>
+<meta name="author" content="Eric Liu"/>
+<meta name="theme-color" content="#143838"/>
+<meta property="og:type" content="article"/>
+<meta property="og:url" content="https://www.torontoaffordability.com/mortgage-stress-test-guide"/>
+<meta property="og:title" content="The Canadian Mortgage Stress Test, Explained With Real Numbers"/>
+<meta property="og:description" content="OSFI B-20 in plain English, with worked examples on an $800,000 Toronto home at three different interest rates."/>
+<meta property="og:site_name" content="Toronto Affordability"/>
+<meta property="og:locale" content="en_CA"/>
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="google-adsense-account" content="ca-pub-5619117265675077"/>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[
+{"@type":"ListItem","position":1,"name":"Home","item":"https://www.torontoaffordability.com/"},
+{"@type":"ListItem","position":2,"name":"Mortgage stress test guide","item":"https://www.torontoaffordability.com/mortgage-stress-test-guide"}]}
+</script>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"Article","headline":"The Canadian Mortgage Stress Test, Explained With Real Toronto Numbers","description":"A plain-English guide to OSFI's B-20 mortgage stress test with worked examples on an $800,000 Toronto home.","datePublished":"2026-06-07","dateModified":"2026-06-07","author":{"@type":"Person","name":"Eric Liu"},"publisher":{"@type":"Organization","name":"Toronto Affordability","url":"https://www.torontoaffordability.com/"},"mainEntityOfPage":"https://www.torontoaffordability.com/mortgage-stress-test-guide"}
+</script>
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5619117265675077" crossorigin="anonymous"></script>
+<script>
+(function(){
+  try {
+    var s = localStorage.getItem('ta-theme');
+    var t = (s === 'light' || s === 'dark') ? s : (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+    document.documentElement.setAttribute('data-theme', t);
+  } catch (e) {}
+})();
+</script>
+<link rel="stylesheet" href="../styles.css"/>
+<link rel="icon" href="../favicon.svg" type="image/svg+xml"/>
+<link rel="alternate icon" href="../favicon.ico"/>
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to main content</a>
+<div class="shell">
+
+<header class="site">
+  <div class="hero-inner fade-up d1">
+  <button id="themeToggle" class="theme-toggle" type="button" aria-pressed="false" aria-label="Switch to dark mode">Dark mode</button>
+  <nav class="site-nav" aria-label="Primary">
+    <a href="/">Home</a>
+    <a href="/income-percentile-to-afford-toronto">Who can afford Toronto?</a>
+    <a href="/mortgage-stress-test-guide" aria-current="page">Stress test guide</a>
+    <a href="/methodology">Methodology</a>
+    <a href="/about">About</a>
+  </nav>
+  <nav class="breadcrumb" aria-label="Breadcrumb"><a href="/">Home</a> / Mortgage stress test guide</nav>
+  <div class="eyebrow">Guide</div>
+  <h1>The mortgage stress test, explained with real numbers</h1>
+  <p class="sub">What OSFI's B-20 rule actually does to your application — and exactly how much income it demands on a typical Toronto purchase, at three different rates.</p>
+  <p class="updated">Last updated: 2026-06-07 &middot; Rule: OSFI Guideline B-20</p>
+  </div>
+  <div class="hero-marquee fade-up d5" aria-label="See where your income lands by age, run the mortgage stress test, and explore prices across the GTA. Built on StatCan T1FF and CMHC data.">
+    <div class="marquee-track" aria-hidden="true">
+      <span>See where your income lands by age <span class="dot"></span> Run the mortgage stress test <span class="dot"></span> Explore prices across the GTA <span class="dot"></span> Built on StatCan T1FF and CMHC data <span class="dot"></span></span>
+      <span>See where your income lands by age <span class="dot"></span> Run the mortgage stress test <span class="dot"></span> Explore prices across the GTA <span class="dot"></span> Built on StatCan T1FF and CMHC data <span class="dot"></span></span>
+    </div>
+  </div>
+</header>
+
+<main id="main">
+<article class="article">
+  <div class="tldr">
+    <div class="stat-label">The short answer</div>
+    <ul>
+      <li>Lenders don't qualify you at your actual rate. They use a <strong>qualifying rate = the greater of (your rate + 2%) or 5.25%.</strong></li>
+      <li>On an $800,000 home with 20% down, that gap pushes the required income from a contract-rate "feel" of ~$180,000 to roughly <strong>$210,000+</strong>.</li>
+      <li>The test governs whether you <em>qualify</em> — your real monthly payment is still based on the lower contract rate you actually sign.</li>
+    </ul>
+  </div>
+
+  <p class="lead">The "stress test" is the single most misunderstood step in getting a Canadian mortgage. People assume the bank checks whether they can afford today's payment. It doesn't. It checks whether they could afford a payment at a deliberately higher rate — and that one rule quietly removes a large share of Toronto buyers from the market. Here's how it works, with the math shown.</p>
+
+  <h2>Where the rule comes from</h2>
+  <p>The stress test lives in <strong>Guideline B-20</strong> from OSFI, the Office of the Superintendent of Financial Institutions, which regulates Canada's federally chartered banks. It applies to <strong>uninsured</strong> mortgages (typically those with 20% or more down) at federally regulated lenders. A parallel rule covers insured mortgages. The goal is prudential: make sure borrowers have a cushion if rates rise before renewal.</p>
+
+  <h2>The one formula that matters</h2>
+  <div class="callout">
+    <p><strong>Qualifying rate = the greater of:</strong> (a) your contract mortgage rate + 2.00 percentage points, or (b) 5.25%.</p>
+  </div>
+  <p>That's the whole rule. If you're offered 5.49%, the bank assesses you at 7.49% (5.49 + 2). If you somehow found a 2.5% rate, the floor of 5.25% would still apply. In today's environment — five-year fixed rates in the 5–5.5% range — the "+2%" branch almost always wins, so qualifying rates sit around 7.0–7.5%.</p>
+
+  <h2>Why this is so punishing</h2>
+  <p>Mortgage payments aren't linear in the interest rate; a two-point jump on a large balance moves the payment a lot. Because lenders then convert that inflated payment into a required income (using a debt-service ratio), a buyer who can comfortably handle their <em>real</em> payment can still fail to <em>qualify</em>. The stress test, in effect, prices in a rate shock you may never experience.</p>
+
+  <h2>Worked examples: an $800,000 Toronto home</h2>
+  <p>Let's run the calculator's default scenario — an $800,000 home, 20% down ($160,000), a $640,000 mortgage over a 25-year amortization — at three contract rates. "Actual payment" is what you'd really pay; "qualifying payment" is the inflated figure the lender tests; "required income" applies a 30% gross-debt-service ratio after adding estimated property tax (0.65%/yr) and a $150/month heat proxy.</p>
+  <div class="data-card">
+    <table>
+      <thead><tr><th>Contract rate</th><th>Qualifying rate</th><th>Actual payment</th><th>Qualifying payment</th><th>Required income</th></tr></thead>
+      <tbody>
+        <tr><td>4.00%</td><td>6.00%</td><td>$3,379/mo</td><td>$4,124/mo</td><td>~$188,000</td></tr>
+        <tr><td>5.49%</td><td>7.49%</td><td>$3,926/mo</td><td>$4,725/mo</td><td class="hl">~$212,000</td></tr>
+        <tr><td>6.50%</td><td>8.50%</td><td>$4,321/mo</td><td>$5,153/mo</td><td>~$229,000</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="data-cap">Figures rounded; computed with the standard amortization formula and the assumptions on our <a href="/methodology">methodology page</a>. They mirror the home page's interactive stress test calculator.</p>
+  <p>Two things jump out. First, at every rate the qualifying payment is roughly $750–$830 a month higher than what you'd actually pay — that's the stress test's "phantom" cost. Second, moving from a 4% to a 6.5% world raises the income you need to qualify for the <em>same house</em> by more than $40,000, even though the price never changed. This is why affordability headlines swing so violently with the Bank of Canada: prices are sticky, but qualifying incomes move with rates.</p>
+
+  <h2>How it connects to "who can afford Toronto"</h2>
+  <p>That ~$212,000 required income at a 5.49% rate isn't an abstraction. As we show in <a href="/income-percentile-to-afford-toronto">our percentile analysis</a>, an income in that range sits around the 95th–97th percentile for buyers under 45. The stress test is a major reason an "average" home demands a top-tier income: it bakes a +2% buffer into every application.</p>
+
+  <h2>Common misconceptions</h2>
+  <h3>"It means my payments will be higher."</h3>
+  <p>No. Your payments are set by your contract rate. The qualifying rate is used only to decide whether you're approved.</p>
+  <h3>"Switching to a credit union avoids it."</h3>
+  <p>Provincially regulated lenders aren't bound by OSFI's B-20, so some apply their own (sometimes looser) rules. That can help at the margin, but it's not a universal escape hatch, and it doesn't change the underlying affordability math.</p>
+  <h3>"A bigger down payment removes the test."</h3>
+  <p>It doesn't remove the stress test, but a larger down payment lowers the loan, which lowers both the actual and qualifying payments — so it directly reduces the income you need to qualify.</p>
+
+  <h2>Run your own scenario</h2>
+  <p>The <a href="/">home-page stress test calculator</a> lets you plug in any price, down payment, rate, and amortization and see the qualifying rate, both payments, and the required income update instantly. Pair it with the <a href="/income-percentile-to-afford-toronto">percentile analysis</a> to see how rare that income is for your age group, and read the <a href="/methodology">methodology</a> for every formula behind these numbers.</p>
+
+  <div class="callout">
+    <p><strong>Reminder:</strong> these examples use simplified, transparent assumptions and are for general information only — not a pre-approval or financial advice. A lender's real decision also weighs your credit, other debts (the TDS ratio), employment, and the specific property. See our <a href="/terms">terms of use</a>.</p>
+  </div>
+
+  <div class="related">
+    <div class="stat-label">Keep reading</div>
+    <div class="related-links">
+      <a href="/income-percentile-to-afford-toronto">Who can afford Toronto?</a>
+      <a href="/methodology">Methodology &amp; sources</a>
+      <a href="/">Run the stress test</a>
+      <a href="/about">About this project</a>
+    </div>
+  </div>
+</article>
+</main>
+
+<footer>
+  <nav class="foot-nav" aria-label="Footer">
+    <a href="/">Home</a>
+    <a href="/income-percentile-to-afford-toronto">Who can afford Toronto?</a>
+    <a href="/mortgage-stress-test-guide">Stress test guide</a>
+    <a href="/methodology">Methodology</a>
+    <a href="/about">About</a>
+    <a href="/privacy">Privacy Policy</a>
+    <a href="/terms">Terms of Use</a>
+    <a href="/contact">Contact</a>
+  </nav>
+  <p>Income data are illustrative estimates derived from StatCan T1FF microdata summaries. Housing values are based on CMHC Toronto affordability data and TRREB Q2 2025 market watch.</p>
+  <p class="disclaimer">&copy; 2024–2026 Eric Liu &middot; For informational purposes only &middot; Not financial, tax, or investment advice. Consult a licensed mortgage broker, financial planner, or real estate professional before making purchase decisions.</p>
+</footer>
+
+</div>
+<script src="../site.js"></script>
+</body>
+</html>

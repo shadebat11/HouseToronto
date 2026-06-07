@@ -1,0 +1,1371 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title> Toronto Affordability Tool </title>
+
+<meta name="google-adsense-account" content="ca-pub-5619117265675077"/>
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5619117265675077" crossorigin="anonymous"></script>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;700&family=Inter:wght@400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<link href="https://unpkg.com/maplibre-gl@4.7.1/dist/maplibre-gl.css" rel="stylesheet"/>
+<script src="https://unpkg.com/maplibre-gl@4.7.1/dist/maplibre-gl.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+
+  <!-- Twitter card -->
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:title" content="Toronto Housing Affordability Calculator"/>
+<meta name="twitter:description" content="See your income percentile, run the stress test, and compare rent vs. buy across the GTA."/>
+
+<meta name="google-adsense-account" content="ca-pub-5619117265675077"/>
+
+<!-- FAQ Schema -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {"@type":"Question","name":"What income do you need to buy a house in Toronto?","acceptedAnswer":{"@type":"Answer","text":"To qualify for an average Toronto home, you typically need an annual income well above the median. Based on CMHC affordability data, most detached homes require a qualifying income of $150,000–$200,000+, depending on your downpayment and mortgage rate."}},
+    {"@type":"Question","name":"Can I afford a condo in Toronto on an average salary?","acceptedAnswer":{"@type":"Answer","text":"Condos are the most accessible entry point in Toronto. Depending on the price and your downpayment, a qualifying income of roughly $80,000–$120,000 may be sufficient for a condo purchase as of 2024."}},
+    {"@type":"Question","name":"How does Toronto housing affordability compare across age groups?","acceptedAnswer":{"@type":"Answer","text":"Income varies significantly by age cohort in Toronto. Younger earners (20s–30s) tend to be concentrated in lower percentiles, making homeownership harder, while those in their 40s–50s are more likely to meet qualifying income thresholds based on StatCan T1FF data."}},
+    {"@type":"Question","name":"What percentile is my income in Toronto?","acceptedAnswer":{"@type":"Answer","text":"You can use the Toronto Income & Housing Affordability tool at torontoaffordability.com to enter your annual income and instantly see which income percentile you fall into for your age cohort, based on Statistics Canada data."}},
+    {"@type":"Question","name":"How long does it take to save a downpayment in Toronto?","acceptedAnswer":{"@type":"Answer","text":"The time to save a downpayment in Toronto depends on your income and savings rate. The affordability calculator on this site lets you model different savings rates and see how many years it would take to reach a downpayment based on your income."}},
+    {"@type":"Question","name":"How does the Canadian mortgage stress test work?","acceptedAnswer":{"@type":"Answer","text":"Under OSFI's B-20 rules, lenders must qualify borrowers at the higher of (a) the contract mortgage rate plus 2 percentage points or (b) 5.25%. The stress test calculator on this page shows your qualifying payment and the income required to pass."}}
+  ]
+}
+</script>
+
+<!-- Article Schema -->
+<script type="application/ld+json">
+{
+  "@context":"https://schema.org",
+  "@type":"Article",
+  "headline":"Toronto Housing Affordability Calculator: Income Percentiles, Mortgage Stress Test, Rent vs. Buy",
+  "description":"Interactive tool comparing Toronto income distributions by age against housing affordability thresholds.",
+  "datePublished":"2024-09-01",
+  "dateModified":"2026-04-30",
+  "author":{"@type":"Person","name":"Eric Liu"},
+  "publisher":{"@type":"Organization","name":"Toronto Affordability","url":"https://www.torontoaffordability.com/"},
+  "mainEntityOfPage":"https://www.torontoaffordability.com/"
+}
+</script>
+  
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#ffffff;--surface:#ffffff;--surface2:#f0f0f0;
+  --ink:#000000;--ink2:#666666;--ink3:#969696;
+  /* coral/teal/amber are DATA-SIGNAL only: banners, chart lines, qualify pills, choropleth */
+  --coral:#c94a2b;--coral-bg:#fdf0ec;--coral-border:#f3c5b5;
+  --teal:#0a8054;--teal-bg:#e8f6f1;--teal-border:#9fd8c6;
+  --amber:#b8640a;--amber-bg:#fdf4e3;
+  --border:#e3e3e3;--border2:#f0f0f0;
+  --radius:14px;--radius-sm:8px;--radius-pill:64px;--press-scale:.97;
+  --font-head:'Manrope',Inter,-apple-system,system-ui,sans-serif;
+  --font-body:'Inter',-apple-system,system-ui,sans-serif;
+  --mono:'DM Mono','SF Mono',ui-monospace,Menlo,Consolas,monospace;
+  --hero-accent:#0a8054;
+  --c1:#e8f6f1;--c2:#bfe3d3;--c3:#8fcdb1;--c4:#4fae87;--c5:#0a8054;
+}
+
+html[data-theme="dark"]{
+  --bg:#0f0f0f;--surface:#1a1a1a;--surface2:#242424;
+  --ink:#ffffff;--ink2:#b8b8b8;--ink3:#888888;
+  --border:rgba(255,255,255,0.14);--border2:rgba(255,255,255,0.06);
+  --teal-bg:rgba(10,128,84,0.18);--coral-bg:rgba(201,74,43,0.18);
+}
+
+body{
+  font-family:var(--font-body);
+  background:var(--bg);color:var(--ink);
+  font-size:15px;line-height:1.5;letter-spacing:-0.01em;
+  -webkit-font-smoothing:antialiased;
+  font-feature-settings:'cv11','ss01';
+  padding:0;
+}
+h1,h2,h3,h4,.eyebrow,.section-label,.section-title,.panel-title,.kpi-label,.ctrl-label{
+  font-family:var(--font-head);
+}
+h1{font-size:clamp(40px,6vw,64px);font-weight:700;line-height:1.05;letter-spacing:-0.02em}
+h2{font-size:clamp(28px,3.4vw,40px);font-weight:700;letter-spacing:-0.02em}
+h3{font-size:20px;font-weight:500;letter-spacing:-0.01em}
+
+.page{max-width:1200px;margin:0 auto;padding:0 24px}
+
+/* === EDITORIAL HERO — black bg / white-on-black chrome (matches footer palette) === */
+.site-hero{
+  position:relative;background:#000;color:#fff;
+  padding:clamp(40px,6vw,80px) 0 clamp(24px,3vw,40px);
+  margin-bottom:0;
+}
+.hero-inner{
+  position:relative;max-width:1100px;margin:0 auto;padding:0 24px;
+  display:flex;justify-content:space-between;align-items:flex-start;gap:32px;flex-wrap:wrap;
+}
+.hero-text{max-width:900px}
+.hero-inner h1{
+  color:#fff;font-family:var(--font-head);
+  font-size:clamp(40px,7.5vw,84px);font-weight:700;
+  line-height:1.02;letter-spacing:-0.035em;margin-top:20px;
+}
+/* Per-word reveal: each word fades over 1s with staggered start */
+.hero-inner h1 .word{display:inline-block;opacity:0;transform:translateY(28px);animation:fadeUp 1s cubic-bezier(.22,.61,.36,1) forwards;will-change:opacity,transform}
+.hero-inner h1 .word.w1{animation-delay:.18s}
+.hero-inner h1 .word.w2{animation-delay:.48s}
+.hero-inner h1 .word.w3{animation-delay:.78s}
+.hero-inner h1 .word.w4{animation-delay:1.08s}
+/* "Toronto" cycles through 5 fonts before landing on Manrope.
+   display:block locks it onto its own line so font-width changes can't reflow the headline. */
+.hero-inner h1 .word.toronto{
+  display:block;
+  animation:
+    fadeUp 1s cubic-bezier(.22,.61,.36,1) 1.08s forwards,
+    fontCycle 1.8s linear 1.08s forwards;
+}
+@keyframes fontCycle{
+  0%   { font-family:'Times New Roman', Times, serif; font-style:italic; }
+  20%  { font-family:'Georgia', serif; font-style:normal; }
+  40%  { font-family:'Impact', 'Arial Black', sans-serif; font-style:normal; letter-spacing:-0.05em; }
+  60%  { font-family:'Comic Sans MS', cursive; font-style:normal; letter-spacing:-0.03em; }
+  80%  { font-family:var(--font-head); font-style:normal; letter-spacing:-0.035em; }
+  100% { font-family:'Courier New', Courier, monospace; font-style:normal; letter-spacing:-0.02em; }
+}
+@media (prefers-reduced-motion:reduce){
+  .hero-inner h1 .word{opacity:1;transform:none;animation:none}
+  .hero-inner h1 .word.toronto{font-family:'Courier New', Courier, monospace; letter-spacing:-0.02em}
+}
+.hero-inner .sub{
+  font-size:clamp(18px,1.8vw,22px);color:rgba(255,255,255,0.85);
+  margin-top:28px;max-width:640px;line-height:1.45;
+}
+.hero-inner .eyebrow{
+  font-size:12px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;
+  color:rgba(255,255,255,0.65);font-family:var(--font-head);
+}
+.hero-inner .updated{
+  font-size:12px;color:rgba(255,255,255,0.5);margin-top:18px;font-family:var(--mono);
+}
+.hero-meta{display:flex;flex-direction:column;align-items:flex-end;gap:10px}
+.theme-toggle{
+  background:transparent;border:1px solid rgba(255,255,255,0.28);
+  border-radius:var(--radius-pill);padding:10px 22px;font-size:13px;
+  font-family:var(--font-head);font-weight:500;color:#fff;cursor:pointer;
+  transition:background .15s,transform .1s;
+}
+.theme-toggle:hover{background:rgba(255,255,255,0.08)}
+.theme-toggle:active{transform:scale(var(--press-scale))}
+
+/* Initial-load fade-up stagger (StyleGuide-style) */
+.fade-up{opacity:0;transform:translateY(24px);animation:fadeUp .9s cubic-bezier(.22,.61,.36,1) forwards}
+.fade-up.d1{animation-delay:.05s}
+.fade-up.d2{animation-delay:.18s}
+.fade-up.d3{animation-delay:.32s}
+.fade-up.d4{animation-delay:.46s}
+.fade-up.d5{animation-delay:.60s}
+/* Slow variant — for the headline; ~2.2s total fade */
+.fade-up.slow{animation-duration:2.2s;transform:translateY(36px)}
+@keyframes fadeUp{to{opacity:1;transform:translateY(0)}}
+
+/* Hero Toronto image (sits on black hero) */
+.hero-img{
+  display:block;width:calc(100% - 48px);max-width:1100px;margin:32px auto 0;
+  border-radius:var(--radius);aspect-ratio:21/9;object-fit:cover;
+  background:#1a1a1a;
+}
+.hero-img.is-error{display:none}
+
+/* Marquee sub-text — green text scrolling across the black banner */
+.hero-marquee{
+  position:relative;overflow:hidden;width:100vw;
+  margin:28px calc(50% - 50vw) 0;
+  padding:16px 0;
+  border-top:1px solid rgba(255,255,255,0.14);
+  border-bottom:1px solid rgba(255,255,255,0.14);
+  -webkit-mask-image:linear-gradient(90deg,transparent 0,#000 6%,#000 94%,transparent 100%);
+          mask-image:linear-gradient(90deg,transparent 0,#000 6%,#000 94%,transparent 100%);
+}
+.marquee-track{display:inline-flex;gap:48px;white-space:nowrap;animation:marqueeScroll 38s linear infinite;will-change:transform}
+.marquee-track > span{display:inline-flex;align-items:center;gap:48px;font-family:var(--font-head);font-size:clamp(16px,1.6vw,20px);font-weight:600;color:#fff;letter-spacing:-0.005em}
+.marquee-track .dot{display:inline-block;width:6px;height:6px;border-radius:50%;background:var(--hero-accent);flex-shrink:0;opacity:.6}
+@keyframes marqueeScroll{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+/* Scroll-triggered fade for sections below the hero */
+.fade-section{opacity:0;transform:translateY(28px);transition:opacity .8s cubic-bezier(.22,.61,.36,1),transform .8s cubic-bezier(.22,.61,.36,1);will-change:opacity,transform}
+.fade-section.is-visible{opacity:1;transform:translateY(0)}
+@media (prefers-reduced-motion:reduce){
+  .fade-up,.fade-section{opacity:1;transform:none;animation:none;transition:none}
+  .marquee-track{animation:none;white-space:normal;display:block;text-align:center;padding:0 24px}
+}
+
+.section-label{
+  font-family:var(--font-head);
+  font-size:12px;font-weight:500;text-transform:uppercase;
+  letter-spacing:.12em;color:var(--ink3);margin-bottom:10px;
+}
+.section-stack{display:flex;flex-direction:column;gap:clamp(40px,7vw,96px);margin-top:clamp(56px,10vw,120px)}
+
+/* Sticky global controls */
+.controls-bar{
+  position:sticky;top:8px;z-index:10;
+  background:rgba(255,255,255,0.85);border:1px solid var(--border);
+  border-radius:var(--radius);
+  padding:14px 20px;margin:32px 0 24px;
+  display:flex;align-items:center;gap:18px;flex-wrap:wrap;
+  backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
+}
+html[data-theme="dark"] .controls-bar{background:rgba(15,15,15,0.85)}
+/* Dark-mode: idle bg darkens for contrast (active state is green in both modes via the base rule) */
+html[data-theme="dark"] .prop-btn,
+html[data-theme="dark"] .tabs .tab,
+html[data-theme="dark"] .metric-chips .mchip{background:#242424;color:var(--ink);border-color:var(--border)}
+html[data-theme="dark"] .prop-btn:hover:not(.active),
+html[data-theme="dark"] .tabs .tab:hover:not(.active),
+html[data-theme="dark"] .metric-chips .mchip:hover:not(.active){background:#2f2f2f}
+.ctrl-label{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:var(--ink3)}
+.ctrl-sep{height:24px;width:1px;background:var(--border)}
+select, input[type="number"]{
+  font-family:inherit;font-size:13px;
+  background:var(--surface2);border:1px solid var(--border);
+  border-radius:8px;padding:6px 10px;color:var(--ink);
+}
+input[type="range"]{
+  -webkit-appearance:none;appearance:none;
+  width:160px;height:4px;background:var(--border);border-radius:999px;outline:none;
+}
+input[type="range"]::-webkit-slider-thumb{
+  -webkit-appearance:none;appearance:none;
+  width:14px;height:14px;border-radius:50%;
+  background:var(--teal);cursor:pointer;border:2px solid var(--surface);
+  box-shadow:0 2px 4px rgba(0,0,0,0.15);
+}
+.rate-val{font-family:var(--mono);font-size:13px;font-weight:600;color:var(--teal);min-width:54px}
+.pill{
+  display:inline-flex;align-items:center;
+  font-size:11px;font-weight:600;padding:4px 10px;border-radius:999px;
+}
+.pill.coral{background:var(--coral-bg);color:var(--coral);border:1px solid var(--coral-border)}
+.pill.teal{background:var(--teal-bg);color:var(--teal);border:1px solid var(--teal-border)}
+.pill.amber{background:var(--amber-bg);color:var(--amber);border:1px solid #e6c98a}
+
+/* === PROPERTY TYPE BUTTONS (b&w pill, with icons) === */
+.prop-toggle{display:flex;gap:6px}
+.prop-btn{
+  display:inline-flex;align-items:center;gap:8px;
+  font-family:var(--font-head);font-size:13px;font-weight:500;
+  padding:8px 16px;border-radius:var(--radius-pill);
+  background:#f0f0f0;border:1px solid var(--border);
+  color:var(--ink);cursor:pointer;
+  transition:transform .1s,background .15s,color .15s,border-color .15s;
+}
+.prop-btn:hover:not(.active){background:#e3e3e3}
+.prop-btn.active{background:var(--hero-accent);color:#fff;border-color:var(--hero-accent)}
+.prop-btn:active{transform:scale(var(--press-scale))}
+.prop-btn svg{
+  width:14px;height:14px;
+  fill:none;stroke:currentColor;stroke-width:1.6;
+  stroke-linecap:round;stroke-linejoin:round;
+}
+
+/* Banner */
+.banner{
+  display:flex;gap:12px;align-items:flex-start;
+  background:var(--surface);border:1px solid var(--border);
+  border-left:3px solid var(--coral);
+  border-radius:var(--radius);padding:14px 18px;margin-bottom:18px;
+}
+.banner.ok{border-left-color:var(--teal)}
+.banner.warn{border-left-color:var(--amber)}
+.banner-icon{font-size:18px;line-height:1.2}
+.banner-text strong{font-size:14px;font-weight:600;display:block;margin-bottom:2px}
+.banner-text p{font-size:12px;color:var(--ink2);line-height:1.5}
+
+/* Hero KPI strip */
+.kpi-strip{
+  display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:18px;
+}
+.kpi-strip.three{grid-template-columns:repeat(3,1fr)}
+.kpi{
+  background:var(--surface);border:1px solid var(--border);
+  border-radius:var(--radius);padding:14px 16px;
+}
+.kpi-label{
+  font-size:10px;font-weight:600;text-transform:uppercase;
+  letter-spacing:.08em;color:var(--ink3);margin-bottom:6px;
+}
+.kpi-value{
+  font-size:22px;font-weight:600;color:var(--ink);
+  letter-spacing:-0.02em;font-feature-settings:'tnum';
+}
+.kpi-value.coral{color:var(--coral)}
+.kpi-value.teal{color:var(--teal)}
+.kpi-delta{font-size:11px;font-weight:500;margin-top:4px;font-family:var(--mono)}
+.kpi-delta.up{color:var(--teal)}
+.kpi-delta.down{color:var(--coral)}
+
+/* Section panel — generic */
+.section{
+  background:var(--surface);border:1px solid var(--border);
+  border-radius:var(--radius);overflow:hidden;
+  margin-bottom:clamp(32px,5vw,64px);
+}
+.section-head{
+  padding:20px 24px 16px;border-bottom:1px solid var(--border2);
+  display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;
+}
+.section-title{font-family:var(--font-head);font-size:22px;font-weight:700;color:var(--ink);letter-spacing:-0.02em}
+.section-sub{font-size:12px;color:var(--ink3);margin-top:4px;font-family:var(--mono)}
+.section-body{padding:24px}
+
+.tabs{display:flex;gap:6px}
+.tabs .tab{
+  font-family:var(--font-head);font-size:12px;font-weight:500;
+  padding:7px 16px;border-radius:var(--radius-pill);
+  background:#f0f0f0;border:1px solid var(--border);color:var(--ink);cursor:pointer;
+  transition:transform .1s,background .15s,color .15s,border-color .15s;
+}
+.tabs .tab:hover:not(.active){background:#e3e3e3}
+.tabs .tab.active{background:var(--hero-accent);color:#fff;border-color:var(--hero-accent)}
+.tabs .tab:active{transform:scale(var(--press-scale))}
+
+.chart-wrap{position:relative;height:340px;width:100%}
+
+/* GTA dashboard grid */
+.dash-grid{
+  display:grid;grid-template-columns:minmax(360px,1fr) 1.6fr;gap:16px;align-items:start;
+}
+.panel{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden}
+.panel-head{padding:14px 16px 10px;border-bottom:1px solid var(--border2)}
+.panel-title{font-size:14px;font-weight:600;color:var(--ink)}
+.panel-sub{font-size:11px;color:var(--ink3);margin-top:2px;font-family:var(--mono)}
+
+.region-table{width:100%;border-collapse:collapse;font-size:13px}
+.region-table thead th{
+  font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:var(--ink3);
+  text-align:left;padding:10px 12px;background:var(--surface2);border-bottom:1px solid var(--border2);
+  cursor:pointer;user-select:none;
+}
+.region-table thead th:hover{color:var(--ink2)}
+.region-table thead th.sort-asc::after{content:' ↑';color:var(--teal)}
+.region-table thead th.sort-desc::after{content:' ↓';color:var(--teal)}
+.region-table tbody tr{border-bottom:1px solid var(--border2);cursor:pointer;transition:background .12s ease}
+.region-table tbody tr:hover{background:var(--surface2)}
+.region-table tbody tr.selected{background:var(--teal-bg)}
+.region-table tbody tr.selected td:first-child{box-shadow:inset 3px 0 0 var(--teal)}
+.region-table td{padding:10px 12px;vertical-align:middle}
+.region-table td.name{font-weight:500;color:var(--ink)}
+.region-table td.num{font-family:var(--mono);font-size:12px;color:var(--ink2);text-align:right}
+.region-table td.bar{width:80px;padding-right:14px}
+.bar-track{position:relative;height:6px;background:var(--surface2);border-radius:999px;overflow:hidden}
+.bar-fill{position:absolute;left:0;top:0;height:100%;background:var(--teal);border-radius:999px}
+
+.right-col{display:flex;flex-direction:column;gap:16px}
+
+/* Map */
+.map-panel{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden}
+.map-head{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:14px 16px;border-bottom:1px solid var(--border2)}
+.metric-chips{display:flex;gap:6px;flex-wrap:wrap}
+.metric-chips .mchip{
+  font-family:var(--font-head);font-size:12px;font-weight:500;
+  padding:7px 14px;border-radius:var(--radius-pill);
+  background:#f0f0f0;border:1px solid var(--border);color:var(--ink);cursor:pointer;
+  transition:transform .1s,background .15s,color .15s,border-color .15s;
+}
+.metric-chips .mchip:hover:not(.active){background:#e3e3e3}
+.metric-chips .mchip.active{background:var(--hero-accent);color:#fff;border-color:var(--hero-accent)}
+.metric-chips .mchip:active{transform:scale(var(--press-scale))}
+#regionMap{width:100%;height:520px;background:var(--surface2);position:relative}
+.map-legend{
+  display:flex;align-items:center;gap:14px;padding:10px 16px;
+  border-top:1px solid var(--border2);font-size:11px;color:var(--ink2);font-family:var(--mono);
+}
+.gradient-bar{display:flex;align-items:center;gap:0;height:10px;border-radius:3px;overflow:hidden;flex:1;max-width:280px}
+.gradient-bar > span{flex:1;height:100%}
+.map-tooltip{
+  position:absolute;pointer-events:none;background:var(--ink);color:#fff;
+  padding:8px 12px;border-radius:8px;font-size:12px;line-height:1.4;
+  box-shadow:0 8px 24px rgba(0,0,0,.18);
+  transform:translate(-50%,-110%);z-index:5;display:none;white-space:nowrap;
+}
+.map-tooltip .name{font-weight:600;margin-bottom:2px}
+.map-tooltip .stat{font-family:var(--mono);font-size:11px;color:#cfe6dc}
+
+/* === STRESS TEST: house visual + inputs === */
+.stress-layout{
+  display:grid;grid-template-columns:180px 1fr;gap:24px;align-items:center;margin-bottom:18px;
+}
+.house-visual{
+  display:flex;flex-direction:column;align-items:center;gap:8px;
+  background:var(--surface2);border:1px solid var(--border);
+  border-radius:var(--radius);padding:18px 14px;
+}
+.house-visual svg{width:120px;height:120px;display:block}
+.house-visual .down-pct{
+  font-size:24px;font-weight:600;font-family:var(--mono);
+  color:var(--teal);letter-spacing:-0.02em;
+}
+.house-visual .down-amt{
+  font-size:11px;color:var(--ink2);font-family:var(--mono);
+}
+.house-visual .down-label{
+  font-size:10px;font-weight:600;text-transform:uppercase;
+  letter-spacing:.08em;color:var(--ink3);
+}
+.calc-input-stack{display:flex;flex-direction:column;gap:14px}
+.calc-input-row{
+  display:grid;grid-template-columns:repeat(4,1fr);gap:12px;
+}
+.calc-input-row label{display:flex;flex-direction:column;gap:4px}
+.calc-input-row label span{
+  font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:var(--ink3);
+}
+.calc-input-row input,.calc-input-row select{font-family:var(--mono);padding:8px 10px}
+
+.slider-row{
+  display:flex;align-items:center;gap:14px;
+  background:var(--surface2);border:1px solid var(--border);border-radius:var(--radius);
+  padding:14px 18px;margin-bottom:14px;
+}
+.slider-row label{font-size:12px;font-weight:600;color:var(--ink2);white-space:nowrap}
+.slider-row input[type="range"]{flex:1;max-width:none}
+.slider-val{font-family:var(--mono);font-size:14px;font-weight:600;color:var(--teal);min-width:90px;text-align:right}
+
+.savings-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.savings-cell{
+  background:var(--surface2);border:1px solid var(--border);border-radius:12px;padding:14px 16px;
+}
+.savings-rate{font-size:11px;font-weight:600;color:var(--ink3);text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px}
+.savings-years{font-size:24px;font-weight:600;font-family:var(--mono);letter-spacing:-0.02em}
+.savings-mo{font-size:11px;color:var(--ink3);margin-top:4px}
+
+.scroll-table{overflow-x:auto}
+.full-table{width:100%;border-collapse:collapse;font-size:13px}
+.full-table thead th{
+  position:sticky;top:0;background:var(--surface2);
+  font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:var(--ink3);
+  text-align:right;padding:10px 12px;border-bottom:1px solid var(--border2);
+}
+.full-table thead th:first-child{text-align:left}
+.full-table tbody td{padding:9px 12px;border-bottom:1px solid var(--border2);font-family:var(--mono);font-size:12px;color:var(--ink2);text-align:right}
+.full-table tbody td:first-child{text-align:left;font-family:inherit;color:var(--ink);font-weight:500}
+.full-table tbody td.hl{color:var(--coral);font-weight:600}
+.full-table tbody td.hlt{color:var(--teal);font-weight:600}
+.full-table tbody tr:hover{background:var(--surface2)}
+
+/* AdSense slot frame */
+.ad-unit{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:16px 12px;margin:24px 0;text-align:center;overflow:hidden;min-height:120px}
+.ad-label{font-family:var(--font-head);font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:var(--ink3);margin-bottom:6px}
+
+/* === Methodology endcap — StyleGuide footer aesthetic (full-bleed black, white text, pill CTA) === */
+.explainer{
+  background:#000;color:#fff;border:none;border-radius:0;
+  padding:clamp(56px,8vw,120px) clamp(32px,5vw,72px);
+  margin:clamp(40px,6vw,72px) 0 0;
+}
+.explainer-inner{max-width:1100px;margin:0 auto}
+.explainer .eyebrow-dark{font-family:var(--font-head);font-size:13px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,0.6);margin-bottom:18px}
+.explainer h2{font-family:var(--font-head);font-size:clamp(36px,5.5vw,64px);font-weight:700;line-height:1.05;letter-spacing:-0.03em;color:#fff;margin-bottom:24px;max-width:780px}
+.explainer .lede{font-size:clamp(16px,1.6vw,20px);color:rgba(255,255,255,0.78);max-width:680px;line-height:1.5;margin-bottom:36px}
+.explainer .cta-row{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:clamp(40px,5vw,64px)}
+.explainer .cta{display:inline-flex;align-items:center;gap:10px;background:#f0f0f0;color:#000;text-decoration:none;border-radius:var(--radius-pill);padding:14px 26px;font-family:var(--font-head);font-size:15px;font-weight:500;border:1px solid transparent;transition:transform .1s,background .15s}
+.explainer .cta:hover{background:#fff}
+.explainer .cta:active{transform:scale(var(--press-scale))}
+.explainer .cta svg{width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.explainer .cta.ghost{background:transparent;color:#fff;border-color:rgba(255,255,255,0.28)}
+.explainer .cta.ghost:hover{background:rgba(255,255,255,0.08)}
+.explainer details{border-top:1px solid rgba(255,255,255,0.14);padding:18px 0;border-bottom:none}
+.explainer details:first-of-type{border-top:1px solid rgba(255,255,255,0.18)}
+.explainer details summary{cursor:pointer;font-family:var(--font-head);font-weight:500;font-size:18px;color:#fff;list-style:none;position:relative;padding-right:32px}
+.explainer details summary::-webkit-details-marker{display:none}
+.explainer details summary::after{content:'+';position:absolute;right:0;top:-2px;font-size:24px;color:rgba(255,255,255,0.6);font-weight:300;line-height:1}
+.explainer details[open] summary::after{content:'−'}
+.explainer details p{margin-top:14px;color:rgba(255,255,255,0.78);font-size:15px;line-height:1.65}
+.explainer details ul{padding-left:18px;margin:14px 0 0;color:rgba(255,255,255,0.78)}
+.explainer details li{font-size:15px;line-height:1.65;margin-bottom:6px}
+.explainer .copy-row{margin-top:clamp(40px,5vw,72px);padding-top:24px;border-top:1px solid rgba(255,255,255,0.14);display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;font-size:13px;color:rgba(255,255,255,0.5)}
+.explainer .copy-row a{color:rgba(255,255,255,0.78);text-decoration:none}
+.explainer .copy-row a:hover{color:#fff;text-decoration:underline}
+.explainer .copy-links{display:flex;gap:24px;flex-wrap:wrap}
+
+.faq details{border-bottom:1px solid var(--border2);padding:12px 0}
+.faq summary{
+  cursor:pointer;font-size:13px;font-weight:500;color:var(--ink);
+  list-style:none;padding-right:24px;position:relative;
+}
+.faq summary::after{
+  content:'+';position:absolute;right:0;top:0;font-size:16px;color:var(--ink3);font-weight:300;
+}
+.faq details[open] summary::after{content:'−'}
+.faq details p{font-size:12px;color:var(--ink2);line-height:1.6;margin-top:8px}
+.faq details ul{font-size:12px;color:var(--ink2);line-height:1.6;margin:8px 0 0 18px}
+
+@media(max-width:980px){
+  .dash-grid{grid-template-columns:1fr}
+  .kpi-strip{grid-template-columns:repeat(2,1fr)}
+  .calc-input-row{grid-template-columns:repeat(2,1fr)}
+  .savings-grid{grid-template-columns:1fr}
+  .stress-layout{grid-template-columns:1fr}
+  .hero h1{font-size:28px}
+}
+</style>
+</head>
+<body>
+
+<!-- ============ EDITORIAL TEXT HERO + IMAGE + MARQUEE ============ -->
+<header class="site-hero" role="banner">
+  <div class="hero-inner">
+    <div class="hero-text">
+      <div class="eyebrow fade-up d1">Toronto &middot; Greater Toronto Area &middot; FY2024 data</div>
+      <h1 aria-label="Can you afford Toronto?"><span class="word w1">Can</span> <span class="word w2">you</span> <span class="word w3">afford</span> <span class="word w4 toronto">Toronto?</span></h1>
+      <div class="updated fade-up d3">Last updated: 2026-04-30 &middot; Data: FY2024 &middot; TRREB Q2 2025 regional</div>
+    </div>
+    <div class="hero-meta fade-up d1">
+      <button class="theme-toggle" id="themeToggle">Dark mode</button>
+    </div>
+  </div>
+
+  <!-- Toronto skyline image — drop "Toronto.jpg" into the "New Material" folder -->
+  <img class="hero-img fade-up d4"
+       src="New Material/Toronto.jpg"
+       alt="Toronto skyline"
+       loading="eager" fetchpriority="high"
+       width="2200" height="943"
+       onerror="this.classList.add('is-error')"/>
+
+  <!-- Marquee sub-text scrolling along the banner -->
+  <div class="hero-marquee fade-up d5" aria-label="See where your income lands by age, run the mortgage stress test, and explore prices across the GTA. Built on StatCan T1FF and CMHC data.">
+    <div class="marquee-track" aria-hidden="true">
+      <span>See where your income lands by age <span class="dot"></span> Run the mortgage stress test <span class="dot"></span> Explore prices across the GTA <span class="dot"></span> Built on StatCan T1FF and CMHC data <span class="dot"></span></span>
+      <span>See where your income lands by age <span class="dot"></span> Run the mortgage stress test <span class="dot"></span> Explore prices across the GTA <span class="dot"></span> Built on StatCan T1FF and CMHC data <span class="dot"></span></span>
+    </div>
+  </div>
+</header>
+
+<div class="page">
+
+  <div class="ad-unit" role="complementary" aria-label="Advertisement">
+    <div class="ad-label">Advertisement</div>
+    <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-5619117265675077" data-ad-slot="SLOT_ID_1" data-ad-format="auto" data-full-width-responsive="true"></ins>
+    <script>(adsbygoogle=window.adsbygoogle||[]).push({})</script>
+  </div>
+
+  <!-- Sticky global controls -->
+  <div class="controls-bar">
+    <span class="ctrl-label">Age</span>
+    <select id="ageSelect"></select>
+    <span id="affordBadge" class="pill coral">—</span>
+    <span class="ctrl-sep"></span>
+    <span class="ctrl-label">Mortgage rate</span>
+    <input type="range" id="rateSlider" min="3.0" max="8.0" step="0.05" value="5.49"/>
+    <span class="rate-val" id="rateVal">5.49%</span>
+    <span class="ctrl-sep"></span>
+    <span class="ctrl-label">Property type</span>
+    <div class="prop-toggle" id="propTypeRow">
+      <button class="prop-btn active" data-type="condo">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <rect x="6" y="2" width="12" height="20"/>
+          <line x1="6" y1="7" x2="18" y2="7"/>
+          <line x1="6" y1="11" x2="18" y2="11"/>
+          <line x1="6" y1="15" x2="18" y2="15"/>
+          <rect x="11" y="18" width="2" height="4"/>
+        </svg>
+        Condo
+      </button>
+      <button class="prop-btn" data-type="house">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M3 9.5L12 3l9 6.5V21H3V9.5z"/>
+          <rect x="9" y="14" width="6" height="7"/>
+        </svg>
+        House
+      </button>
+    </div>
+  </div>
+
+  <!-- Affordability banner -->
+  <div id="affordBanner" class="banner warn">
+    <div class="banner-icon">⚠</div>
+    <div class="banner-text">
+      <strong id="bannerTitle">—</strong>
+      <p id="bannerBody">—</p>
+    </div>
+  </div>
+
+  <!-- Hero KPI strip -->
+  <div class="kpi-strip" id="heroKpis"></div>
+
+  <!-- ============ SECTION 1: GTA MARKET DASHBOARD (NOW FIRST) ============ -->
+  <div style="margin-bottom:18px">
+    <div class="section-label">01 &middot; Market</div>
+    <div style="display:flex;align-items:flex-end;justify-content:space-between;gap:16px;margin-bottom:12px;flex-wrap:wrap">
+      <div>
+        <div style="font-size:18px;font-weight:600;letter-spacing:-0.01em">Greater Toronto Area Market</div>
+        <div style="font-size:12px;color:var(--ink3);margin-top:3px;font-family:var(--mono)">Click a region in the table or on the map &middot; TRREB Q2 2025</div>
+      </div>
+    </div>
+
+    <div class="dash-grid">
+      <div class="panel">
+        <div class="panel-head">
+          <div class="panel-title">Buyer Competition Now</div>
+          <div class="panel-sub" id="regionTableSub">10 GTA regions · Condo prices</div>
+        </div>
+        <table class="region-table" id="regionTable">
+          <thead>
+            <tr>
+              <th data-sort="name">Region</th>
+              <th data-sort="avg" class="sort-desc">Avg Price</th>
+              <th data-sort="psf">$/Sqft</th>
+              <th data-sort="income">Income Req'd</th>
+              <th>vs. GTA</th>
+            </tr>
+          </thead>
+          <tbody id="regionTableBody"></tbody>
+        </table>
+      </div>
+
+      <div class="right-col">
+        <div class="kpi-strip" id="regionKpis">
+          <div class="kpi"><div class="kpi-label">Median Price</div><div class="kpi-value" id="rkPrice">$685k</div><div class="kpi-delta up">+2.4% YoY</div></div>
+          <div class="kpi"><div class="kpi-label">Qualifying Income</div><div class="kpi-value" id="rkIncome">$142k</div><div class="kpi-delta down">+$8k vs '24</div></div>
+          <div class="kpi"><div class="kpi-label">$/Sqft</div><div class="kpi-value" id="rkPsf">$912</div><div class="kpi-delta up">+1.1% YoY</div></div>
+          <div class="kpi"><div class="kpi-label">Affordability</div><div class="kpi-value" id="rkAff">38</div><div class="kpi-delta down">−4 pts YoY</div></div>
+        </div>
+
+        <div class="map-panel">
+          <div class="map-head">
+            <div>
+              <div class="panel-title" id="mapTitle">Average Condo Price by Region</div>
+              <div class="panel-sub" id="mapSub">Hover for details · click to pin</div>
+            </div>
+            <div class="metric-chips" id="metricChips">
+              <button class="mchip active" data-metric="avg">Price</button>
+              <button class="mchip" data-metric="psf">$/Sqft</button>
+              <button class="mchip" data-metric="income">Income Req'd</button>
+              <button class="mchip" data-metric="aff">Affordability</button>
+            </div>
+          </div>
+          <div id="regionMap"><div class="map-tooltip" id="mapTooltip"></div></div>
+          <div class="map-legend">
+            <span>Lower</span>
+            <div class="gradient-bar">
+              <span style="background:var(--c1)"></span>
+              <span style="background:var(--c2)"></span>
+              <span style="background:var(--c3)"></span>
+              <span style="background:var(--c4)"></span>
+              <span style="background:var(--c5)"></span>
+            </div>
+            <span>Higher</span>
+            <span style="margin-left:auto">Source: TRREB Q2 2025</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ SECTION 2: INCOME DISTRIBUTION ============ -->
+  <div class="section">
+    <div class="section-head">
+      <div>
+        <div class="section-label">02 &middot; Income</div>
+        <div class="section-title">Income Distribution by Age</div>
+        <div class="section-sub">Upper-tail percentiles across Toronto earners &middot; StatCan T1FF, FY2024</div>
+      </div>
+      <div class="tabs" id="incomeTabs">
+        <button class="tab active" data-v="all">Full curve</button>
+        <button class="tab" data-v="upper">Upper tail (P90–P99)</button>
+      </div>
+    </div>
+    <div class="section-body">
+      <div class="chart-wrap"><canvas id="incomeChart"></canvas></div>
+    </div>
+  </div>
+
+  <div class="ad-unit" role="complementary" aria-label="Advertisement">
+    <div class="ad-label">Advertisement</div>
+    <ins class="adsbygoogle" style="display:block;text-align:center" data-ad-layout="in-article" data-ad-format="fluid" data-ad-client="ca-pub-5619117265675077" data-ad-slot="SLOT_ID_2"></ins>
+    <script>(adsbygoogle=window.adsbygoogle||[]).push({})</script>
+  </div>
+
+  <!-- ============ SECTION 3: STRESS TEST (with house visual) ============ -->
+  <div class="section">
+    <div class="section-head">
+      <div>
+        <div class="section-label">03 &middot; Mortgage</div>
+        <div class="section-title">Mortgage Stress Test Calculator</div>
+        <div class="section-sub">OSFI B-20 rule: lenders qualify at the higher of (contract rate + 2%) or 5.25%</div>
+      </div>
+    </div>
+    <div class="section-body">
+      <div class="stress-layout">
+        <!-- House fill visual -->
+        <div class="house-visual">
+          <div class="down-label">Down %</div>
+          <svg viewBox="0 0 24 24" id="houseFillSvg" aria-hidden="true">
+            <defs>
+              <clipPath id="houseClip">
+                <path d="M3 9.5L12 3l9 6.5V21H3V9.5z"/>
+              </clipPath>
+            </defs>
+            <!-- Empty house background -->
+            <path d="M3 9.5L12 3l9 6.5V21H3V9.5z" fill="#e8f6f1" stroke="#0a8054" stroke-width="0.4"/>
+            <!-- Animated fill rect, clipped to house shape -->
+            <rect id="houseFillRect" x="3" y="21" width="18" height="0" fill="#0a8054" clip-path="url(#houseClip)" style="transition:y .25s ease, height .25s ease"/>
+            <!-- Door outline (always visible) -->
+            <rect x="9" y="14" width="6" height="7" fill="none" stroke="#143838" stroke-width="0.4"/>
+            <!-- Roof outline restated on top so it stays crisp -->
+            <path d="M3 9.5L12 3l9 6.5V21H3V9.5z" fill="none" stroke="#143838" stroke-width="0.5"/>
+          </svg>
+          <div class="down-pct" id="houseDownPct">20%</div>
+          <div class="down-amt" id="houseDownAmt">$160,000</div>
+        </div>
+
+        <!-- Inputs -->
+        <div class="calc-input-stack">
+          <div class="calc-input-row">
+            <label><span>Home Price</span><input type="number" id="stPrice" min="100000" max="5000000" step="10000" value="800000"/></label>
+            <label><span>Downpayment %</span><input type="number" id="stDown" min="5" max="100" step="1" value="20"/></label>
+            <label><span>Mortgage Rate %</span><input type="number" id="stRate" min="1" max="15" step="0.05" value="5.49"/></label>
+            <label><span>Amortization (yrs)</span>
+              <select id="stAmort"><option value="25">25</option><option value="30">30</option></select>
+            </label>
+          </div>
+        </div>
+      </div>
+
+      <div class="kpi-strip three" id="stressResult"></div>
+    </div>
+  </div>
+
+  <!-- ============ SECTION 4: AFFORDABILITY + SAVINGS RUNWAY ============ -->
+  <div class="section">
+    <div class="section-head">
+      <div>
+        <div class="section-label">04 &middot; Affordability</div>
+        <div class="section-title">What Can I Afford &amp; How Long to Save?</div>
+        <div class="section-sub">Set your income to see your percentile, what you qualify for, and your downpayment runway</div>
+      </div>
+    </div>
+    <div class="section-body">
+      <div class="slider-row">
+        <label for="myIncome">My Annual Income</label>
+        <input type="range" id="myIncome" min="30000" max="600000" step="5000" value="100000"/>
+        <span class="slider-val" id="myIncomeVal">$100,000</span>
+      </div>
+      <div class="kpi-strip" id="affordResult"></div>
+
+      <div style="margin-top:24px">
+        <div class="section-label">Downpayment savings runway</div>
+        <div style="font-size:12px;color:var(--ink3);margin:-4px 0 12px;font-family:var(--mono)">Years to save 20% down at different savings rates</div>
+        <div class="savings-grid" id="savingsGrid"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ SECTION 5: FULL PERCENTILE TABLE ============ -->
+  <div class="section">
+    <div class="section-head">
+      <div>
+        <div class="section-label">05 &middot; Reference</div>
+        <div class="section-title">Full Income Percentile Table</div>
+        <div class="section-sub">All age cohorts × all percentiles · StatCan T1FF FY2024</div>
+      </div>
+    </div>
+    <div class="section-body" style="padding:0">
+      <div class="scroll-table">
+        <table class="full-table" id="incomeTable"></table>
+      </div>
+    </div>
+  </div>
+
+  <div class="ad-unit" role="complementary" aria-label="Advertisement">
+    <div class="ad-label">Advertisement</div>
+    <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-5619117265675077" data-ad-slot="SLOT_ID_3" data-ad-format="auto" data-full-width-responsive="true"></ins>
+    <script>(adsbygoogle=window.adsbygoogle||[]).push({})</script>
+  </div>
+
+</div><!-- /.page -->
+
+<!-- ============ SECTION 7: METHODOLOGY (StyleGuide footer-style endcap, full-bleed black) ============ -->
+<section class="explainer" aria-labelledby="h2-explainer">
+  <div class="explainer-inner">
+    <div class="eyebrow-dark">Methodology</div>
+    <h2 id="h2-explainer">How these numbers work.</h2>
+    <p class="lede">Sources, assumptions, and common questions — so you can trust the numbers and reproduce them yourself.</p>
+
+    <div class="cta-row">
+      <a href="methodology.html" class="cta">Read full methodology
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+      </a>
+    </div>
+
+    <details>
+      <summary>How the calculators work</summary>
+      <p>Estimated qualifying income uses ~22.5% of home price as required gross household income. Based on a typical 30% Gross Debt Service ratio. Mortgage payments assume 20% down, 25-year amortization, and the rate from the global slider.</p>
+    </details>
+    <details>
+      <summary>What income do I need to buy in Toronto?</summary>
+      <p>Detached/semi at ~$1.13M needs ~$250k qualifying income at current rates. Condo at ~$651K needs ~$149k. Adjust the rate slider to see how rates move these thresholds.</p>
+    </details>
+    <details>
+      <summary>How does the mortgage stress test work?</summary>
+      <p>Federally regulated lenders qualify uninsured borrowers at the higher of contract rate + 2% or 5.25%. With 5-yr fixed at ~5.0–5.5%, qualifying rate is typically 7.0–7.5%.</p>
+    </details>
+    <details>
+      <summary>Methodology and sources</summary>
+      <ul>
+        <li>Income: Statistics Canada T1FF custom tabulations, FY2024, Toronto CMA</li>
+        <li>City-wide pricing: CMHC Housing Market Information Portal, 2024</li>
+        <li>Regional pricing: TRREB Q2 2025 market watch</li>
+        <li>Stress test: OSFI Guideline B-20</li>
+      </ul>
+    </details>
+
+    <div class="copy-row">
+      <div>&copy; 2024–2026 Eric Liu &middot; For informational purposes only &middot; Not financial advice</div>
+    </div>
+  </div>
+</section>
+
+<script>
+/* ============================================================
+   DATA — original age cohort ranges restored
+   ============================================================ */
+const DATA = [
+  {age:'18–24', p10:0,     p25:4200,  p50:14200, p75:28600,  p90:46500,  p95:62000,  p97:76000,  p99:112000},
+  {age:'25–34', p10:9800,  p25:26500, p50:45200, p75:72500,  p90:108000, p95:142000, p97:178000, p99:255000},
+  {age:'35–44', p10:12800, p25:34200, p50:61200, p75:98500,  p90:148000, p95:205000, p97:265000, p99:390000},
+  {age:'45–54', p10:13200, p25:36500, p50:68400, p75:112000, p90:172000, p95:245000, p97:315000, p99:465000},
+  {age:'55–64', p10:8200,  p25:28800, p50:54800, p75:92000,  p90:146000, p95:218000, p97:292000, p99:440000},
+  {age:'65–69', p10:6200,  p25:21800, p50:39200, p75:68500,  p90:106000, p95:158000, p97:215000, p99:340000},
+  {age:'70+',   p10:4200,  p25:18200, p50:32800, p75:57600,  p90:91000,  p95:135000, p97:182000, p99:295000},
+];
+
+const HOUSING = {
+  condo: {label:'Condo', price:651000, down:32550, down20:130200, mortgage:3850, qualifying:149000, medianIncome:100500, ownership:62, rent:2680, mortgagePct:0.46},
+  house: {label:'House', price:1132000, down:106200, down20:226400, mortgage:6580, qualifying:255000, medianIncome:100500, ownership:54, rent:null, mortgagePct:0.79}
+};
+
+const REGIONS = [
+  {key:'tor-downtown', name:'Toronto — Downtown', avg:825000, psf:1180, income:178000, aff:28, avgHouse:1485000, psfHouse:1320, incomeHouse:325000, affHouse:18},
+  {key:'tor-north',    name:'North York',         avg:712000, psf:945,  income:152000, aff:34, avgHouse:1325000, psfHouse:1080, incomeHouse:285000, affHouse:24},
+  {key:'tor-scar',     name:'Scarborough',        avg:621000, psf:780,  income:131000, aff:42, avgHouse:1085000, psfHouse:850,  incomeHouse:232000, affHouse:32},
+  {key:'tor-etob',     name:'Etobicoke',          avg:695000, psf:910,  income:148000, aff:36, avgHouse:1245000, psfHouse:1010, incomeHouse:268000, affHouse:27},
+  {key:'mississauga',  name:'Mississauga',        avg:668000, psf:830,  income:142000, aff:38, avgHouse:1185000, psfHouse:920,  incomeHouse:255000, affHouse:29},
+  {key:'brampton',     name:'Brampton',           avg:585000, psf:710,  income:124000, aff:46, avgHouse:1075000, psfHouse:780,  incomeHouse:230000, affHouse:34},
+  {key:'vaughan',      name:'Vaughan',            avg:752000, psf:980,  income:160000, aff:32, avgHouse:1395000, psfHouse:1120, incomeHouse:298000, affHouse:23},
+  {key:'markham',      name:'Markham',            avg:738000, psf:965,  income:156000, aff:33, avgHouse:1365000, psfHouse:1095, incomeHouse:292000, affHouse:24},
+  {key:'oakville',     name:'Oakville',           avg:798000, psf:1050, income:168000, aff:30, avgHouse:1525000, psfHouse:1240, incomeHouse:325000, affHouse:20},
+  {key:'pickering',    name:'Pickering',          avg:612000, psf:760,  income:128000, aff:43, avgHouse:1095000, psfHouse:820,  incomeHouse:235000, affHouse:33},
+];
+
+const METRICS = {
+  avg:    {label:'Average Price',        fmt:v=>'$'+(v/1000).toFixed(0)+'k', invert:false},
+  psf:    {label:'Price per Sqft',       fmt:v=>'$'+v,                       invert:false},
+  income: {label:'Qualifying Income',    fmt:v=>'$'+(v/1000).toFixed(0)+'k', invert:false},
+  aff:    {label:'Affordability Index',  fmt:v=>v+' / 100',                  invert:true},
+};
+
+/* STATE — default age set to 25–34 */
+let selected = '25–34';
+let rate = 0.0549;
+let housingView = 'condo';
+let incomeView = 'all';
+let myIncome = 100000;
+let activeMetric = 'avg';
+let activeRegion = null;
+let sortKey = 'avg';
+let sortDir = 'desc';
+let incomeChart;
+
+/* HELPERS */
+const money = n => '$' + (n>=1000 ? Math.round(n/1000)+'k' : Math.round(n).toLocaleString());
+const moneyFull = n => '$' + Math.round(n).toLocaleString();
+
+function affordFrac(age, qualIncome){
+  const d = DATA.find(x=>x.age===age) || DATA[1];
+  const pcts = [10,25,50,75,90,95,97,99];
+  const keys = ['p10','p25','p50','p75','p90','p95','p97','p99'];
+  for(let i=0;i<keys.length;i++){
+    if(qualIncome <= d[keys[i]]) return Math.max(1, 100 - pcts[i]);
+  }
+  return 1;
+}
+
+function pctRankFor(age, income){
+  const d = DATA.find(x=>x.age===age) || DATA[1];
+  const pcts = [10,25,50,75,90,95,97,99];
+  const keys = ['p10','p25','p50','p75','p90','p95','p97','p99'];
+  for(let i=0;i<keys.length;i++){
+    if(income <= d[keys[i]]) return 'P'+pcts[i];
+  }
+  return 'P99+';
+}
+
+/* RENDERERS */
+function populateAgeSelect(){
+  const sel = document.getElementById('ageSelect');
+  sel.innerHTML = DATA.map(d=>`<option value="${d.age}">${d.age}</option>`).join('');
+  sel.value = selected;
+  sel.onchange = ()=>{ selected = sel.value; renderAll(); };
+}
+
+function renderRateLabel(){
+  document.getElementById('rateVal').textContent = (rate*100).toFixed(2)+'%';
+  document.getElementById('rateSlider').value = (rate*100).toFixed(2);
+  document.getElementById('stRate').value = (rate*100).toFixed(2);
+}
+
+function renderHero(){
+  const h = HOUSING[housingView];
+  const d = DATA.find(x=>x.age===selected);
+  const frac = affordFrac(selected, h.qualifying);
+  document.getElementById('heroKpis').innerHTML = `
+    <div class="kpi"><div class="kpi-label">Median Price (${h.label})</div><div class="kpi-value">${money(h.price)}</div><div class="kpi-delta up">+2.4% YoY</div></div>
+    <div class="kpi"><div class="kpi-label">Qualifying Income</div><div class="kpi-value coral">${money(h.qualifying)}</div><div class="kpi-delta down">+$8k vs '24</div></div>
+    <div class="kpi"><div class="kpi-label">Cohort P90 Income (${selected})</div><div class="kpi-value">${money(d.p90)}</div></div>
+    <div class="kpi"><div class="kpi-label">% of Cohort Qualifying</div><div class="kpi-value ${frac<20?'coral':'teal'}">${frac}%</div></div>
+  `;
+}
+
+function renderBanner(){
+  const h = HOUSING[housingView];
+  const frac = affordFrac(selected, h.qualifying);
+  const banner = document.getElementById('affordBanner');
+  const title = document.getElementById('bannerTitle');
+  const body = document.getElementById('bannerBody');
+  const badge = document.getElementById('affordBadge');
+  if(frac < 15){
+    banner.className='banner';
+    title.textContent = `Only the top ${frac}% of ${selected} earners can qualify for a ${h.label.toLowerCase()} in Toronto`;
+    body.textContent = `Qualifying income of ${moneyFull(h.qualifying)}/yr — far above the median ${moneyFull(h.medianIncome)}.`;
+    badge.textContent = `Top ${frac}% only`; badge.className='pill coral';
+  } else if(frac < 35){
+    banner.className='banner warn';
+    title.textContent = `Roughly the top ${frac}% of ${selected} earners can qualify`;
+    body.textContent = `Qualifying income: ${moneyFull(h.qualifying)}/yr vs. median ${moneyFull(h.medianIncome)}.`;
+    badge.textContent = `Top ${frac}%`; badge.className='pill amber';
+  } else {
+    banner.className='banner ok';
+    title.textContent = `About ${frac}% of ${selected} earners meet the income threshold`;
+    body.textContent = `Qualifying income: ${moneyFull(h.qualifying)}/yr — within reach for upper-middle earners.`;
+    badge.textContent = `${frac}% qualify`; badge.className='pill teal';
+  }
+}
+
+/* Income chart */
+Chart.defaults.font.family = "'Inter',sans-serif";
+Chart.defaults.color = '#86868b';
+
+function drawIncome(){
+  if(incomeChart) incomeChart.destroy();
+  const labels = DATA.map(d=>d.age);
+  let datasets;
+  if(incomeView === 'upper'){
+    const palette = ['#bfa88a','#9b8a6e','#c94a2b','#0a8054'];
+    datasets = ['p90','p95','p97','p99'].map((k,i)=>({
+      label:k.toUpperCase(), data:DATA.map(d=>d[k]), tension:.3,
+      borderWidth:k==='p99'?2.5:1.5, pointRadius:k==='p99'?4:2.5,
+      borderColor:palette[i], backgroundColor:palette[i]+'22', fill:false,
+    }));
+  } else {
+    const cols = ['#d4cfc6','#c0b89e','#9b8a6e','#7a6e57','#bfa88a','#c94a2b','#1a1915'];
+    datasets = ['p10','p25','p50','p75','p90','p95','p99'].map((k,i)=>({
+      label:k.toUpperCase(), data:DATA.map(d=>d[k]), tension:.3,
+      borderWidth:k==='p50'?2.5:1.5, pointRadius:2,
+      borderColor:cols[i], fill:false,
+    }));
+  }
+  incomeChart = new Chart(document.getElementById('incomeChart'), {
+    type:'line', data:{labels, datasets},
+    options:{
+      responsive:true, maintainAspectRatio:false,
+      interaction:{mode:'index',intersect:false},
+      plugins:{
+        legend:{labels:{boxWidth:8,usePointStyle:true,font:{size:11}}},
+        tooltip:{
+          itemSort:(a,b)=>b.parsed.y - a.parsed.y,
+          callbacks:{label:c=>`${c.dataset.label}: ${money(c.raw)}`},
+          padding:10,cornerRadius:8
+        },
+      },
+      scales:{
+        x:{grid:{display:false},border:{display:false},title:{display:true,text:'Age cohort',font:{size:11}}},
+        y:{ticks:{callback:v=>money(v),font:{size:11}},grid:{color:'rgba(0,0,0,0.06)'},border:{display:false}},
+      }
+    }
+  });
+}
+
+document.querySelectorAll('#incomeTabs .tab').forEach(t=>{
+  t.addEventListener('click',()=>{
+    document.querySelectorAll('#incomeTabs .tab').forEach(x=>x.classList.remove('active'));
+    t.classList.add('active');
+    incomeView = t.dataset.v;
+    drawIncome();
+  });
+});
+
+/* ============================================================
+   STRESS TEST + house fill visual
+   ============================================================ */
+function updateHouseFill(price, downPct){
+  const downAmt = price * downPct;
+  // House SVG: viewBox 0 0 24 24. Roof peak at y=3, base at y=21. Vertical span = 18.
+  // Fill from bottom up by downPct of full house height.
+  const SPAN = 18;
+  const BASE_Y = 21;
+  const fillH = SPAN * Math.min(downPct, 1);
+  const newY = BASE_Y - fillH;
+  const rect = document.getElementById('houseFillRect');
+  rect.setAttribute('y', newY);
+  rect.setAttribute('height', fillH);
+  document.getElementById('houseDownPct').textContent = Math.round(downPct*100)+'%';
+  document.getElementById('houseDownAmt').textContent = moneyFull(Math.round(downAmt));
+}
+
+function runStressTest(){
+  const price = +document.getElementById('stPrice').value;
+  const downPct = +document.getElementById('stDown').value/100;
+  const contract = +document.getElementById('stRate').value/100;
+  const amort = +document.getElementById('stAmort').value;
+  if(!price || !contract || !amort) return;
+
+  updateHouseFill(price, downPct);
+
+  const principal = price*(1-downPct);
+  const qualRate = Math.max(contract+0.02, 0.0525);
+  const m = contract/12, n = amort*12;
+  const contractPay = m===0 ? principal/n : principal*m/(1-Math.pow(1+m,-n));
+  const qm = qualRate/12;
+  const qualPay = qm===0 ? principal/n : principal*qm/(1-Math.pow(1+qm,-n));
+  const incomeReq = (qualPay*12)/0.30;
+
+  document.getElementById('stressResult').innerHTML = `
+    <div class="kpi"><div class="kpi-label">Monthly Payment (Contract)</div><div class="kpi-value">${moneyFull(Math.round(contractPay))}</div><div class="kpi-delta">at ${(contract*100).toFixed(2)}%</div></div>
+    <div class="kpi"><div class="kpi-label">Qualifying Payment (Stress)</div><div class="kpi-value coral">${moneyFull(Math.round(qualPay))}</div><div class="kpi-delta">at ${(qualRate*100).toFixed(2)}%</div></div>
+    <div class="kpi"><div class="kpi-label">Income Required to Qualify</div><div class="kpi-value">${moneyFull(Math.round(incomeReq))}</div><div class="kpi-delta">30% GDS, gross</div></div>
+  `;
+}
+
+['stPrice','stDown','stAmort'].forEach(id=>{
+  document.getElementById(id).oninput = runStressTest;
+});
+document.getElementById('stRate').oninput = ()=>{
+  rate = +document.getElementById('stRate').value/100;
+  renderRateLabel();
+  runStressTest();
+  renderHero(); renderBanner();
+};
+
+/* AFFORDABILITY */
+function renderAfford(){
+  const rank = pctRankFor(selected, myIncome);
+  const condo = HOUSING.condo, house = HOUSING.house;
+  const condoOK = myIncome >= condo.qualifying;
+  const houseOK = myIncome >= house.qualifying;
+  document.getElementById('affordResult').innerHTML = `
+    <div class="kpi">
+      <div class="kpi-label">Your Percentile (${selected})</div>
+      <div class="kpi-value">${rank}</div>
+      <div class="kpi-delta">${moneyFull(myIncome)}/yr</div>
+    </div>
+    <div class="kpi">
+      <div class="kpi-label">Condo (${moneyFull(condo.price)})</div>
+      <div class="kpi-value ${condoOK?'teal':'coral'}">${condoOK?'✓ Qualify':'✗ Below'}</div>
+      <div class="kpi-delta ${condoOK?'up':'down'}">${condoOK?'+'+moneyFull(myIncome-condo.qualifying):moneyFull(condo.qualifying-myIncome)+' short'}</div>
+    </div>
+    <div class="kpi">
+      <div class="kpi-label">House (${moneyFull(house.price)})</div>
+      <div class="kpi-value ${houseOK?'teal':'coral'}">${houseOK?'✓ Qualify':'✗ Below'}</div>
+      <div class="kpi-delta ${houseOK?'up':'down'}">${houseOK?'+'+moneyFull(myIncome-house.qualifying):moneyFull(house.qualifying-myIncome)+' short'}</div>
+    </div>
+    <div class="kpi">
+      <div class="kpi-label">Max Affordable Price</div>
+      <div class="kpi-value">${moneyFull(Math.round(myIncome/0.225))}</div>
+      <div class="kpi-delta">at 22.5% income ratio</div>
+    </div>
+  `;
+}
+
+document.getElementById('myIncome').oninput = (e)=>{
+  myIncome = +e.target.value;
+  document.getElementById('myIncomeVal').textContent = moneyFull(myIncome);
+  renderAfford();
+  renderSavings();
+};
+
+/* SAVINGS */
+function renderSavings(){
+  const h = HOUSING[housingView];
+  const target = h.down20;
+  const html = [{r:.10,label:'Save 10%'},{r:.20,label:'Save 20%'},{r:.30,label:'Save 30%'}].map(({r,label})=>{
+    const ann = myIncome*r;
+    const yrs = ann>0 ? target/ann : Infinity;
+    const disp = yrs>99?'99+':yrs<1?'<1':yrs.toFixed(1);
+    const color = yrs>15?'var(--coral)':yrs>8?'var(--amber)':'var(--teal)';
+    return `<div class="savings-cell">
+      <div class="savings-rate">${label} · ${moneyFull(Math.round(ann))}/yr</div>
+      <div class="savings-years" style="color:${color}">${disp} <span style="font-size:14px;color:var(--ink3)">yrs</span></div>
+      <div class="savings-mo">to save ${moneyFull(target)} (20% down on ${h.label.toLowerCase()})</div>
+    </div>`;
+  }).join('');
+  document.getElementById('savingsGrid').innerHTML = html;
+}
+
+/* FULL TABLE */
+function renderIncomeTable(){
+  document.getElementById('incomeTable').innerHTML = `
+    <thead><tr>
+      <th>Age</th><th>P10</th><th>P25</th><th>P50</th><th>P75</th>
+      <th>P90</th><th>P95</th><th>P97</th><th>P99</th>
+    </tr></thead>
+    <tbody>${DATA.map(d=>`
+      <tr>
+        <td>${d.age}</td>
+        <td>${money(d.p10)}</td><td>${money(d.p25)}</td>
+        <td>${money(d.p50)}</td><td>${money(d.p75)}</td>
+        <td class="hl">${money(d.p90)}</td>
+        <td>${money(d.p95)}</td><td>${money(d.p97)}</td>
+        <td class="hlt">${money(d.p99)}</td>
+      </tr>
+    `).join('')}</tbody>
+  `;
+}
+
+/* GTA TABLE + MAP */
+function getRegionVal(r, key){
+  if(housingView === 'house'){
+    if(key==='avg') return r.avgHouse;
+    if(key==='psf') return r.psfHouse;
+    if(key==='income') return r.incomeHouse;
+    if(key==='aff') return r.affHouse;
+  }
+  return r[key];
+}
+
+function renderRegionTable(){
+  const sorted = [...REGIONS].sort((a,b)=>{
+    if(sortKey === 'name') return sortDir==='asc'?a.name.localeCompare(b.name):b.name.localeCompare(a.name);
+    const A = getRegionVal(a, sortKey), B = getRegionVal(b, sortKey);
+    return sortDir==='asc' ? A-B : B-A;
+  });
+  const max = Math.max(...REGIONS.map(r=>getRegionVal(r,'avg')));
+  const tbody = document.getElementById('regionTableBody');
+  tbody.innerHTML = sorted.map(r=>{
+    const v = getRegionVal(r,'avg');
+    const psf = getRegionVal(r,'psf');
+    const inc = getRegionVal(r,'income');
+    const pct = Math.round((v/max)*100);
+    return `<tr data-key="${r.key}" class="${activeRegion===r.key?'selected':''}">
+      <td class="name">${r.name}</td>
+      <td class="num">$${(v/1000).toFixed(0)}k</td>
+      <td class="num">$${psf}</td>
+      <td class="num">$${(inc/1000).toFixed(0)}k</td>
+      <td class="bar"><div class="bar-track"><div class="bar-fill" style="width:${pct}%"></div></div></td>
+    </tr>`;
+  }).join('');
+  document.querySelectorAll('#regionTable thead th').forEach(th=>{
+    th.classList.remove('sort-asc','sort-desc');
+    if(th.dataset.sort === sortKey) th.classList.add(sortDir==='asc'?'sort-asc':'sort-desc');
+  });
+  tbody.querySelectorAll('tr').forEach(tr=>{
+    tr.addEventListener('click',()=>selectRegion(tr.dataset.key));
+  });
+  document.getElementById('regionTableSub').textContent =
+    `${REGIONS.length} GTA regions · ${HOUSING[housingView].label} prices`;
+}
+
+document.querySelectorAll('#regionTable thead th').forEach(th=>{
+  if(!th.dataset.sort) return;
+  th.addEventListener('click',()=>{
+    if(sortKey === th.dataset.sort){ sortDir = sortDir==='asc'?'desc':'asc'; }
+    else { sortKey = th.dataset.sort; sortDir = sortKey==='name'?'asc':'desc'; }
+    renderRegionTable();
+  });
+});
+
+const POLYS = {
+  'tor-downtown':[[-79.43,43.665],[-79.42,43.640],[-79.40,43.638],[-79.36,43.645],[-79.34,43.665],[-79.36,43.685],[-79.39,43.690],[-79.42,43.685]],
+  'tor-north':[[-79.50,43.770],[-79.48,43.745],[-79.43,43.735],[-79.39,43.735],[-79.34,43.745],[-79.32,43.770],[-79.34,43.790],[-79.40,43.795],[-79.46,43.790]],
+  'tor-scar':[[-79.32,43.770],[-79.31,43.740],[-79.27,43.720],[-79.20,43.715],[-79.14,43.745],[-79.13,43.785],[-79.18,43.805],[-79.26,43.800],[-79.30,43.790]],
+  'tor-etob':[[-79.58,43.730],[-79.58,43.700],[-79.56,43.680],[-79.52,43.665],[-79.48,43.660],[-79.46,43.685],[-79.46,43.720],[-79.50,43.745],[-79.55,43.745]],
+  'mississauga':[[-79.78,43.620],[-79.74,43.575],[-79.66,43.540],[-79.58,43.530],[-79.54,43.585],[-79.56,43.640],[-79.62,43.685],[-79.70,43.695],[-79.76,43.665]],
+  'brampton':[[-79.85,43.815],[-79.82,43.770],[-79.74,43.730],[-79.66,43.715],[-79.62,43.745],[-79.62,43.795],[-79.66,43.835],[-79.74,43.855],[-79.82,43.845]],
+  'vaughan':[[-79.62,43.860],[-79.60,43.815],[-79.55,43.785],[-79.49,43.785],[-79.45,43.815],[-79.45,43.870],[-79.50,43.905],[-79.57,43.905]],
+  'markham':[[-79.40,43.890],[-79.39,43.845],[-79.34,43.815],[-79.28,43.810],[-79.22,43.835],[-79.21,43.885],[-79.26,43.935],[-79.33,43.940],[-79.38,43.925]],
+  'oakville':[[-79.78,43.520],[-79.73,43.470],[-79.66,43.430],[-79.60,43.430],[-79.58,43.470],[-79.62,43.510],[-79.68,43.540],[-79.74,43.545]],
+  'pickering':[[-79.16,43.940],[-79.14,43.870],[-79.08,43.830],[-78.98,43.825],[-78.94,43.860],[-78.96,43.920],[-79.02,43.970],[-79.10,43.985]],
+};
+
+function buildFeatureCollection(){
+  const vals = REGIONS.map(r=>getRegionVal(r, activeMetric));
+  const min = Math.min(...vals), max = Math.max(...vals);
+  return {
+    type:'FeatureCollection',
+    features: REGIONS.map(r=>{
+      const v = getRegionVal(r, activeMetric);
+      let t = (v-min)/(max-min || 1);
+      if(METRICS[activeMetric].invert) t = 1 - t;
+      return {
+        type:'Feature', id:r.key,
+        properties:{ key:r.key, name:r.name, val:v, ramp:t },
+        geometry:{ type:'Polygon', coordinates:[ POLYS[r.key].concat([POLYS[r.key][0]]) ] }
+      };
+    })
+  };
+}
+
+const map = new maplibregl.Map({
+  container:'regionMap',
+  style:'https://basemaps.cartocdn.com/gl/positron-gl-style/style.json',
+  center:[-79.50, 43.78], zoom:8.6, attributionControl:false, interactive:true,
+});
+map.addControl(new maplibregl.NavigationControl({showCompass:false}),'top-right');
+map.addControl(new maplibregl.AttributionControl({compact:true}),'bottom-left');
+
+map.on('load', ()=>{
+  map.addSource('regions',{type:'geojson', data:buildFeatureCollection()});
+  map.addLayer({
+    id:'regions-fill', type:'fill', source:'regions',
+    paint:{
+      'fill-color':[
+        'interpolate',['linear'],['get','ramp'],
+        0,'#e8f6f1',0.25,'#bfe3d3',0.5,'#8fcdb1',0.75,'#4fae87',1,'#0a8054'
+      ],
+      'fill-opacity':[
+        'case',
+        ['boolean',['feature-state','selected'],false],0.85,
+        ['boolean',['feature-state','hover'],false],0.78,
+        0.65
+      ]
+    }
+  });
+  map.addLayer({
+    id:'regions-line', type:'line', source:'regions',
+    paint:{
+      'line-color':['case',['boolean',['feature-state','selected'],false],'#143838','#ffffff'],
+      'line-width':['case',['boolean',['feature-state','selected'],false],2.5,1.2]
+    }
+  });
+
+  let hoverId = null;
+  map.on('mousemove','regions-fill',(e)=>{
+    map.getCanvas().style.cursor='pointer';
+    if(e.features.length){
+      const f = e.features[0];
+      if(hoverId !== null){ map.setFeatureState({source:'regions',id:hoverId},{hover:false}); }
+      hoverId = f.id || f.properties.key;
+      map.setFeatureState({source:'regions',id:hoverId},{hover:true});
+      const tip = document.getElementById('mapTooltip');
+      const m = METRICS[activeMetric];
+      tip.innerHTML = `<div class="name">${f.properties.name}</div><div class="stat">${m.label}: ${m.fmt(f.properties.val)}</div>`;
+      tip.style.left = e.point.x+'px';
+      tip.style.top = e.point.y+'px';
+      tip.style.display = 'block';
+    }
+  });
+  map.on('mouseleave','regions-fill',()=>{
+    map.getCanvas().style.cursor='';
+    if(hoverId !== null){ map.setFeatureState({source:'regions',id:hoverId},{hover:false}); }
+    hoverId = null;
+    document.getElementById('mapTooltip').style.display='none';
+  });
+  map.on('click','regions-fill',(e)=>{
+    if(e.features.length) selectRegion(e.features[0].properties.key);
+  });
+});
+
+function refreshMapData(){
+  if(map && map.getSource && map.getSource('regions')){
+    map.getSource('regions').setData(buildFeatureCollection());
+  }
+}
+
+function selectRegion(key){
+  if(activeRegion){ try{ map.setFeatureState({source:'regions',id:activeRegion},{selected:false}); }catch(e){} }
+  activeRegion = key;
+  try{ map.setFeatureState({source:'regions',id:key},{selected:true}); }catch(e){}
+  const r = REGIONS.find(x=>x.key===key);
+  if(r){
+    document.getElementById('rkPrice').textContent  = '$'+(getRegionVal(r,'avg')/1000).toFixed(0)+'k';
+    document.getElementById('rkIncome').textContent = '$'+(getRegionVal(r,'income')/1000).toFixed(0)+'k';
+    document.getElementById('rkPsf').textContent    = '$'+getRegionVal(r,'psf');
+    document.getElementById('rkAff').textContent    = getRegionVal(r,'aff');
+    document.getElementById('mapSub').textContent   = `Selected: ${r.name}`;
+  }
+  renderRegionTable();
+}
+
+document.querySelectorAll('.mchip').forEach(c=>{
+  c.addEventListener('click',()=>{
+    document.querySelectorAll('.mchip').forEach(x=>x.classList.remove('active'));
+    c.classList.add('active');
+    activeMetric = c.dataset.metric;
+    document.getElementById('mapTitle').textContent = METRICS[activeMetric].label + ' by Region';
+    refreshMapData();
+  });
+});
+
+document.querySelectorAll('#propTypeRow .prop-btn').forEach(c=>{
+  c.addEventListener('click',()=>{
+    document.querySelectorAll('#propTypeRow .prop-btn').forEach(x=>x.classList.remove('active'));
+    c.classList.add('active');
+    housingView = c.dataset.type;
+    renderAll();
+  });
+});
+
+document.getElementById('themeToggle').addEventListener('click',()=>{
+  const cur = document.documentElement.getAttribute('data-theme');
+  const next = cur==='dark'?'light':'dark';
+  document.documentElement.setAttribute('data-theme', next);
+  document.getElementById('themeToggle').textContent = next==='dark'?'Light mode':'Dark mode';
+});
+
+document.getElementById('rateSlider').oninput = (e)=>{
+  rate = +e.target.value/100;
+  renderRateLabel();
+  runStressTest();
+  renderHero();
+  renderBanner();
+};
+
+function renderAll(){
+  renderHero();
+  renderBanner();
+  drawIncome();
+  renderRegionTable();
+  refreshMapData();
+  renderAfford();
+  renderSavings();
+  renderIncomeTable();
+}
+
+populateAgeSelect();
+renderRateLabel();
+renderAll();
+runStressTest();
+
+/* Scroll-triggered fade-up on sections (StyleGuide pattern) */
+(function initFadeUp(){
+  const reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion:reduce)').matches;
+  const targets = document.querySelectorAll('.page > div.section, .page > div[style*="margin-bottom"]');
+  targets.forEach(t => t.classList.add('fade-section'));
+  if (!('IntersectionObserver' in window) || reduced) {
+    targets.forEach(t => t.classList.add('is-visible'));
+    return;
+  }
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) { e.target.classList.add('is-visible'); obs.unobserve(e.target); }
+    });
+  }, { threshold: 0.08, rootMargin: '0px 0px -60px 0px' });
+  targets.forEach(t => obs.observe(t));
+})();
+</script>
+
+</body>
+</html>
